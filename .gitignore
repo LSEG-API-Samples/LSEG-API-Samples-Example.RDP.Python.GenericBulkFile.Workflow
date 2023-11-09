@@ -1,0 +1,16 @@
+.env
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+*.csv
+*.tar.gz
+*-Copy1.ipynb
+*.csv.gz
+*.jsonl.gz
+*.jsonl
+*.zip
+EsgPIT*
