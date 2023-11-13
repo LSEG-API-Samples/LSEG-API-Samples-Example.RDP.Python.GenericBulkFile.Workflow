@@ -17,7 +17,7 @@ Before I am going further, there is some prerequisite, dependencies, and librari
 
 ### Access to the RDP with the your desire Bulk file permission
 
-This project uses RDP access credentials with the  CFS Bulk file permission.
+This project uses RDP access credentials with the CFS Bulk file permission.
 
 Please contact your Refinitiv representative to help you with the RDP account and services.
 
@@ -89,4 +89,48 @@ Subscribers can only access the files to which they are entitled. On AWS S3, Sub
 
 Files are available for a defined period of time that is determined by the Publisher.
 
-[To be done]
+## <a id="how_to_run"></a>How to run the demo application
+
+The first step is to unzip or download the example project folder into a directory of your choice, then set up Python or Docker environments based on your preference.
+
+### <a id="python_example_run"></a>Run the demo application
+
+1. Open Anaconda Prompt and go to the project's folder.
+2. Run the following command in the Anaconda Prompt application to create a Conda environment named *ESG* for the project.
+    ``` bash
+    (base) $>conda create --name CFS python=3.10
+    ```
+3. Once the environment is created, activate a Conda *ESG* environment with this command in Anaconda Prompt.
+    ``` bash
+    (base) $>conda activate CFS
+    ```
+4. Run the following command to the dependencies in the *CFS* environment 
+    ``` bash
+    (CFS) $>pip install -r requirements.txt
+    ```
+5. Once the dependencies installation process is success, create a ```.env``` file with the following content
+    ``` INI
+    RDP_USERNAME=<Your RDP Username>
+    RDP_PASSWORD=<Your RDP Password>
+    RDP_APP_KEY=<Your RDP App key>
+    ```
+5. Then run the following command to start the Jupyter Lab application.
+    ``` bash
+    (CFS) $>jupyter lab
+    ```
+6. Open a **RDP-Generic-BULK.ipynb**  file and run each cell to learn the RDP CFS Bulk File workflow step by step.
+
+## <a id="references"></a>References
+
+That brings me to the end of my generic CFS Bulk file workflow project. For further details, please check out the following resources:
+
+* [Refinitiv Data Platform APIs page](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [Refinitiv Developer Community](https://developers.refinitiv.com/) website.
+* [Refinitiv Data Platform APIs Playground page](https://api.refinitiv.com).
+* [Refinitiv Data Platform APIs: Introduction to the Request-Response API](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
+* [Refinitiv Data Platform APIs: Authorization - All about tokens](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
+* [Limitations and Guidelines for the RDP Authentication Service](https://developers.refinitiv.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
+* [Getting Started with Refinitiv Data Platform](https://developers.refinitiv.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
+* [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide)
+
+
+For any questions related to Refinitiv Data Platform APIs, please use the [RDP APIs Forum](https://community.developers.refinitiv.com/spaces/231/index.html) on the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
