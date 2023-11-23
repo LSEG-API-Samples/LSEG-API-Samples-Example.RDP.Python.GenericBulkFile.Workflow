@@ -120,6 +120,12 @@ The first step is to unzip or download the example project folder into a directo
     ```
 6. Open a **RDP-Generic-BULK.ipynb**  file and run each cell to learn the RDP CFS Bulk File workflow step by step.
 
+    ![figure-2](images/notebook_file.png "Notebook file")
+
+## <a id="how_to_run_postman"></a>How to run the Postman collection
+
+[To be done]
+
 ## <a id="references"></a>References
 
 That brings me to the end of my generic CFS Bulk file workflow project. For further details, please check out the following resources:
