@@ -1,0 +1,508 @@
+{
+	"info": {
+		"_postman_id": "d57a1d71-47c6-41ad-adec-13708a4ce7bc",
+		"name": "RDP CFS Bulk API",
+		"description": "\\[Action\\]\n\n- read package id\n    \n- paging request\n    \n\n# Overview  \n\nCollection of RDP CFS Bulk API calls that are used in the Postman tutorials.\n\n# What is CFS?\n\n**Client File Store (CFS)** aka File Distribution is a capability of Refinitiv Data Platform (RDP) that provides authorization and enables access to content files stored in publisher-supplied repository. CFS defines content ownership that publisher are isolated. And subscribers can trust the source of content.\n\nCFS provides bucket and file-set to organize files to simplify the interaction with publishers or subscribers. CFS doesn't store file directly. Actual files are store in publisher-supplied. AWS S3 only one type storage that supported by current CFS.\n\n# Set-up\n\nAfter importing the collection, edit the variables of this collection to set your RDP credentials.\n\nFor simplicity, the following variables have been defined supporting OAuth authentication available within the platform. Based on the authentication IDs provided to you, set the following variables:\n\n- **USERNAME**\n    - Machine ID (OAuth Password Grant)\n- **PASSWORD**\n    - Password (OAuth Password Grant)\n- **APP_KEY**\n    - Application Key\n- **BUCKET_NAME**\n    - The Bucket name\n\n**\\*Note**\\*\n\nThe APP_KEY is a unique ID defined for an application making the request. Users can generate/manage their AppKey's [here](http://amers1-apps.platform.refinitiv.com/apps/appkeygenerator).\n\n# Running the calls\n\n- After setting your above credentials, the first step is to create a token required by the gateway giving you access to data services. To do this, run the following collection:\n    - **Get Access Token using Password Grant**\n- Finally, run the desired examples available within this collection\n    \n\n**\\*Note**\\*\n\nWhen running the above collection, this will initially generate your token required for subsequent data calls into platform. However, this token is short-lived, i.e. \\~10 minutes. As a result, you may need to refresh your token for continued use. To do this, run the **Get Access Token using Refresh Token**. It is also important to note this is best practices to perform a token refresh for resource management.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31268612",
+		"_collection_link": "https://winter-water-515088.postman.co/workspace/f116ad8d-5341-4492-a87d-d0b7cf21b240/collection/31268612-d57a1d71-47c6-41ad-adec-13708a4ce7bc?action=share&source=collection_link&creator=31268612"
+	},
+	"item": [
+		{
+			"name": "Step 1: Get Access Token using Password Grant (Machine ID)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"    // Support for different POSTMAN versions (backwards compatibility)",
+							"    pm.environment.set(\"ACCESS_TOKEN\", jsonData.access_token);",
+							"    pm.environment.set(\"REFRESH_TOKEN\", jsonData.refresh_token);",
+							"    pm.environment.set(\"EXPIRES_IN\", jsonData.expires_in);",
+							"}",
+							"else {",
+							"    console.log(\"Request failed with status code: \", pm.response.code);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{USERNAME}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{PASSWORD}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "trapi",
+							"type": "text"
+						},
+						{
+							"key": "takeExclusiveSignOnControl",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{APP_KEY}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{RDP_HOST}}/auth/oauth2/{{RDP_VERSION}}/token",
+					"protocol": "https",
+					"host": [
+						"{{RDP_HOST}}"
+					],
+					"path": [
+						"auth",
+						"oauth2",
+						"{{RDP_VERSION}}",
+						"token"
+					]
+				},
+				"description": "Gets the Access and Refresh tokens"
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2: Get list of Package IDs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(\"Setting packageId to the first one\");\r",
+							"    pm.environment.set(\"PACKAGE_ID\", jsonData.value[0].packageId);\r",
+							"    pm.environment.set(\"NEXT_LINK\",jsonData['@nextLink']);\r",
+							"    console.log(`nextLini is ${jsonData['@nextLink']}`);\r",
+							"}\r",
+							"else {\r",
+							"    console.log(\"Request failed with status code: \", pm.response.code);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{RDP_HOST}}/file-store/{{RDP_VERSION}}/file-sets?bucket={{BUCKET_NAME}}",
+					"protocol": "https",
+					"host": [
+						"{{RDP_HOST}}"
+					],
+					"path": [
+						"file-store",
+						"{{RDP_VERSION}}",
+						"file-sets"
+					],
+					"query": [
+						{
+							"key": "bucket",
+							"value": "{{BUCKET_NAME}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2.5: Get list of Package IDs Next Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(\"Setting packageId to the first one\");\r",
+							"    pm.environment.set(\"PACKAGE_ID\", jsonData.value[0].packageId);\r",
+							"    pm.environment.set(\"NEXT_LINK\",jsonData['@nextLink']);\r",
+							"    console.log(`nextLini is ${jsonData['@nextLink']}`);\r",
+							"}\r",
+							"else {\r",
+							"    console.log(\"Request failed with status code: \", pm.response.code);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{RDP_HOST}}/{{NEXT_LINK}}",
+					"protocol": "https",
+					"host": [
+						"{{RDP_HOST}}"
+					],
+					"path": [
+						"{{NEXT_LINK}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3: Get list of Files",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(\"Setting packageId to the first one\");\r",
+							"    pm.environment.set(\"FILE_ID\", jsonData.value[0].files[0]);\r",
+							"}\r",
+							"else {\r",
+							"    console.log(\"Request failed with status code: \", pm.response.code);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{RDP_HOST}}/file-store/{{RDP_VERSION}}/file-sets?bucket={{BUCKET_NAME}}&packageId={{PACKAGE_ID}}",
+					"protocol": "https",
+					"host": [
+						"{{RDP_HOST}}"
+					],
+					"path": [
+						"file-store",
+						"{{RDP_VERSION}}",
+						"file-sets"
+					],
+					"query": [
+						{
+							"key": "bucket",
+							"value": "{{BUCKET_NAME}}"
+						},
+						{
+							"key": "packageId",
+							"value": "{{PACKAGE_ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 4: Get a File link",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{RDP_HOST}}/file-store/{{RDP_VERSION}}/files/{{FILE_ID}}/stream?doNotRedirect=true",
+					"protocol": "https",
+					"host": [
+						"{{RDP_HOST}}"
+					],
+					"path": [
+						"file-store",
+						"{{RDP_VERSION}}",
+						"files",
+						"{{FILE_ID}}",
+						"stream"
+					],
+					"query": [
+						{
+							"key": "doNotRedirect",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 4: Get a File link direct",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{RDP_HOST}}/file-store/{{RDP_VERSION}}/files/{{FILE_ID}}/stream",
+					"protocol": "https",
+					"host": [
+						"{{RDP_HOST}}"
+					],
+					"path": [
+						"file-store",
+						"{{RDP_VERSION}}",
+						"files",
+						"{{FILE_ID}}",
+						"stream"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 5: Refresh Access Token using Refresh Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    // Support for different POSTMAN versions (backwards compatibility)",
+							"    if (pm.collectionVariables) {",
+							"        pm.collectionVariables.set(\"_access_token\", jsonData.access_token);",
+							"        pm.collectionVariables.set(\"_refresh_token\", jsonData.refresh_token);",
+							"    } else {",
+							"        pm.globals.set(\"_access_token\", jsonData.access_token);",
+							"        pm.globals.set(\"_refresh_token\", jsonData.refresh_token);",
+							"    }",
+							"}",
+							"else {",
+							"    console.log(\"Request failed with status code: \", pm.response.code);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{USERNAME}}",
+							"type": "string"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "refresh_token",
+							"value": "{{REFRESH_TOKEN}}",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{APP_KEY}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{RDP_HOST}}/auth/oauth2/{{RDP_VERSION}}/token",
+					"protocol": "https",
+					"host": [
+						"{{RDP_HOST}}"
+					],
+					"path": [
+						"auth",
+						"oauth2",
+						"{{RDP_VERSION}}",
+						"token"
+					]
+				},
+				"description": "Gets the Access and Refresh tokens, using a previous refresh token"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "USERNAME",
+			"value": "MarieVeronica.BugaisRDP@refinitiv.com",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "PASSWORD",
+			"value": "Welcome1",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "APP_KEY",
+			"value": "255a774231844f00a692dfaf8250a17f7887fff6",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "RDP_HOST",
+			"value": "api.refinitiv.com",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "RDP_VERSION",
+			"value": "v1",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "ACCESS_TOKEN",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "REFRESH_TOKEN",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "EXPIRES_IN",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "BUCKET_NAME",
+			"value": "bulk-ESG",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
