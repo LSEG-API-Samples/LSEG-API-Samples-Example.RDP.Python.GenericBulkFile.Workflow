@@ -126,6 +126,15 @@ The first step is to unzip or download the example project folder into a directo
 
 [To be done]
 
+## Next Steps
+
+You may interested in the following resources for more detail about the CFS data usage:
+- [Find environmental footprint of your bond portfolio](https://developers.lseg.com/en/article-catalog/article/Environmental_footprint_of_bond_portfolio) article
+- [RDP APIs Green Revenues CFS Bulk file Workflow](https://github.com/LSEG-API-Samples/Example.RDP.Python.GreenRevenuesBulk) - a dedicate Green Revenue CFS workflow
+- [RDP APIs ESG CFS Bulk file Workflow](https://github.com/LSEG-API-Samples/Example.RDP.Python.ESG.PointinTimeBulk) - a dedicate ESG CFS workflow
+
+And much more on the [Developer Portal](https://developers.lseg.com/en) website.
+
 ## <a id="references"></a>References
 
 That brings me to the end of my generic CFS Bulk file workflow project. For further details, please check out the following resources:
