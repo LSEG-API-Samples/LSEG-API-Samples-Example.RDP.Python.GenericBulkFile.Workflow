@@ -124,7 +124,48 @@ The first step is to unzip or download the example project folder into a directo
 
 ## <a id="how_to_run_postman"></a>How to run the Postman collection
 
-[To be done]
+1. Open the Postman application
+2. Click on the "Collections" tab, then click the "Import" button
+
+    ![figure-3](images/postman1.png)
+
+3. Choose the *RDP CFS Bulk API.postman_collection.json* file, then the RDP CFS BUlk API collection will be imported to Postman
+
+    ![figure-4](images/postman3.png)
+
+4. Click on the "Environments" tab, then click the "Import" button
+
+    ![figure-5](images/postman4.png)
+
+5. Choose the *RDP CFS Bulk Environment.postman_environment.json* file, then the RDP CFS Bulk environment will be imported to Postman
+6. Click on the "Collections" tab, then choose the *RDP CFS Bulk environment*. Input the ```USERNAME```, ```PASSWORD```, ```APP_KEY```, and ```BUCKET_NAME``` variables with your RDP credential detail.
+
+    ![figure-6](images/postman5.png)
+
+7. The first step is run the "Step 1" Get Access Token using Password Grant (Machine ID)" request, please make sure that the environment on the top right corner is pointed to the *RDP CFS Bulk Environment*
+
+    ![figure-7](images/postman7.png)
+
+8. You can generate the source code from this Postman request by clicking the ```</>``` button and choose prefer language.
+
+    ![figure-8](images/postman8.png)
+
+9. Once the Once authentication is successful, run the requests from step 2 to step 4
+
+    ![figure-9](images/postman9.png)
+
+10. You can generate the source code from these Postman requests by clicking the ```</>``` button and choose prefer language on each request too.
+
+    ![figure-10](images/postman10.png)
+
+11. If the Access Token is expired, the RDP CFS API requests return "token expired" error message as follows:
+
+    ![figure-11](images/postman11.png)
+
+12. You need to refresh the Access Token by requesting "Step 5: Refresh Access Token using Refresh Token"
+
+    ![figure-12](images/postman12.png)
+
 
 ## Next Steps
 
