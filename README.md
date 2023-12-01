@@ -122,50 +122,103 @@ The first step is to unzip or download the example project folder into a directo
 
     ![figure-2](images/notebook_file.png "Notebook file")
 
-## <a id="how_to_run_postman"></a>How to run the Postman collection
+## <a id="how_to_run_postman"></a>LSEG CFS Bulk API Workspace
 
-1. Open the Postman application
-2. Click on the "Collections" tab, then click the "Import" button
+The [RDP CFS Bulk Postman Workspace](https://www.postman.com/winter-water-515088/workspace/lseg-cfs-bulk-api-workspace) is a public workspace in Postman that demonstrates how to use CFS API. It contains the following collection and environment:
+- **RDP CFS Bulk API Collection**: This collection contain all HTTP requests with the RDP CFS Bulk file API. The requests are in ordered from Step 1 to Step 5.
+- **RDP CFS Bulk API Environment**: This environment contains all parameters consumers need for requesting data with the requests in RDP CFS Bulk API Collection (including the credential).
 
-    ![figure-3](images/postman1.png)
+Users can fork these Postman items to their own workspaces. Please follow these five steps to fork the RDP CFS Bulk Postman Workspace to a Postman workspace. 
 
-3. Choose the *RDP CFS Bulk API.postman_collection.json* file, then the RDP CFS BUlk API collection will be imported to Postman
+### 1. Create a new Postman workspace
 
-    ![figure-4](images/postman3.png)
+Open the Postman application, then sign in to the Postman and create a new workspace.
 
-4. Click on the "Environments" tab, then click the "Import" button
+![figure-3](images/postman1.png "create a new workspace")
 
-    ![figure-5](images/postman4.png)
+Choose a Blank workspace, and click the Next button.
 
-5. Choose the *RDP CFS Bulk Environment.postman_environment.json* file, then the RDP CFS Bulk environment will be imported to Postman
-6. Click on the "Collections" tab, then choose the *RDP CFS Bulk environment*. Input the ```USERNAME```, ```PASSWORD```, ```APP_KEY```, and ```BUCKET_NAME``` variables with your RDP credential detail.
+![figure-4](images/postman2.png "choose a blank workspace")
 
-    ![figure-6](images/postman5.png)
+Set a workspace name, such as “My CFS Workspace”, set the Visibility to Personal, and then click the Create button. 
 
-7. The first step is run the "Step 1" Get Access Token using Password Grant (Machine ID)" request, please make sure that the environment on the top right corner is pointed to the *RDP CFS Bulk Environment*
+![figure-5](images/postman3.png "create a personal workspace")
 
-    ![figure-7](images/postman7.png)
+The new workspace will appear on the list. 
 
-8. You can generate the source code from this Postman request by clicking the ```</>``` button and choose prefer language.
+![figure-6](images/postman4.png "create a personal workspace success")
 
-    ![figure-8](images/postman8.png)
+### 2. Open the LSEG CFS Bulk API Workspace
 
-9. Once the Once authentication is successful, run the requests from step 2 to step 4
+The [LSEG CFS Bulk API Workspace](https://www.postman.com/winter-water-515088/workspace/lseg-cfs-bulk-api-workspace) is in the public workspace so you can search it in Postman by clicking on “Search Postman”. 
 
-    ![figure-9](images/postman9.png)
+![figure-7](images/postman6.png "search public workspace")
 
-10. You can generate the source code from these Postman requests by clicking the ```</>``` button and choose prefer language on each request too.
+And then, enter “LSEG CFS Bulk API”. 
 
-    ![figure-10](images/postman10.png)
+![figure-8](images/postman7.png "search for LSEG CFS Bulk API")
 
-11. If the Access Token is expired, the RDP CFS API requests return "token expired" error message as follows:
+Click on the LSEG CFS Bulk API to open the workspace.
 
-    ![figure-11](images/postman11.png)
+![figure-9](images/postman8.png)
 
-12. You need to refresh the Access Token by requesting "Step 5: Refresh Access Token using Refresh Token"
+This LSEG CFS Bulk API workspace will be added to the workspace list.
 
-    ![figure-12](images/postman12.png)
+![figure-10](images/postman9.png)
 
+### 3. Fork the RDP CFS Bulk API Collection
+
+Select the LSEG CFS Bulk API workspace from the workspace list, and then select “...” menu of the RDP CFS Bulk API collection and choose the "Create a fork" command to fork this collection.
+
+![figure-11](images/postman10.png "fork collection")
+
+Then, enter the fork label, select the workspace (My CFS Workspace) created in the first step, uncheck “Watch original collection”, and then click on the Fork Collection button. 
+
+![figure-12](images/postman11.png "enter fork detail")
+
+The forked collection will be created in the selected workspace. 
+
+![figure-13](images/postman11b.png "fork collection success")
+
+### 4. Fork the Environment
+
+Select the LSEG CFS Bulk API workspace from the workspace list, and then select “...” menu of the RDP CFS Bulk Environment and choose the "Create a fork" command to fork this environment.
+
+![figure-14](images/postman12.png "fork environment")
+
+Then, enter the fork label, select the workspace (My CFS Workspace) created in the first step, and then click on the Fork Environment button. 
+
+![figure-15](images/postman13.png "enter fork detail")
+
+The forked environment will be created in the selected workspace. Input the ```USERNAME```, ```PASSWORD```, ```APP_KEY```, and ```BUCKET_NAME``` variables with your RDP credential detail.
+
+![figure-16](images/postman14.png "fork environment success")
+
+### 5. Running Postman Collection
+
+The first step is run the "Step 1" Get Access Token using Password Grant (Machine ID)" request, please make sure that the environment on the top right corner is pointed to the RDP CFS Bulk Environment.
+
+![figure-17](images/postman15.png)
+
+You can generate the source code from this Postman request by clicking the ```</>``` button and choose prefer language.
+
+![figure-18](images/postman16.png)
+
+Once the Once authentication is successful, run the requests from step 2 to step 4
+
+![figure-19](images/postman17.png)
+
+You can generate the source code from these Postman requests by clicking the ```</>``` button and choose prefer language on each request too.
+
+![figure-20](images/postman18.png)
+
+If the Access Token is expired, the RDP CFS API requests return "token expired" error message as follows:
+
+![figure-21](images/postman19.png)
+
+You need to refresh the Access Token by requesting "Step 5: Refresh Access Token using Refresh Token", then you can re-run the requests in step 2-4 again.
+
+![figure-22](images/postman20.png)
 
 ## Next Steps
 
