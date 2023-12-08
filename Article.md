@@ -8,6 +8,7 @@ The Client File Store (CFS) is a capability of Refinitiv Data Platform (RDP) tha
 - Symbology data
 - Tick History
 - Starmine
+
 And much more.
 
 The Client File Store (CFS) is a component of the RDP which let consumers access via a set of HTTP RESTful APIs. This article contains a step-by-step, generic workflow guide from the authentication and download the file for any bucket (ESG, Symbology, Green Revenue, etc). The example source code is written in [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment. However, our APIs are the web-based API, so any programming langues can connect and consume data using the same concept. 
@@ -80,7 +81,7 @@ Before I am going further, there is some prerequisite, dependencies, and librari
 
 This project uses RDP access credentials with the CFS Bulk file permission.
 
-Please contact your Refinitiv representative to help you with the RDP account and the bucket permission.
+Please contact your LSEG representative to help you with the RDP account and the bucket permission.
 
 ### Internet Access
 
@@ -96,7 +97,7 @@ The Python [Anaconda](https://www.anaconda.com/distribution/) or [MiniConda](htt
 
 ### Step 1: Authentication with RDP APIs
 
-The CFS APIs are considered protected resources and require that your application be authenticated before making a data call. This authentication and provisioning of access token is based on OAuth 2.0 specification. The first step of an application workflow is to get a token from RDP Auth Service, which will allow access to the protected resource, i.e. data REST API. 
+Let’s start with the authentication. The CFS APIs are considered protected resources and require that your application be authenticated before making a data call. This authentication and provisioning of access token is based on OAuth 2.0 specification. The first step of an application workflow is to get a token from RDP Auth Service, which will allow access to the protected resource, i.e. data REST API. 
 
 The API requires the following access credential information:
 - Username: The username/machine-id. 
@@ -128,8 +129,8 @@ Once the authentication success, the function gets the RDP Auth service response
 - **expires_in**: Access token validity time in seconds.
 
 Next, after the application received the Access Token (and authorization token) from RDP Auth Service, all subsequent REST API calls will use this token to get the data. Please find more detail regarding RDP APIs workflow in the following resources:
-- [RDP APIs: Introduction to the Request-Response API](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api) page.
-- [RDP APIs: Authorization - All about tokens](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens) page.
+- [RDP APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api) page.
+- [RDP APIs: Authorization - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens) page.
 
 Example source code in Python:
 ```Python
@@ -184,33 +185,34 @@ If the token is still valid and has appropriate scope, the request is allowed to
 
 The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from Refinitiv Data Platform's [API Playground page](https://api.refinitiv.com/) - which is an interactive documentation site developers can access once they have a valid Refinitiv Data Platform account.
 
-### Step 2: Listing the packageId using the Bucket Name
+### Step 2: Listing the packageIds using the Bucket Name
 
-To request the CFS Bulk data, the first step is to send an HTTP ```GET``` request to the RDP ```/file-store/v1/file-sets?bucket={bucket-name}``` endpoint to list all FileSets under the input ```bucket-name```.
+Now let me move on to the CFS APIs call. To request the CFS Bulk data, the first step is to send an HTTP ```GET``` request to the RDP ```/file-store/v1/packages?bucketName={bucket-name}``` endpoint to list all Package Ids under the input ```bucket-name```.
 
 The HTTP Request structure is as follows:
 
 ```HTTP
-GET /file-store/v1/file-sets?bucket={bucket-name}, HTTP/1.1
+GET /file-store/v1/packages?bucketName={bucket-name} HTTP/1.1
 Host: api.refinitiv.com
 Authorization: Bearer <Access Token>
 ```
 
 The example bucket names for RDP content set are as follows:
 
-|              Content             |                  Bucket Name                 |           
-|:--------------------------------:|:-------------------------------------------:|
-| Financial Markets Reference Data | bulk-FMRD                                    | 
-| Symbology                        | bulk-Symbology                               | 
-| ESG                              | bulk-ESG                                     | 
-| ESG - Point in Time              | bulk-ESG                                     | 
-| Tick History                     | TICKHISTORY_VBD_NO_EMBARGO                   | 
-| Green Revenue                    | bulk-GreenRevenue                            | 
-| Starmine                         | STARMINE_PREDICTIVE_ANALYTICS_SMARTECON_LIVE | 
+|              Content             |                  Bucket Name                 |              Example of Package ID             |
+|:--------------------------------:|:-------------------------------------------:|:---------------------------------------------:|
+| Financial Markets Reference Data | bulk-FMRD                                    | 4d48-d7ff-edcc3d38-8243-a4f7517962b8           |
+| Symbology                        | bulk-Symbology                               | 4c80-73a0-fcef949b-bfde-2b9b8117cfb0           |
+| ESG                              | bulk-ESG                                     | 4288-ebb6-93372235-acb2-89882a826af1           |
+| ESG - Point in Time              | bulk-ESG                                     | 4173-aec7-8a0b0ac9-96f9-48e83ddbd2ad           |
+| Tick History                     | TICKHISTORY_VBD_NO_EMBARGO                   | 4c01-ab9e-db594a31-a8f5-5b7852ec4638           |
+| Green Revenue                    | bulk-GreenRevenue                            | Summary: 4e94-6d63-fea034dc-90e2-de33895bd4e9  |
+| Green Revenue                    | bulk-GreenRevenue                            | Standard: 4316-d43b-81c40763-8e6a-0dbec8162ab1 |
+| Starmine                         | STARMINE_PREDICTIVE_ANALYTICS_SMARTECON_LIVE | 40d4-1404-58533484-afe8-718650a4e0d4           |  
 
 **Note**: The bucket name is *case-insensitive*.
 
-I am using the ```bulk-ESG``` as an example bucket name for the Python code.
+If you cannot find the bucket name for your interested content set, please contact your LSEG representative. I am using the ```bulk-ESG``` as an example bucket name for the Python code.
 
 ```Python
 # set Bucket Name, this notebook use bulk-ESG as an example
@@ -218,7 +220,7 @@ bucket_name = 'bulk-ESG'
 
 #step 2 - list Package IDs from bucket name
 
-CFS_url = f'{RDP_HOST}/file-store/v1/file-sets?bucket={bucket_name}'
+CFS_url = f'{RDP_HOST}/file-store/v1/packages?bucketName={bucket_name}'
 
 try:
     response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
@@ -242,183 +244,20 @@ print(json.dumps(response.json()['value'][0], sort_keys=True, indent=2, separato
 Result:
 ```JSON
 {
-  "attributes":[
-    {
-      "name":"ContentType",
-      "value":"Symbology SEDOL"
-    }
+  "bucketNames":[
+    "bulk-ESG"
   ],
-  "availableFrom":"2023-11-12T16:15:14Z",
-  "availableTo":"2023-12-12T16:15:14Z",
-  "bucketName":"bulk-ESG",
-  "contentFrom":"1970-01-01T00:00:00Z",
-  "contentTo":"2023-11-12T15:55:00Z",
-  "created":"2023-11-12T16:15:14Z",
-  "files":[
-    "4c88-afd6-e880c53b-b2fb-ecd47fc3297a"
-  ],
-  "id":"4013-7266-3759750e-b77b-c19ff93186d5",
-  "modified":"2023-11-12T16:15:34Z",
-  "name":"Bulk-ESG-Global-Symbology-EquitySEDOL-v2-Jsonl-Init-2023-11-12T16:01:55.121Z",
-  "numFiles":1,
-  "packageId":"4976-f976-fc3caef0-82d1-c345db924b6f",
-  "status":"READY"
+  "contactEmail":"robin.fielder@refinitiv.com",
+  "created":"2021-11-11T07:54:04Z",
+  "modified":"2023-02-10T09:10:16Z",
+  "packageId":"4037-e79c-96b73648-a42a-6b65ef8ccbd1",
+  "packageName":"Bulk-ESG-Global-Symbology-Organization-v1",
+  "packageType":"bulk"
 }
 ```
+## Step 3: Listing the FileSets using the Bucket Name and Package ID
 
-### Step 2.5: Listing the packageId using the Bucket Name - Paging
-
-By default, the ```/file-store/v1/file-sets?bucket={bucket-name}``` endpoint always returns 25 results per request. You can adjust the number of return results via the ```pageSize``` query parameter, the maximum number is **100**.
-
-```HTTP
-GET /file-store/v1/file-sets?bucket={bucket-name}&pageSize={number}, HTTP/1.1
-Host: api.refinitiv.com
-Authorization: Bearer <Access Token>
-```
-Let's try with ```pageSize=2``` as an example.
-
-Python Code:
-
-```Python
-#step 2.5 - list Package IDs from bucket name - with pageSize 2
-CFS_url = f'{RDP_HOST}/file-store/v1/file-sets?bucket={bucket_name}&pageSize=2'
-
-try:
-    response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
-except requests.exceptions.RequestException as exp:
-    print(f'Caught exception: {exp}')
-
-
-if response.status_code == 200:  # HTTP Status 'OK'
-    print('Receive list Package IDs from RDP APIs')
-else:
-    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
-```
-Now we get 2 entries per request from the API as we set via ```pageSize=2``` parameter:
-
-```JSON
-{
-  "@nextLink":"/file-store/v1/file-sets?bucket=bulk-ESG&pageSize=2&skipToken=ZmlsZXNldElkPTQwMjAtMTUwZS0yMWY3ODEzZC04MGU0LWYwZjU0NGRlOTliYw",
-  "value":[
-    {
-      "attributes":[
-        {
-          "name":"ContentType",
-          "value":"Symbology SEDOL"
-        }
-      ],
-      "availableFrom":"2023-11-12T16:15:14Z",
-      "availableTo":"2023-12-12T16:15:14Z",
-      "bucketName":"bulk-ESG",
-      "contentFrom":"1970-01-01T00:00:00Z",
-      "contentTo":"2023-11-12T15:55:00Z",
-      "created":"2023-11-12T16:15:14Z",
-      "files":[
-        "4c88-afd6-e880c53b-b2fb-ecd47fc3297a"
-      ],
-      ...
-    },
-    {
-      "attributes":[
-        {
-          "name":"ContentType",
-          "value":"ESG Sources"
-        },
-        {
-          "name":"ResultCount",
-          "value":"104064"
-        }
-      ],
-      "availableFrom":"2023-11-26T17:03:58Z",
-      "availableTo":"2023-12-10T17:03:57Z",
-      "bucketName":"bulk-ESG",
-      "contentFrom":"2023-11-19T16:45:00Z",
-      "contentTo":"2023-11-26T16:45:00Z",
-      "created":"2023-11-26T17:03:58Z",
-      "files":[
-        "4e67-a909-938ec235-a37b-f1386462f093"
-      ],
-      ...
-    }
-  ]
-}
-```
-There is a ```@nextLink``` node contains the URL for requesting the next page of results with the following HTTP request.
-
-```HTTP
-GET {@nextLink URL}, HTTP/1.1
-Host: api.refinitiv.com
-Authorization: Bearer <Access Token>
-```
-
-Example of Python code:
-
-```Python
-if '@nextLink' in response.json():
-    next_link = response.json()['@nextLink']
-    #step 2.5 - list Package IDs from bucket name - with pageSize 2 - navigate to next link
-    CFS_url = f'{RDP_HOST}{next_link}'
-    
-    try:
-        response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
-    except requests.exceptions.RequestException as exp:
-        print(f'Caught exception: {exp}')
-    
-    if response.status_code == 200:  # HTTP Status 'OK'
-        print('Receive list Package IDs from RDP APIs')
-    else:
-        print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-        print(f'Text: {response.text}')
-```
-
-Result:
-```JSON
-{
-  "@nextLink":"/file-store/v1/file-sets?bucket=bulk-ESG&skipToken=ZmlsZXNldElkPTQwNGUtNGVjMC0zNDc2Y2YyYy04OTEzLWI1NmE3NTE0MzBkNA&pageSize=2",
-  "value":[
-    {
-      "attributes":[
-        {
-          "name":"ContentType",
-          "value":"ESG EU BMR"
-        }
-      ],
-      "availableFrom":"2023-11-19T16:19:04Z",
-      "availableTo":"2023-12-03T16:19:04Z",
-      "bucketName":"bulk-ESG",
-      "contentFrom":"1970-01-01T00:00:00Z",
-      "contentTo":"2023-11-19T15:55:00Z",
-      "created":"2023-11-19T16:19:04Z",
-      "files":[
-        "45da-1478-f3a8e6e6-8be9-259a707e006c"
-      ],
-      "...
-    },
-    {
-      "attributes":[
-        {
-          "name":"ContentType",
-          "value":"ESG Scores"
-        }
-      ],
-      "availableFrom":"2023-11-26T17:08:15Z",
-      "availableTo":"2023-12-10T17:08:15Z",
-      "bucketName":"bulk-ESG",
-      "contentFrom":"1970-01-01T00:00:00Z",
-      "contentTo":"2023-11-26T16:25:00Z",
-      "created":"2023-11-26T17:08:15Z",
-      "files":[
-        "4a9e-47f3-a7c7a831-bf07-3ca70634d15e"
-      ],
-      ...
-    }
-  ]
-}
-```
-### Step 3: Listing the Filesets of the Bulk ESG Data with the packageId
-
-The next step is calling the CFS API with the bucket name and package Id to list all FileSets using **the package Id**. The API endpoint is ```/file-store/v1/file-sets?bucket={bucket-name}&packageId={packageId}```
+Now we come to getting the FileSets information. The application needs to send an HTTP ```GET``` request to the RDP ```/file-store/v1/file-sets?bucket={bucket-name}&packageId={packageId}``` endpoint to list all FileSets under the input ```bucket-name``` and ```packageId```.
 
 The HTTP Request structure is as follows:
 
@@ -427,27 +266,19 @@ GET /file-store/v1/file-sets?bucket={bucket-name}&packageId={packageId} HTTP/1.1
 Host: api.refinitiv.com
 Authorization: Bearer <Access Token>
 ```
-The example bucket names for RDP content set are as follows:
 
-|              Content             |                  Bucket Name                 |              Example of Package ID             |
-|:--------------------------------:|:-------------------------------------------:|:---------------------------------------------:|
-| Financial Markets Reference Data | bulk-FMRD                                    | 4d48-d7ff-edcc3d38-8243-a4f7517962b8           |
-| Symbology                        | bulk-Symbology                               | 4c80-73a0-fcef949b-bfde-2b9b8117cfb0           |
-| ESG                              | bulk-ESG                                     | 4288-ebb6-93372235-acb2-89882a826af1           |
-| ESG - Point in Time              | bulk-ESG                                     | 4173-aec7-8a0b0ac9-96f9-48e83ddbd2ad           |
-| Tick History                     | TICKHISTORY_VBD_NO_EMBARGO                   | 4c01-ab9e-db594a31-a8f5-5b7852ec4638           |
-| Green Revenue                    | bulk-GreenRevenue                            | Summary: 4e94-6d63-fea034dc-90e2-de33895bd4e9  |
-| Green Revenue                    | bulk-GreenRevenue                            | Standard: 4316-d43b-81c40763-8e6a-0dbec8162ab1 |
-| Starmine                         | STARMINE_PREDICTIVE_ANALYTICS_SMARTECON_LIVE | 40d4-1404-58533484-afe8-718650a4e0d4           |
+This article uses ```4037-e79c-96b73648-a42a-6b65ef8ccbd1``` packageId of the ```bulk-ESG``` bucket as an example.
 
-I am using the ```4288-ebb6-93372235-acb2-89882a826af1``` of the ```bulk-ESG``` as an example package id for the Python code.
+If you cannot find the package Id for your interested content set, please contact your LSEG representative.
 
 Python code:
 ```Python
 # pick the packageId you need and set to the packageId variable
-packageId = '4288-ebb6-93372235-acb2-89882a826af1'
+#packageId = response.json()['value'][0]['packageId']
+packageId = '4037-e79c-96b73648-a42a-6b65ef8ccbd1'
 
-#step 3 - get file id from bucket name
+#step 3 - list FileSets from bucket name and package Id
+
 CFS_url = f'{RDP_HOST}/file-store/v1/file-sets?bucket={bucket_name}&packageId={packageId}'
 
 try:
@@ -468,33 +299,183 @@ The FileSets response message from the API is as follows:
   "attributes":[
     {
       "name":"ContentType",
-      "value":"ESG Raw Full B"
+      "value":"Symbology Organization"
     }
   ],
-  "availableFrom":"2023-11-12T17:17:33Z",
-  "availableTo":"2023-11-26T17:17:32Z",
+  "availableFrom":"2023-11-26T16:18:44Z",
+  "availableTo":"2023-12-10T16:18:44Z",
   "bucketName":"bulk-ESG",
   "contentFrom":"1970-01-01T00:00:00Z",
-  "contentTo":"2023-11-12T16:05:00Z",
-  "created":"2023-11-12T17:17:33Z",
+  "contentTo":"2023-11-26T15:55:00Z",
+  "created":"2023-11-26T16:18:44Z",
   "files":[
-    "4544-874e-9da0efa0-8051-c734a79d5c61",
-    "4c35-1775-c1a590ea-8376-ac6c1546b908"
+    "4de0-ceda-25b5a1f1-9b7e-35c10b384078"
   ],
-  "id":"401f-b3a2-1650edf4-ae9c-e65ea076e128",
-  "modified":"2023-11-12T17:40:28Z",
-  "name":"Bulk-ESG-Global-Raw-Full-SchemeB-v1-Env-Jsonl-Init-2023-11-12T16:11:09.024Z",
-  "numFiles":2,
-  "packageId":"4288-ebb6-93372235-acb2-89882a826af1",
+  "id":"4646-6302-b810e622-8808-85367d798021",
+  "modified":"2023-11-26T16:18:49Z",
+  "name":"Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-11-26T16:04:11.525Z",
+  "numFiles":1,
+  "packageId":"4037-e79c-96b73648-a42a-6b65ef8ccbd1",
   "status":"READY"
 }
 ```
 
-The File ID is in the ```files``` array above. I am demonstrating just one file (```4c35-1775-c1a590ea-8376-ac6c1546b908```).
+The File ID is in the ```files``` array above. I am demonstrating with the ```4c35-1775-c1a590ea-8376-ac6c1546b908``` file id.
+
+### Step 3.5: Listing the packageId using the Bucket Name - Paging
+
+My next point is the paging feature. By default, the ```/file-store/v1/file-sets?bucket={bucket-name}``` endpoint always returns 25 results per request. You can adjust the number of return results via the ```pageSize``` query parameter, the maximum number is **100**.
+
+```HTTP
+GET /file-store/v1/file-sets?bucket={bucket-name}&pageSize={number}, HTTP/1.1
+Host: api.refinitiv.com
+Authorization: Bearer <Access Token>
+```
+Let's try with ```pageSize=2``` as an example.
+
+Python Code:
+
+```Python
+#step 3.5 - list FileSets from bucket name and package Id - with pageSize 2
+CFS_url = f'{RDP_HOST}/file-store/v1/file-sets?bucket={bucket_name}&pageSize=2'
+
+try:
+    response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+except requests.exceptions.RequestException as exp:
+    print(f'Caught exception: {exp}')
+
+
+if response.status_code == 200:  # HTTP Status 'OK'
+    print('Receive list Package IDs from RDP APIs')
+else:
+    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
+    print(f'Text: {response.text}')
+```
+Now we get 2 entries per request from the API as we set via ```pageSize=2``` parameter:
+
+```JSON
+{
+  "value":[
+    {
+      "attributes":[
+        {
+          "name":"ContentType",
+          "value":"Symbology Organization"
+        }
+      ],
+      "availableFrom":"2023-11-26T16:18:44Z",
+      "availableTo":"2023-12-10T16:18:44Z",
+      "bucketName":"bulk-ESG",
+      "contentFrom":"1970-01-01T00:00:00Z",
+      "contentTo":"2023-11-26T15:55:00Z",
+      "created":"2023-11-26T16:18:44Z",
+      "files":[
+        "4de0-ceda-25b5a1f1-9b7e-35c10b384078"
+      ],
+      ...
+    },
+    {
+      "attributes":[
+        {
+          "name":"ContentType",
+          "value":"Symbology Organization"
+        }
+      ],
+      "availableFrom":"2023-12-03T16:16:37Z",
+      "availableTo":"2023-12-17T16:16:37Z",
+      "bucketName":"bulk-ESG",
+      "contentFrom":"1970-01-01T00:00:00Z",
+      "contentTo":"2023-12-03T15:55:00Z",
+      "created":"2023-12-03T16:16:37Z",
+      "files":[
+        "4823-5fb2-67ae60ab-bd45-1699a214c428"
+      ],
+      ...
+    }
+  ]
+}
+```
+There is a ```@nextLink``` node contains the URL for requesting the next page of results with the following HTTP request.
+
+```HTTP
+GET {@nextLink URL}, HTTP/1.1
+Host: api.refinitiv.com
+Authorization: Bearer <Access Token>
+```
+
+Example of Python code:
+
+```Python
+if '@nextLink' in response.json():
+    next_link = response.json()['@nextLink']
+    #step 3.5 - list Package IDs from bucket name - with pageSize 2 - navigate to next link
+    CFS_url = f'{RDP_HOST}{next_link}'
+    
+    try:
+        response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+    except requests.exceptions.RequestException as exp:
+        print(f'Caught exception: {exp}')
+    
+    if response.status_code == 200:  # HTTP Status 'OK'
+        print('Receive list Package IDs from RDP APIs')
+    else:
+        print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
+        print(f'Text: {response.text}')
+```
+
+Result:
+```JSON
+{
+  "value":[
+    {
+      "attributes":[
+        {
+          "name":"ContentType",
+          "value":"Symbology Organization"
+        }
+      ],
+      "availableFrom":"2023-11-26T16:18:44Z",
+      "availableTo":"2023-12-10T16:18:44Z",
+      "bucketName":"bulk-ESG",
+      "contentFrom":"1970-01-01T00:00:00Z",
+      "contentTo":"2023-11-26T15:55:00Z",
+      "created":"2023-11-26T16:18:44Z",
+      "files":[
+        "4de0-ceda-25b5a1f1-9b7e-35c10b384078"
+      ],
+      ...
+    },
+    {
+      "attributes":[
+        {
+          "name":"ContentType",
+          "value":"Symbology Organization"
+        }
+      ],
+      "availableFrom":"2023-12-03T16:16:37Z",
+      "availableTo":"2023-12-17T16:16:37Z",
+      "bucketName":"bulk-ESG",
+      "contentFrom":"1970-01-01T00:00:00Z",
+      "contentTo":"2023-12-03T15:55:00Z",
+      "created":"2023-12-03T16:16:37Z",
+      "files":[
+        "4823-5fb2-67ae60ab-bd45-1699a214c428"
+      ],
+      ...
+    }
+  ]
+}
+```
+
+Then you can continue to send requests to URL in ```@nextLink``` node to get the next page results.
+
+**Note**: The ```/file-store/v1/packages?bucketName={bucket-name}``` endpoint on the **step 2** above also supports the Paging feature with the same ```pageSize``` query parameter and ```@nextLink``` node.
+
+Let’s leave the paging feature there.
 
 ### Step 4: Get the Bulk file URL on AWS S3
 
-The next step is getting the file URL on Amazon AWS S3 service with the RDP ```/file-store/v1/files/{file ID}/stream``` endpoint.
+Now let me turn to getting the file URL on Amazon AWS S3 service with the RDP ```/file-store/v1/files/{file ID}/stream``` endpoint.
 
 The HTTP Request structure is as follows:
 
@@ -508,8 +489,8 @@ The File URL is in the ```url``` attribute of the response message.
 
 Python code:
 ```Python
-# try just one file
-file_id = response.json()['value'][0]['files'][1] #'4c35-1775-c1a590ea-8376-ac6c1546b908'
+# pick file id in FileSets response
+file_id = response.json()['value'][0]['files'][1] #'4c35-1775-c1a590ea-8376-ac6c1546b908`'
 
 #step 4 - get file URL from file id
 FileID_url = f'{RDP_HOST}/file-store/v1/files/{file_id}/stream?doNotRedirect=true'
@@ -530,12 +511,12 @@ print(file_url)
 ```
 Result
 ```bash
-'https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Raw-Full-SchemeB-v1/2023/11/12/Bulk-ESG-Global-Raw-Full-SchemeB-v1-Env-Init-2023-11-12T16%3A11%3A09.024Z-part0.jsonl.gz?x-request-Id=f1acbb88-a85c-4ad2-95d5-48a20b774fd6&x-package-id=4288-ebb6-93372235-acb2-89882a826af1&x-client-app-id=b4842f3904fb4a1fa18234796368799086c63541&x-file-name=Bulk-ESG-Global-Raw-Full-SchemeB-v1-Env-Init-2023-11-12T16%3A11%3A09.024Z-part0.jsonl.gz&x-fileset-id=401f-b3a2-1650edf4-ae9c-e65ea076e128&x-bucket-name=bulk-ESG&x-uuid=GESG1-178570&x-file-Id=4c35-1775-c1a590ea-8376-ac6c1546b908&x-fileset-name=Bulk-ESG-Global-Raw-Full-SchemeB-v1-Env-Jsonl-Init-2023-11-12T16%3A11%3A09.024Z&x-event-external-name=cfs-claimCheck-download&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOn%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCLBeDWjpDLBL3JDJNeGkbKWbdsIFxtNlAfR6n2aCMLeAIgHXdlyuG9WPIpGySOcsl82UmRLELracnxxFBbBvtJCzQqmgIIQhAEGgw2NDIxNTcxODEzMjYiDJKbrz%2Fv47u856n3iCr3AcOtX7SgriBm8XZK%2FObxziVADHu5Mm6G56tmDz5mTP19NcP29i3Mk5ZPthSzfUBNE7AWflhMaSXsjoLL4jgDtC1YXa0uO0crbr7JLjzUZm%2B7E6Y6bXa%2B7NsBWeGWB8U9qz45xUrV34cxPTeG612H%2BW3VQ4Urjja3RoV4PNpATQtBJLRCE3uixRJXLhyMSWggsAUbFYhllkJt6Zhj3XvR3QzFzOBt45Dl3Ur5SRtcSMNVntcEf3CbN8jsBtYbeGrjynGjKyeHZwEbaBuqkAwohTITUkr9EhZ6pi%2F948aTB3AeMlXoCJymOLQzHbgFErqNVHvRpAxyk60wuZ78qgY6nQHRLeYyAANubgCbXUDwE7EGHSWJEfUZv6%2ByRF3T%2FfiWOUNXWSbGqilkfWdUDtZf6z0%2FZBcZ9xyJGbb9ayHTJrermcTIeUoT16TqpjTAOq3ddVlVmusQrGbbIjmNv2LaSGrcJBPIg0jqGV6Z0zwlpC7W%2BRjsJlaBFWRO52srYq4LqounhMHQr20nqUDX37Nq7c4gJXuyhC8WmEFJTkg3&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20231123T083714Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21599&X-Amz-Credential=ASIAZLA4M7GHGKC4VFSX%2F20231123%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=28143f64524165b3906d8bf6181f1c5e44163c4f9a6958f5246a4472a8c1ba04'
+'https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz?x-request-Id=e7658630-f8c6-4bd3-9443-4d87efa20b5c&x-package-id=4037-e79c-96b73648-a42a-6b65ef8ccbd1&x-client-app-id=b4842f3904fb4a1fa18234796368799086c63541&x-file-name=Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz&x-fileset-id=4646-6302-b810e622-8808-85367d798021&x-bucket-name=bulk-ESG&x-uuid=GESG1-178570&x-file-Id=4de0-ceda-25b5a1f1-9b7e-35c10b384078&x-fileset-name=Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-11-26T16%3A04%3A11.525Z&x-event-external-name=cfs-claimCheck-download&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFAaCXVzLWVhc3QtMSJHMEUCIEzV%2BjWQVpI6MyZSaZ8SDQHlLPSsv8n50rxgWVDO6l%2F6AiEAu6f00kJgGFokGZxSWXicGqPbiL2X1SwEI16MlBgrMQwqowIIuP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAEGgw2NDIxNTcxODEzMjYiDBu3pKa9FpE%2Fi14VMCr3AQDhdsrjQAR4YmsEBme6RolP2AlZSYOhk8cH5xRqqus1fYhG0jIxx5Rj0t5n7%2Fcy5fq7TX9ygoR4JJDjRKpHhS4weeTn2oqcEPEyGlegGJuktEjmWrRFqANR3vSzFQQbUECxDSC%2FnHAuIUz2X130j30SC31aNihaF1XNWJEGcxGYVNWKPslvVe3Ohg1euVup4kvH3YpIhfAGHnPHhyAHoK7M8K417rAMqkuSP05XGyf%2BD%2BuPSiS9n2EM66XnHZUthf5nkm70bk1%2B%2FpA%2BC5opQIRfhE7kHMg29qKWpPiyJJCtvmj9N79AeEwnfm%2FD%2BXlV5ZM%2BVx8cHGkw5YPLqwY6nQFj%2BbHSvw088XgcKLEde1RJdKZ9E1t39X%2FT3m765zf8I94m8skLdLd9tSJalzFnQbq%2BWx4zABO5VKm1xJ9Z%2FFyRklKzTX8B6fmV4ioEqbvauMn0OT4Lcn2BQLDoLefsZc0WaUQd5p1N8UVSfgVzcv3yNR4%2FHCFmXhKPMT%2F8MNWjlwG438YlrNRVCrWZpl2Eogx7shza%2Bl99v0rLdtF4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20231208T071237Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=ASIAZLA4M7GHBJJLJVV4%2F20231208%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=8f67fbf45259c2830f7e2578d03e7e546832ef34fba37b769b951e071ad08175'
 ```
 
 ### Step 5: Downloading the file
 
-Based on the S3 ```file_url``` above, the actual file name is *Bulk-ESG-Global-Raw-Full-SchemeB-v1-Env-Init-2023-11-12T16_11_09.024Z-part0.jsonl.gz*. So you need to replace the escape character ```%3A``` with ```_``` (underscore) character.
+That brings us to download the file. Based on the S3 ```file_url``` above, the actual file name is *Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz*. So you need to replace the escape character ```%3A``` with ```_``` (underscore) character.
 
 **Note**: If you cannot download the file, please wait for a while and then retry download the file from the URL (```file_url```). Please do not flush the download requests. I am demonstrating with the [polling2](https://pypi.org/project/polling2/) library.
 
@@ -570,14 +551,14 @@ else:
 
 Result:
 ```bash
-Downloading File Bulk-ESG-Global-Raw-Full-SchemeB-v1-Env-Init-2023-11-12T16_11_09.024Z-part0.jsonl.gz ...
+Downloading File Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz ...
 Receive File Successfully
-Bulk-ESG-Global-Raw-Full-SchemeB-v1-Env-Init-2023-11-12T16_11_09.024Z-part0.jsonl.gz Saved
+Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz Saved
 ```
 
 Now you get the CFS Bulk file that you can extract and read the file.
 
-That is all for the RDP CFS Bulk File workflow.
+That covers how to download the CFS Bulk file via the RDP APIs.
 
 ### Step 6: Refresh Token with RDP APIs
 
@@ -690,8 +671,148 @@ if response.status_code != 200:
     print(f'RDP authentication failure: {response.status_code} {response.reason}')
     print(f'Text: {response.text}')
 ```
+That’s all I have to say about the CFS Bulk API workflow.
+
+## <a id="how_to_run"></a>How to run the demo application
+
+The first step is to unzip or download the example project folder into a directory of your choice, then set up Python or Postman environments based on your preference.
+
+### <a id="python_example_run"></a>Run the demo application
+
+1. Open Anaconda Prompt and go to the project's folder.
+2. Run the following command in the Anaconda Prompt application to create a Conda environment named *ESG* for the project.
+    ``` bash
+    (base) $>conda create --name CFS python=3.10
+    ```
+3. Once the environment is created, activate a Conda *ESG* environment with this command in Anaconda Prompt.
+    ``` bash
+    (base) $>conda activate CFS
+    ```
+4. Run the following command to the dependencies in the *CFS* environment 
+    ``` bash
+    (CFS) $>pip install -r requirements.txt
+    ```
+5. Once the dependencies installation process is success, create a ```.env``` file with the following content
+    ``` INI
+    RDP_USERNAME=<Your RDP Username>
+    RDP_PASSWORD=<Your RDP Password>
+    RDP_APP_KEY=<Your RDP App key>
+    ```
+5. Then run the following command to start the Jupyter Lab application.
+    ``` bash
+    (CFS) $>jupyter lab
+    ```
+6. Open a **RDP-Generic-BULK.ipynb**  file and run each cell to learn the RDP CFS Bulk File workflow step by step.
+
+    ![figure-2](images/notebook_file.png "Notebook file")
+
+That completes how to run an example Jupyter Lab notebook application.
+
+### <a id="how_to_run_postman"></a>Run the Postman LSEG CFS Bulk API Workspace
+
+Now let me turn to the Postman collection. The [RDP CFS Bulk Postman Workspace](https://www.postman.com/winter-water-515088/workspace/lseg-cfs-bulk-api-workspace) is a public workspace in Postman that demonstrates how to use CFS API. It contains the following collection and environment:
+- **RDP CFS Bulk API Collection**: This collection contain all HTTP requests with the RDP CFS Bulk file API. The requests are in ordered from Step 1 to Step 5.
+- **RDP CFS Bulk API Environment**: This environment contains all parameters consumers need for requesting data with the requests in RDP CFS Bulk API Collection (including the credential).
+
+Users can fork these Postman items to their own workspaces. Please follow these five steps to fork the RDP CFS Bulk Postman Workspace to a Postman workspace. 
+
+#### 1. Create a new Postman workspace
+
+Firstly, open the Postman application and then sign in to the Postman and create a new workspace.
+
+![figure-3](images/postman1.png "create a new workspace")
+
+Choose a Blank workspace, and click the Next button.
+
+![figure-4](images/postman2.png "choose a blank workspace")
+
+Set a workspace name, such as “My CFS Workspace”, set the Visibility to Personal, and then click the Create button. 
+
+![figure-5](images/postman3.png "create a personal workspace")
+
+The new workspace will appear on the list. 
+
+![figure-6](images/postman4.png "create a personal workspace success")
+
+#### 2. Open the LSEG CFS Bulk API Workspace
+
+The [LSEG CFS Bulk API Workspace](https://www.postman.com/winter-water-515088/workspace/lseg-cfs-bulk-api-workspace) is in the public workspace so you can search it in Postman by clicking on “Search Postman”. 
+
+![figure-7](images/postman6.png "search public workspace")
+
+And then, enter “LSEG CFS Bulk API”. 
+
+![figure-8](images/postman7.png "search for LSEG CFS Bulk API")
+
+Click on the LSEG CFS Bulk API to open the workspace.
+
+![figure-9](images/postman8.png)
+
+This LSEG CFS Bulk API workspace will be added to the workspace list.
+
+![figure-10](images/postman9.png)
+
+#### 3. Fork the RDP CFS Bulk API Collection
+
+Select the LSEG CFS Bulk API workspace from the workspace list, and then select “...” menu of the RDP CFS Bulk API collection and choose the "Create a fork" command to fork this collection.
+
+![figure-11](images/postman10.png "fork collection")
+
+Then, enter the fork label, select the workspace (My CFS Workspace) created in the first step, uncheck “Watch original collection”, and then click on the Fork Collection button. 
+
+![figure-12](images/postman11.png "enter fork detail")
+
+The forked collection will be created in the selected workspace. 
+
+![figure-13](images/postman11b.png "fork collection success")
+
+#### 4. Fork the Environment
+
+Select the LSEG CFS Bulk API workspace from the workspace list, and then select “...” menu of the RDP CFS Bulk Environment and choose the "Create a fork" command to fork this environment.
+
+![figure-14](images/postman12.png "fork environment")
+
+Then, enter the fork label, select the workspace (My CFS Workspace) created in the first step, and then click on the Fork Environment button. 
+
+![figure-15](images/postman13.png "enter fork detail")
+
+The forked environment will be created in the selected workspace. Input the ```USERNAME```, ```PASSWORD```, ```APP_KEY```, and ```BUCKET_NAME``` variables with your RDP credential detail.
+
+![figure-16](images/postman14.png "fork environment success")
+
+#### 5. Running Postman Collection
+
+The first step is run the "Step 1" Get Access Token using Password Grant (Machine ID)" request, please make sure that the environment on the top right corner is pointed to the RDP CFS Bulk Environment.
+
+![figure-17](images/postman15.png)
+
+You can generate the source code from this Postman request by clicking the ```</>``` button and choose prefer language.
+
+![figure-18](images/postman16.png)
+
+Once the Once authentication is successful, run the requests from step 2 to step 4
+
+![figure-19](images/postman17.png)
+
+You can generate the source code from these Postman requests by clicking the ```</>``` button and choose prefer language on each request too.
+
+![figure-20](images/postman18.png)
+
+If the Access Token is expired, the RDP CFS API requests return "token expired" error message as follows:
+
+![figure-21](images/postman19.png)
+
+You need to refresh the Access Token by requesting "Step 5: Refresh Access Token using Refresh Token", then you can re-run the requests in step 2-4 again.
+
+![figure-22](images/postman20.png)
+
+That covers how to run an example Postman collection.
 
 ## Next Steps
+
+That brings me to the end of this CFS Bulk API workflow project. The CFS Bulk API is a powerful API that allows developers to download the content file dynamically via a straightforward sequence of HTTP RESTful API calls. The demonstration code is written in Python but the concept of the API calls steps are the same for other programming languages.
+
+At the same time, the [Refinitiv Data Platform (RDP) APIs](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via an easy-to-use Web-based API. The APIs are easy to integrate into any application and platform that supports the HTTP protocol and JSON message format. 
 
 You may interested in the following resources for more detail about the CFS data usage:
 - [Find environmental footprint of your bond portfolio](https://developers.lseg.com/en/article-catalog/article/Environmental_footprint_of_bond_portfolio) article
@@ -700,11 +821,9 @@ You may interested in the following resources for more detail about the CFS data
 
 And much more on the [Developer Portal](https://developers.lseg.com/en) website.
 
-[To Be Done]
-
 ## <a id="references"></a>References
 
-That brings me to the end of my generic CFS Bulk file workflow project. For further details, please check out the following resources:
+For further details, please check out the following resources:
 
 * [Refinitiv Data Platform APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [Refinitiv Developer Community](https://developers.lseg.com/) website.
 * [Refinitiv Data Platform APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
