@@ -692,13 +692,7 @@ The first step is to unzip or download the example project folder into a directo
     ``` bash
     (CFS) $>pip install -r requirements.txt
     ```
-5. Once the dependencies installation process is success, create a ```.env``` file with the following content
-    ``` INI
-    RDP_USERNAME=<Your RDP Username>
-    RDP_PASSWORD=<Your RDP Password>
-    RDP_APP_KEY=<Your RDP App key>
-    ```
-5. Then run the following command to start the Jupyter Lab application.
+5. Once the dependencies installation process is success, run the following command to start the Jupyter Lab application.
     ``` bash
     (CFS) $>jupyter lab
     ```
