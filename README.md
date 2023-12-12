@@ -1,4 +1,4 @@
-# A Generic and Step By Step Workflow for RDP Client File Store (CFS) Bulk File API
+# A Generic and Step By Step Workflow for RDP Client File Store (CFS) File API
 - version: 1.0.0
 - Last update: Dec 2023
 - Environment: Jupyter Notebook
