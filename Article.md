@@ -1,9 +1,9 @@
-# A Generic and Step By Step Workflow for RDP Client File Store (CFS) Bulk File API
+# A Generic and Step By Step Workflow for RDP Client File Store (CFS) File API
 
 ## <a id="intro"></a>Introduction
 
 The Client File Store (CFS) is a capability of Refinitiv Data Platform (RDP) that provides authorization and enables access to content files stored in publisher repositories. LSEG provides various content file domains (aka *bucket*) for consumers such as:
-- Bulk ESG data
+- CFS ESG data
 - Green Revenue data
 - Symbology data
 - Tick History
@@ -77,9 +77,9 @@ Please find more detail on the [CFS API User Guide](https://developers.lseg.com/
 
 Before I am going further, there is some prerequisite, dependencies, and libraries that the project is needed.
 
-### Access to the RDP with the your desire Bulk file permission
+### Access to the RDP with the your desire CFS file permission
 
-This project uses RDP access credentials with the CFS Bulk file permission.
+This project uses RDP access credentials with the CFS file permission.
 
 Please contact your LSEG representative to help you with the RDP account and the bucket permission.
 
@@ -187,7 +187,7 @@ The application then creates a request message in a JSON message format or URL q
 
 ### Step 2: Listing the packageIds using the Bucket Name
 
-Now let me move on to the CFS APIs call. To request the CFS Bulk data, the first step is to send an HTTP ```GET``` request to the RDP ```/file-store/v1/packages?bucketName={bucket-name}``` endpoint to list all Package Ids under the input ```bucket-name```.
+Now let me move on to the CFS APIs call. To request the CFS data, the first step is to send an HTTP ```GET``` request to the RDP ```/file-store/v1/packages?bucketName={bucket-name}``` endpoint to list all Package Ids under the input ```bucket-name```.
 
 The HTTP Request structure is as follows:
 
@@ -473,7 +473,7 @@ Then you can continue to send requests to URL in ```@nextLink``` node to get the
 
 Let’s leave the paging feature there.
 
-### Step 4: Get the Bulk file URL on AWS S3
+### Step 4: Get the file URL on AWS S3
 
 Now let me turn to getting the file URL on Amazon AWS S3 service with the RDP ```/file-store/v1/files/{file ID}/stream``` endpoint.
 
@@ -556,9 +556,9 @@ Receive File Successfully
 Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz Saved
 ```
 
-Now you get the CFS Bulk file that you can extract and read the file.
+Now you get the CFS file that you can extract and read the file.
 
-That covers how to download the CFS Bulk file via the RDP APIs.
+That covers how to download the CFS file via the RDP APIs.
 
 ### Step 6: Refresh Token with RDP APIs
 
@@ -671,7 +671,7 @@ if response.status_code != 200:
     print(f'RDP authentication failure: {response.status_code} {response.reason}')
     print(f'Text: {response.text}')
 ```
-That’s all I have to say about the CFS Bulk API workflow.
+That’s all I have to say about the CFS API workflow.
 
 ## <a id="how_to_run"></a>How to run the demo application
 
@@ -702,19 +702,19 @@ The first step is to unzip or download the example project folder into a directo
     ``` bash
     (CFS) $>jupyter lab
     ```
-6. Open a **RDP-Generic-BULK.ipynb**  file and run each cell to learn the RDP CFS Bulk File workflow step by step.
+6. Open a **RDP-Generic-CFS.ipynb**  file and run each cell to learn the RDP CFS File workflow step by step.
 
     ![figure-2](images/notebook_file.png "Notebook file")
 
 That completes how to run an example Jupyter Lab notebook application.
 
-### <a id="how_to_run_postman"></a>Run the Postman LSEG CFS Bulk API Workspace
+### <a id="how_to_run_postman"></a>Run the Postman LSEG CFS API Workspace
 
-Now let me turn to the Postman collection. The [RDP CFS Bulk Postman Workspace](https://www.postman.com/winter-water-515088/workspace/lseg-cfs-bulk-api-workspace) is a public workspace in Postman that demonstrates how to use CFS API. It contains the following collection and environment:
-- **RDP CFS Bulk API Collection**: This collection contain all HTTP requests with the RDP CFS Bulk file API. The requests are in ordered from Step 1 to Step 5.
-- **RDP CFS Bulk API Environment**: This environment contains all parameters consumers need for requesting data with the requests in RDP CFS Bulk API Collection (including the credential).
+Now let me turn to the Postman collection. The [RDP CFS API Postman Workspace](https://www.postman.com/winter-water-515088/workspace/lseg-cfs-api-workspace) is a public workspace in Postman that demonstrates how to use CFS API. It contains the following collection and environment:
+- **RDP CFS API Collection**: This collection contain all HTTP requests with the RDP CFS file API. The requests are in ordered from Step 1 to Step 5.
+- **RDP CFS API Environment**: This environment contains all parameters consumers need for requesting data with the requests in RDP CFS API Collection (including the credential).
 
-Users can fork these Postman items to their own workspaces. Please follow these five steps to fork the RDP CFS Bulk Postman Workspace to a Postman workspace. 
+Users can fork these Postman items to their own workspaces. Please follow these five steps to fork the RDP CFS Postman Workspace to a Postman workspace. 
 
 #### 1. Create a new Postman workspace
 
@@ -734,27 +734,27 @@ The new workspace will appear on the list.
 
 ![figure-6](images/postman4.png "create a personal workspace success")
 
-#### 2. Open the LSEG CFS Bulk API Workspace
+#### 2. Open the LSEG CFS API Workspace
 
-The [LSEG CFS Bulk API Workspace](https://www.postman.com/winter-water-515088/workspace/lseg-cfs-bulk-api-workspace) is in the public workspace so you can search it in Postman by clicking on “Search Postman”. 
+The [LSEG CFS API Workspace](https://www.postman.com/winter-water-515088/workspace/lseg-cfs-api-workspace) is in the public workspace so you can search it in Postman by clicking on “Search Postman”. 
 
 ![figure-7](images/postman6.png "search public workspace")
 
-And then, enter “LSEG CFS Bulk API”. 
+And then, enter “LSEG CFS API”. 
 
-![figure-8](images/postman7.png "search for LSEG CFS Bulk API")
+![figure-8](images/postman7.png "search for LSEG CFS API")
 
-Click on the LSEG CFS Bulk API to open the workspace.
+Click on the LSEG CFS API to open the workspace.
 
 ![figure-9](images/postman8.png)
 
-This LSEG CFS Bulk API workspace will be added to the workspace list.
+This LSEG CFS API workspace will be added to the workspace list.
 
 ![figure-10](images/postman9.png)
 
-#### 3. Fork the RDP CFS Bulk API Collection
+#### 3. Fork the RDP CFS API Collection
 
-Select the LSEG CFS Bulk API workspace from the workspace list, and then select “...” menu of the RDP CFS Bulk API collection and choose the "Create a fork" command to fork this collection.
+Select the LSEG CFS API workspace from the workspace list, and then select “...” menu of the RDP CFS API collection and choose the "Create a fork" command to fork this collection.
 
 ![figure-11](images/postman10.png "fork collection")
 
@@ -768,7 +768,7 @@ The forked collection will be created in the selected workspace.
 
 #### 4. Fork the Environment
 
-Select the LSEG CFS Bulk API workspace from the workspace list, and then select “...” menu of the RDP CFS Bulk Environment and choose the "Create a fork" command to fork this environment.
+Select the LSEG CFS API workspace from the workspace list, and then select “...” menu of the RDP CFS Environment and choose the "Create a fork" command to fork this environment.
 
 ![figure-14](images/postman12.png "fork environment")
 
@@ -782,7 +782,7 @@ The forked environment will be created in the selected workspace. Input the ```U
 
 #### 5. Running Postman Collection
 
-The first step is run the "Step 1" Get Access Token using Password Grant (Machine ID)" request, please make sure that the environment on the top right corner is pointed to the RDP CFS Bulk Environment.
+The first step is run the "Step 1" Get Access Token using Password Grant (Machine ID)" request, please make sure that the environment on the top right corner is pointed to the RDP CFS Environment.
 
 ![figure-17](images/postman15.png)
 
@@ -810,14 +810,14 @@ That covers how to run an example Postman collection.
 
 ## Next Steps
 
-That brings me to the end of this CFS Bulk API workflow project. The CFS Bulk API is a powerful API that allows developers to download the content file dynamically via a straightforward sequence of HTTP RESTful API calls. The demonstration code is written in Python but the concept of the API calls steps are the same for other programming languages.
+That brings me to the end of this CFS API workflow project. The CFS API is a powerful API that allows developers to download the content file dynamically via a straightforward sequence of HTTP RESTful API calls. The demonstration code is written in Python but the concept of the API calls steps are the same for other programming languages.
 
 At the same time, the [Refinitiv Data Platform (RDP) APIs](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via an easy-to-use Web-based API. The APIs are easy to integrate into any application and platform that supports the HTTP protocol and JSON message format. 
 
 You may interested in the following resources for more detail about the CFS data usage:
 - [Find environmental footprint of your bond portfolio](https://developers.lseg.com/en/article-catalog/article/Environmental_footprint_of_bond_portfolio) article
-- [RDP APIs Green Revenues CFS Bulk file Workflow](https://github.com/LSEG-API-Samples/Example.RDP.Python.GreenRevenuesBulk) - a dedicate Green Revenue CFS workflow
-- [RDP APIs ESG CFS Bulk file Workflow](https://github.com/LSEG-API-Samples/Example.RDP.Python.ESG.PointinTimeBulk) - a dedicate ESG CFS workflow
+- [RDP APIs Green Revenues CFS file Workflow](https://github.com/LSEG-API-Samples/Example.RDP.Python.GreenRevenuesBulk) - a dedicate Green Revenue CFS workflow
+- [RDP APIs ESG CFS file Workflow](https://github.com/LSEG-API-Samples/Example.RDP.Python.ESG.PointinTimeBulk) - a dedicate ESG CFS workflow
 
 And much more on the [Developer Portal](https://developers.lseg.com/en) website.
 

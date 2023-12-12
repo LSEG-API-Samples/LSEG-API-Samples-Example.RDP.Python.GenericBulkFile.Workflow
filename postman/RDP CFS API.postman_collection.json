@@ -1,11 +1,11 @@
 {
 	"info": {
 		"_postman_id": "78ae7518-53c0-4830-b616-24d752409c51",
-		"name": "RDP CFS Bulk API",
-		"description": "# Overview\n\nCollection of RDP CFS Bulk API calls that are used in the Postman tutorials.\n\n# What is CFS?\n\n**Client File Store (CFS)** aka File Distribution is a capability of Refinitiv Data Platform (RDP) that provides authorization and enables access to content files stored in publisher-supplied repository. CFS defines content ownership that publisher are isolated. And subscribers can trust the source of content.\n\nCFS provides bucket and file-set to organize files to simplify the interaction with publishers or subscribers. CFS doesn't store file directly. Actual files are store in publisher-supplied. AWS S3 only one type storage that supported by current CFS.\n\n# Set-up\n\nAfter importing the collection, edit the variables of this collection to set your RDP credentials.\n\nFor simplicity, the following variables have been defined supporting OAuth authentication available within the platform. Based on the authentication IDs provided to you, set the following variables:\n\n- **USERNAME**\n    - Machine ID (OAuth Password Grant)\n- **PASSWORD**\n    - Password (OAuth Password Grant)\n- **APP_KEY**\n    - Application Key\n- **BUCKET_NAME**\n    - The Bucket name\n\n**\\*Note**\\*\n\n- The APP_KEY is a unique ID defined for an application making the request. Users can generate/manage their AppKey's [here](http://amers1-apps.platform.refinitiv.com/apps/appkeygenerator).\n    \n- Please contact your LSEG representative to learn more about your interested content set's bucket name.\n    \n\n# Running the calls\n\n- After setting your above credentials, the first step is to create a token required by the gateway giving you access to data services. To do this, run the following collection:\n    - **Get Access Token using Password Grant**\n- Finally, run the desired examples available within this collection\n    \n\n**\\*Note**\\*\n\nWhen running the above collection, this will initially generate your token required for subsequent data calls into platform. However, this token is short-lived, i.e. \\~10 minutes. As a result, you may need to refresh your token for continued use. To do this, run the **Get Access Token using Refresh Token**. It is also important to note this is best practices to perform a token refresh for resource management.",
+		"name": "RDP CFS API",
+		"description": "# Overview\n\nCollection of RDP CFS API calls that are used in the Postman tutorials.\n\n# What is CFS?\n\n**Client File Store (CFS)** aka File Distribution is a capability of Refinitiv Data Platform (RDP) that provides authorization and enables access to content files stored in publisher-supplied repository. CFS defines content ownership that publisher are isolated. And subscribers can trust the source of content.\n\nCFS provides bucket and file-set to organize files to simplify the interaction with publishers or subscribers. CFS doesn't store file directly. Actual files are store in publisher-supplied. AWS S3 only one type storage that supported by current CFS.\n\n# Set-up\n\nAfter importing the collection, edit the variables of this collection to set your RDP credentials.\n\nFor simplicity, the following variables have been defined supporting OAuth authentication available within the platform. Based on the authentication IDs provided to you, set the following variables:\n\n- **USERNAME**\n    - Machine ID (OAuth Password Grant)\n- **PASSWORD**\n    - Password (OAuth Password Grant)\n- **APP_KEY**\n    - Application Key\n- **BUCKET_NAME**\n    - The Bucket name\n\n**\\*Note**\\*\n\n- The APP_KEY is a unique ID defined for an application making the request. Users can generate/manage their AppKey's [here](http://amers1-apps.platform.refinitiv.com/apps/appkeygenerator).\n- Please contact your LSEG representative to learn more about your interested content set's bucket name.\n    \n\n# Running the calls\n\n- After setting your above credentials, the first step is to create a token required by the gateway giving you access to data services. To do this, run the following collection:\n    - **Get Access Token using Password Grant**\n- Finally, run the desired examples available within this collection\n    \n\n**\\*Note**\\*\n\nWhen running the above collection, this will initially generate your token required for subsequent data calls into platform. However, this token is short-lived, i.e. \\~10 minutes. As a result, you may need to refresh your token for continued use. To do this, run the **Get Access Token using Refresh Token**. It is also important to note this is best practices to perform a token refresh for resource management.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "31268612",
-		"_collection_link": "https://www.postman.com/winter-water-515088/workspace/lseg-cfs-bulk-api-workspace/collection/31268612-78ae7518-53c0-4830-b616-24d752409c51?action=share&source=collection_link&creator=31268612"
+		"_collection_link": "https://www.postman.com/winter-water-515088/workspace/lseg-cfs-api-workspace/collection/31268612-78ae7518-53c0-4830-b616-24d752409c51?action=share&source=collection_link&creator=31268612"
 	},
 	"item": [
 		{
@@ -168,7 +168,7 @@
 			"response": []
 		},
 		{
-			"name": "Step 2.5: Get list of Package IDs - pageSize",
+			"name": "Step 2.1: Get list of Package IDs - pageSize",
 			"event": [
 				{
 					"listen": "test",
@@ -230,7 +230,7 @@
 			"response": []
 		},
 		{
-			"name": "Step 2.5: Get list of Package IDs - Next Page",
+			"name": "Step 2.2: Get list of Package IDs - Next Page",
 			"event": [
 				{
 					"listen": "test",
@@ -342,7 +342,7 @@
 			"response": []
 		},
 		{
-			"name": "Step 3.5: Listing the FileSets using the Bucket Name and Package ID - pageSize",
+			"name": "Step 3.1: Listing the FileSets using the Bucket Name and Package ID - pageSize",
 			"event": [
 				{
 					"listen": "test",
@@ -408,7 +408,7 @@
 			"response": []
 		},
 		{
-			"name": "Step 3.5: Listing the FileSets using the Bucket Name and Package ID - Next Page",
+			"name": "Step 3.2: Listing the FileSets using the Bucket Name and Package ID - Next Page",
 			"event": [
 				{
 					"listen": "test",
@@ -458,7 +458,7 @@
 			"response": []
 		},
 		{
-			"name": "Step 4: Get the Bulk file URL on AWS S3",
+			"name": "Step 4: Get the file URL on AWS S3",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -496,7 +496,7 @@
 			"response": []
 		},
 		{
-			"name": "Step 4: Get the Bulk file URL  direct",
+			"name": "Step 4: Get the file URL  direct",
 			"request": {
 				"auth": {
 					"type": "bearer",
