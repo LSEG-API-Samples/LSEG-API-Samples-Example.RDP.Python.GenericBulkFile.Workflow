@@ -15,7 +15,7 @@ The Client File Store (CFS) is a component of the RDP which let consumers access
 
 ## <a id="whatis_rdp"></a>What is Refinitiv Data Platform (RDP) APIs?
 
-The [Refinitiv Data Platform - RDP)](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via easy-to-use Web-based API.
+The [Refinitiv Data Platform - (RDP)](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via easy-to-use Web-based API.
 
 RDP APIs give developers seamless and holistic access to all of the LSEG content such as Environmental Social and Governance (ESG), News, Research, etc, and commingled with their content, enriching, integrating, and distributing the data through a single interface, delivered wherever they need it.  The RDP APIs delivery mechanisms are the following:
 * Request - Response: RESTful web service (HTTP GET, POST, PUT or DELETE) 
@@ -322,7 +322,7 @@ The FileSets response message from the API is as follows:
 
 The File ID is in the ```files``` array above. I am demonstrating with the ```4c35-1775-c1a590ea-8376-ac6c1546b908``` file id.
 
-### Step 3.5: Listing the packageId using the Bucket Name - Paging
+### Step 3.1: Listing the packageId using the Bucket Name - Paging
 
 My next point is the paging feature. By default, the ```/file-store/v1/file-sets?bucket={bucket-name}``` endpoint always returns 25 results per request. You can adjust the number of return results via the ```pageSize``` query parameter, the maximum number is **100**.
 
@@ -331,7 +331,7 @@ GET /file-store/v1/file-sets?bucket={bucket-name}&pageSize={number}, HTTP/1.1
 Host: api.refinitiv.com
 Authorization: Bearer <Access Token>
 ```
-Let's try with ```pageSize=2``` as an example.
+Let's try with ```pageSize=2``` query as an example.
 
 Python Code:
 
@@ -484,9 +484,6 @@ GET /file-store/v1/files/{fileId}/stream?doNotRedirect=true HTTP/1.1
 Host: api.refinitiv.com
 Authorization: Bearer <Access Token>
 ```
-
-The File URL is in the ```url``` attribute of the response message.
-
 Python code:
 ```Python
 # pick file id in FileSets response
@@ -509,7 +506,9 @@ else:
 file_url = response.json()['url']
 print(file_url)
 ```
-Result
+The File URL is in the ```url``` attribute of the response message.
+
+Result:
 ```bash
 'https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz?x-request-Id=e7658630-f8c6-4bd3-9443-4d87efa20b5c&x-package-id=4037-e79c-96b73648-a42a-6b65ef8ccbd1&x-client-app-id=b4842f3904fb4a1fa18234796368799086c63541&x-file-name=Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz&x-fileset-id=4646-6302-b810e622-8808-85367d798021&x-bucket-name=bulk-ESG&x-uuid=GESG1-178570&x-file-Id=4de0-ceda-25b5a1f1-9b7e-35c10b384078&x-fileset-name=Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-11-26T16%3A04%3A11.525Z&x-event-external-name=cfs-claimCheck-download&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFAaCXVzLWVhc3QtMSJHMEUCIEzV%2BjWQVpI6MyZSaZ8SDQHlLPSsv8n50rxgWVDO6l%2F6AiEAu6f00kJgGFokGZxSWXicGqPbiL2X1SwEI16MlBgrMQwqowIIuP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAEGgw2NDIxNTcxODEzMjYiDBu3pKa9FpE%2Fi14VMCr3AQDhdsrjQAR4YmsEBme6RolP2AlZSYOhk8cH5xRqqus1fYhG0jIxx5Rj0t5n7%2Fcy5fq7TX9ygoR4JJDjRKpHhS4weeTn2oqcEPEyGlegGJuktEjmWrRFqANR3vSzFQQbUECxDSC%2FnHAuIUz2X130j30SC31aNihaF1XNWJEGcxGYVNWKPslvVe3Ohg1euVup4kvH3YpIhfAGHnPHhyAHoK7M8K417rAMqkuSP05XGyf%2BD%2BuPSiS9n2EM66XnHZUthf5nkm70bk1%2B%2FpA%2BC5opQIRfhE7kHMg29qKWpPiyJJCtvmj9N79AeEwnfm%2FD%2BXlV5ZM%2BVx8cHGkw5YPLqwY6nQFj%2BbHSvw088XgcKLEde1RJdKZ9E1t39X%2FT3m765zf8I94m8skLdLd9tSJalzFnQbq%2BWx4zABO5VKm1xJ9Z%2FFyRklKzTX8B6fmV4ioEqbvauMn0OT4Lcn2BQLDoLefsZc0WaUQd5p1N8UVSfgVzcv3yNR4%2FHCFmXhKPMT%2F8MNWjlwG438YlrNRVCrWZpl2Eogx7shza%2Bl99v0rLdtF4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20231208T071237Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=ASIAZLA4M7GHBJJLJVV4%2F20231208%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=8f67fbf45259c2830f7e2578d03e7e546832ef34fba37b769b951e071ad08175'
 ```
@@ -724,7 +723,7 @@ Set a workspace name, such as “My CFS Workspace”, set the Visibility to Pers
 
 ![figure-5](images/postman3.png "create a personal workspace")
 
-The new workspace will appear on the list. 
+The new workspace will be appear on the list. 
 
 ![figure-6](images/postman4.png "create a personal workspace success")
 
@@ -819,7 +818,7 @@ And much more on the [Developer Portal](https://developers.lseg.com/en) website.
 
 For further details, please check out the following resources:
 
-* [Refinitiv Data Platform APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [Refinitiv Developer Community](https://developers.lseg.com/) website.
+* [Refinitiv Data Platform APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [LSEG Developer Community](https://developers.lseg.com/) website.
 * [Refinitiv Data Platform APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
 * [Refinitiv Data Platform APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
 * [Refinitiv Data Platform APIs: Authorization - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
