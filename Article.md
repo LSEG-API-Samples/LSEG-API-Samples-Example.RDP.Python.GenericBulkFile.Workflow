@@ -11,7 +11,7 @@ The Client File Store (CFS) is a capability of Refinitiv Data Platform (RDP) tha
 
 And much more.
 
-The Client File Store (CFS) is a component of the RDP which let consumers access via a set of HTTP RESTful APIs. This article contains a step-by-step, generic workflow guide from the authentication and download the file for any bucket (ESG, Symbology, Green Revenue, etc). The example source code is written in [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment. However, our APIs are the web-based API, so any programming langues can connect and consume data using the same concept. 
+The Client File Store (CFS) is a component of the RDP which let consumers access via a set of HTTP RESTful APIs. This article contains a step-by-step, generic workflow guide from the authentication and download the file for any buckets (ESG, Symbology, Green Revenue, etc). The example source code is written in [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment. However, our APIs are the web-based API, so any programming langues can connect and consume data using the same concept. 
 
 ## <a id="whatis_rdp"></a>What is Refinitiv Data Platform (RDP) APIs?
 
@@ -680,11 +680,11 @@ The first step is to unzip or download the example project folder into a directo
 ### <a id="python_example_run"></a>Run the demo application
 
 1. Open Anaconda Prompt and go to the project's folder.
-2. Run the following command in the Anaconda Prompt application to create a Conda environment named *ESG* for the project.
+2. Run the following command in the Anaconda Prompt application to create a Conda environment named *CFS* for the project.
     ``` bash
     (base) $>conda create --name CFS python=3.10
     ```
-3. Once the environment is created, activate a Conda *ESG* environment with this command in Anaconda Prompt.
+3. Once the environment is created, activate a Conda *CFS* environment with this command in Anaconda Prompt.
     ``` bash
     (base) $>conda activate CFS
     ```

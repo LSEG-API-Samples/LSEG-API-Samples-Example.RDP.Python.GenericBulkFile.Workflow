@@ -96,11 +96,11 @@ The first step is to unzip or download the example project folder into a directo
 ### <a id="python_example_run"></a>Run the demo Notebook application
 
 1. Open Anaconda Prompt and go to the project's folder.
-2. Run the following command in the Anaconda Prompt application to create a Conda environment named *ESG* for the project.
+2. Run the following command in the Anaconda Prompt application to create a Conda environment named *CFS* for the project.
     ``` bash
     (base) $>conda create --name CFS python=3.10
     ```
-3. Once the environment is created, activate a Conda *ESG* environment with this command in Anaconda Prompt.
+3. Once the environment is created, activate a Conda *CFS* environment with this command in Anaconda Prompt.
     ``` bash
     (base) $>conda activate CFS
     ```
