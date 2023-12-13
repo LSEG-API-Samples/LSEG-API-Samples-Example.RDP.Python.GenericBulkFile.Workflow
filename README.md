@@ -9,7 +9,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 
 ## <a id="intro"></a>Introduction
 
-This demo application shows the generic workflow of Our Delivery Platform (previously known as Refinitiv Data Platform - RDP) CFS API. The workflow can be applied to any Bucket (ESG, Symbology, Green Revenue, etc). I am demonstrating the workflow in [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment. However, the RDP APIs are the web-based API that any programming langues can connect and consume data from via the HTTP RESTful API. 
+This demo application shows the generic workflow of Refinitiv Data Platform (RDP) CFS API. The workflow can be applied to any Bucket (ESG, Symbology, Green Revenue, etc). I am demonstrating the workflow in [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment. However, the RDP APIs are the web-based API that any programming langues can connect and consume data from via the HTTP RESTful API. 
 
 ## <a id="prerequisite"></a>Prerequisite
 

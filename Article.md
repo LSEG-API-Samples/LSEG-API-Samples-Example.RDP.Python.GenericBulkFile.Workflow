@@ -15,7 +15,7 @@ The Client File Store (CFS) is a component of the RDP which let consumers access
 
 ## <a id="whatis_rdp"></a>What is Refinitiv Data Platform (RDP) APIs?
 
-The [Our Delivery Platform (previously known as Refinitiv Data Platform - RDP)](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via easy-to-use Web-based API.
+The [Refinitiv Data Platform - RDP)](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via easy-to-use Web-based API.
 
 RDP APIs give developers seamless and holistic access to all of the LSEG content such as Environmental Social and Governance (ESG), News, Research, etc, and commingled with their content, enriching, integrating, and distributing the data through a single interface, delivered wherever they need it.  The RDP APIs delivery mechanisms are the following:
 * Request - Response: RESTful web service (HTTP GET, POST, PUT or DELETE) 
