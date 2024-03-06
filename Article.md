@@ -79,7 +79,12 @@ Before I am going further, there is some prerequisite, dependencies, and librari
 
 ### Access to the RDP with the your desire CFS file permission
 
-This project uses RDP access credentials with the CFS file permission.
+This project uses RDP access credentials with the CFS file permission. You need both RDP User-ID (email base) and Machine-ID (GE-A-XXXXX) user types.
+
+- **User-ID**: Identifier for user allowing access to contracted content and APIs on the API Playground page (https://apidocs.refinitiv.com/Apps/ApiDocs) or Bulk UI via Workspace/Eikon Desktop. It normally is email address of user (example: sample@lseg.com).
+- **Machine ID**:  Identifier for machine allowing access and run this tool or any automate applications. It normally is a username with "GE-A-XXXXXXXX" format.
+
+Please see more detail about how to setup your RDP User-ID and Machine-ID from the [Getting Started with Refinitiv Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article. 
 
 Please contact your LSEG representative to help you with the RDP account and the bucket permission.
 
