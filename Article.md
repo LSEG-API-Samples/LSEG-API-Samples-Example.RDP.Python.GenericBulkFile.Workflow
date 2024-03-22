@@ -692,7 +692,7 @@ The first step is to unzip or download the example project folder into a directo
     ``` bash
     (base) $>conda activate CFS
     ```
-4. Run the following command to the dependencies in the *CFS* environment 
+4. Run the following command to install the project's dependencies in the *CFS* environment 
     ``` bash
     (CFS) $>pip install -r requirements.txt
     ```
