@@ -1,6 +1,6 @@
 # A Generic and Step By Step Workflow for RDP Client File Store (CFS) File API
-- version: 1.0.0
-- Last update: Dec 2023
+- version: 1.0.2
+- Last update: Apr 2024
 - Environment: Jupyter Notebook
 - Prerequisite: [Access to RDP credentials](#prerequisite)
 
@@ -8,6 +8,8 @@ Example Code Disclaimer:
 ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR ILLUSTRATIVE PURPOSES ONLY. LSEG MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE OPERATION OF THE EXAMPLE CODE, OR THE INFORMATION, CONTENT, OR MATERIALS USED IN CONNECTION WITH THE EXAMPLE CODE. YOU EXPRESSLY AGREE THAT YOUR USE OF THE EXAMPLE CODE IS AT YOUR SOLE RISK.
 
 ## <a id="intro"></a>Introduction
+
+**Important for Messenger Compliance External feeds users**: On 28 April 2024, a new version of Messenger will be released in parallel with a new External Feeds offering, which will allow customers to retrieve their compliance files in JSON format using this Client File Store (CFS) API. For more details on support, refer to [PCN208738](https://my.refinitiv.com/content/mytr/en/product-notifications/details.html?id=PCN208738). 
 
 This demo application shows the generic workflow of Refinitiv Data Platform (RDP) CFS API. The workflow can be applied to any Bucket (ESG, Symbology, Green Revenue, etc). I am demonstrating the workflow in [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment. However, the RDP APIs are the web-based API that any programming langues can connect and consume data from via the HTTP RESTful API. 
 
