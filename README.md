@@ -1,6 +1,6 @@
 # A Generic and Step By Step Workflow for RDP Client File Store (CFS) File API
-- version: 1.0.2
-- Last update: Apr 2024
+- version: 1.0.5
+- Last update: Jan 2025
 - Environment: Jupyter Notebook
 - Prerequisite: [Access to RDP credentials](#prerequisite)
 
