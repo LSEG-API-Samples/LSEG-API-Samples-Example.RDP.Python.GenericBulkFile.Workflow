@@ -1,6 +1,6 @@
 # A Generic and Step By Step Workflow for RDP Client File Store (CFS) File API
-- version: 1.0.5
-- Last update: Jan 2025
+- version: 1.0.8
+- Last update: February 2025
 - Environment: Jupyter Notebook
 - Prerequisite: [Access to RDP credentials](#prerequisite)
 
@@ -36,7 +36,7 @@ This demonstration connects to RDP on AWS via a public internet.
 
 This project uses [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment.
 
-The Python [Anaconda](https://www.anaconda.com/distribution/) or [MiniConda](https://docs.conda.io/en/latest/miniconda.html) distribution/package manager is recommended.
+The Python [Anaconda](https://www.anaconda.com/distribution/) or [MiniConda](https://docs.conda.io/en/latest/miniconda.html) distribution/package manager or Python Virtual Environment is recommended.
 
 ## <a id="whatis_rdp"></a>What is Refinitiv Data Platform (RDP) APIs?
 
@@ -102,14 +102,18 @@ The first step is to unzip or download the example project folder into a directo
 
 ### <a id="python_example_run"></a>Run the demo Notebook application
 
-1. Open Anaconda Prompt and go to the project's folder.
-2. Run the following command in the Anaconda Prompt application to create a Conda environment named *CFS* for the project.
+1. Open the Command Prompt and go to the project's folder.
+2. Run the following command in the Command Prompt application to create a virtual environment named *CFS* for the project.
     ``` bash
-    (base) $>conda create --name CFS python=3.10
+    $>python -m venv CFS
     ```
-3. Once the environment is created, activate a Conda *CFS* environment with this command in Anaconda Prompt.
+3. Once the environment is created, activate a virtual *CFS* environment with this command.
     ``` bash
-    (base) $>conda activate CFS
+    #Windows
+    $>CSF\Scripts\activate
+
+    #Mac
+    $>source CFS\bin\activte
     ```
 4. Run the following command to the dependencies in the *CFS* environment 
     ``` bash
@@ -234,13 +238,13 @@ And much more on the [Developer Portal](https://developers.lseg.com/en) website.
 
 That brings me to the end of my generic CFS file workflow project. For further details, please check out the following resources:
 
-* [Refinitiv Data Platform APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [Refinitiv Developer Community](https://developers.lseg.com/) website.
-* [Refinitiv Data Platform APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
-* [Refinitiv Data Platform APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
-* [Refinitiv Data Platform APIs: Authorization - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
-* [Limitations and Guidelines for the RDP Authentication Service](https://developers.lseg.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
-* [Getting Started with Refinitiv Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
-* [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide).
+- [RDP APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [LSEG Developer Community](https://developers.lseg.com/) website.
+- [RDP APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
+- [RDP APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
+- [RDP APIs: Authorization - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
+- [Limitations and Guidelines for the RDP Authentication Service](https://developers.lseg.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
+- [Getting Started with Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
+- [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide).
 
 
-For any questions related to Refinitiv Data Platform APIs, please use the [RDP APIs Forum](https://community.developers.refinitiv.com/spaces/231/index.html) on the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
+For any questions related to RDP APIs or CFS service, please use the [Developers Community Q&A page](https://community.developers.refinitiv.com/).

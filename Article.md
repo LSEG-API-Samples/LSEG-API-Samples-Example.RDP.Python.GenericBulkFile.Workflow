@@ -2,7 +2,7 @@
 
 ## <a id="intro"></a>Introduction
 
-The Client File Store (CFS) is a capability of Refinitiv Data Platform (RDP) that provides authorization and enables access to content files stored in publisher repositories. LSEG provides various content file domains (aka *bucket*) for consumers such as:
+The Client File Store (CFS) is a capability of Delivery Platform (RDP - formerly known as Refinitiv Data Platform) that provides authorization and enables access to content files stored in publisher repositories. LSEG provides various content file domains (aka *bucket*) for consumers such as:
 - CFS ESG data
 - Green Revenue data
 - Symbology data
@@ -13,15 +13,16 @@ And much more.
 
 The Client File Store (CFS) is a component of the RDP which let consumers access via a set of HTTP RESTful APIs. This article contains a step-by-step, generic workflow guide from the authentication and download the file for any buckets (ESG, Symbology, Green Revenue, etc). The example source code is written in [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment. However, our APIs are the web-based API, so any programming langues can connect and consume data using the same concept. 
 
-## <a id="whatis_rdp"></a>What is Refinitiv Data Platform (RDP) APIs?
+## <a id="whatis_rdp"></a>What is Delivery Platform (RDP) APIs?
 
-The [Refinitiv Data Platform - (RDP)](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via easy-to-use Web-based API.
+The [Delivery Platform - (RDP)](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) (formerly known as Refinitiv Data Platform) provide various LSEG data and content for developers via easy-to-use Web-based API.
 
 RDP APIs give developers seamless and holistic access to all of the LSEG content such as Environmental Social and Governance (ESG), News, Research, etc, and commingled with their content, enriching, integrating, and distributing the data through a single interface, delivered wherever they need it.  The RDP APIs delivery mechanisms are the following:
-* Request - Response: RESTful web service (HTTP GET, POST, PUT or DELETE) 
-* Alert: delivery is a mechanism to receive asynchronous updates (alerts) to a subscription. 
-* Bulks:  deliver substantial payloads, like the end-of-day pricing data for the whole venue. 
-* Streaming: deliver real-time delivery of messages.
+
+- Request - Response: RESTful web service (HTTP GET, POST, PUT or DELETE) 
+- Alert: delivery is a mechanism to receive asynchronous updates (alerts) to a subscription. 
+- Bulks:  deliver substantial payloads, like the end-of-day pricing data for the whole venue. 
+- Streaming: deliver real-time delivery of messages.
 
 This example project is focusing on the Request-Response: RESTful web service delivery method only.  
 
@@ -33,7 +34,7 @@ For more detail regarding RDP, please see the following APIs resources:
 
 ## <a id="what_is_cfs"></a>What is CFS?
 
-**Client File Store (CFS)** aka File Distribution is a capability of Refinitiv Data Platform (RDP) that provides authorization and enables access to content files stored in publisher-supplied repository. CFS defines content ownership that publisher are isolated. And subscribers can trust the source of content.
+**Client File Store (CFS)** aka File Distribution is a capability of RDP APIs that provides authorization and enables access to content files stored in publisher-supplied repository. CFS defines content ownership that publisher are isolated. And subscribers can trust the source of content.
 
 CFS is engineered as a self-service metadata tool intend for publishers and subscribers. CFS provides bucket and file-set to organize files to simplify the interaction with publishers or subscribers CFS doesn't store file directly. Actual files are store in publisher-supplied. AWS S3 only one type storage that supported by current CFS.
 
@@ -84,7 +85,7 @@ This project uses RDP access credentials with the CFS file permission. You need 
 - **User-ID**: Identifier for user allowing access to contracted content and APIs on the API Playground page (https://apidocs.refinitiv.com/Apps/ApiDocs) or Bulk UI via Workspace/Eikon Desktop. It normally is email address of user (example: sample@lseg.com).
 - **Machine ID**:  Identifier for machine allowing access and run this tool or any automate applications. It normally is a username with "GE-A-XXXXXXXX" format.
 
-Please see more detail about how to setup your RDP User-ID and Machine-ID from the [Getting Started with Refinitiv Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article. 
+Please see more detail about how to setup your RDP User-ID and Machine-ID from the [Getting Started with Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article. 
 
 Please contact your LSEG representative to help you with the RDP account and the bucket permission.
 
@@ -188,7 +189,7 @@ Please notice *the space* between the ```Bearer``` and ```RDP Access Token``` va
 
 If the token is still valid and has appropriate scope, the request is allowed to access the data.
 
-The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from Refinitiv Data Platform's [API Playground page](https://api.refinitiv.com/) - which is an interactive documentation site developers can access once they have a valid Refinitiv Data Platform account.
+The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from RDP [API Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs) - which is an interactive documentation site developers can access once they have a valid RDP account.
 
 ### Step 2: Listing the packageIds using the Bucket Name
 
@@ -810,7 +811,7 @@ That covers how to run an example Postman collection.
 
 That brings me to the end of this CFS API workflow project. The CFS API is a powerful API that allows developers to download the content file dynamically via a straightforward sequence of HTTP RESTful API calls. The demonstration code is written in Python but the concept of the API calls steps are the same for other programming languages.
 
-At the same time, the [Refinitiv Data Platform (RDP) APIs](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via an easy-to-use Web-based API. The APIs are easy to integrate into any application and platform that supports the HTTP protocol and JSON message format. 
+At the same time, the [RDP APIs](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via an easy-to-use Web-based API. The APIs are easy to integrate into any application and platform that supports the HTTP protocol and JSON message format. 
 
 You may interested in the following resources for more detail about the CFS data usage:
 - [Find environmental footprint of your bond portfolio](https://developers.lseg.com/en/article-catalog/article/Environmental_footprint_of_bond_portfolio) article
@@ -823,16 +824,16 @@ And much more on the [Developer Portal](https://developers.lseg.com/en) website.
 
 For further details, please check out the following resources:
 
-* [Refinitiv Data Platform APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [LSEG Developer Community](https://developers.lseg.com/) website.
-* [Refinitiv Data Platform APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
-* [Refinitiv Data Platform APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
-* [Refinitiv Data Platform APIs: Authorization - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
-* [Limitations and Guidelines for the RDP Authentication Service](https://developers.lseg.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
-* [Getting Started with Refinitiv Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
-* [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide).
+- [RDP APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [LSEG Developer Community](https://developers.lseg.com/) website.
+- [RDP APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
+- [RDP APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
+- [RDP APIs: Authorization - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
+- [Limitations and Guidelines for the RDP Authentication Service](https://developers.lseg.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
+- [Getting Started with Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
+- [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide).
 
 
-For any questions related to Refinitiv Data Platform APIs, please use the [RDP APIs Forum](https://community.developers.refinitiv.com/spaces/231/index.html) on the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
+For any questions related to RDP APIs or CFS service, please use the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
 
 
 

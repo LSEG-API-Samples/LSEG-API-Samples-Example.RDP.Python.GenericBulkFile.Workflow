@@ -7312,6 +7312,7 @@ a.anchor-link {
                     processEnvironments: true
                 },
                 displayAlign: 'center',
+                messageStyle: 'none',
                 CommonHTML: {
                     linebreaks: {
                     automatic: true
@@ -7516,7 +7517,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="RDP-Generic-CFS-File-Workflow">RDP Generic CFS File Workflow<a class="anchor-link" href="#RDP-Generic-CFS-File-Workflow">¶</a></h1><p><strong>Last Update</strong>: Jan 2025</p>
+<h1 id="RDP-Generic-CFS-File-Workflow">RDP Generic CFS File Workflow<a class="anchor-link" href="#RDP-Generic-CFS-File-Workflow">¶</a></h1><p><strong>Last Update</strong>: Feb 2025</p>
 <p>Example Code Disclaimer:
 ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR ILLUSTRATIVE PURPOSES ONLY. LSEG MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE OPERATION OF THE EXAMPLE CODE, OR THE INFORMATION, CONTENT, OR MATERIALS USED IN CONNECTION WITH THE EXAMPLE CODE. YOU EXPRESSLY AGREE THAT YOUR USE OF THE EXAMPLE CODE IS AT YOUR SOLE RISK.</p>
 </div>
@@ -7538,13 +7539,13 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">requests</span> 
-<span class="kn">import</span> <span class="nn">json</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 </pre></div>
 </div>
 </div>
@@ -7566,7 +7567,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">username</span> <span class="o">=</span> <span class="s1">'your RDP Machine-ID'</span>
@@ -7589,7 +7590,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="RDP-APIs-Application-Workflow"><a id="rdp_workflow"></a>RDP APIs Application Workflow<a class="anchor-link" href="#RDP-APIs-Application-Workflow">¶</a></h2><h3 id="Step-1:-Authentication-with-RDP-APIs">Step 1: Authentication with RDP APIs<a class="anchor-link" href="#Step-1:-Authentication-with-RDP-APIs">¶</a></h3><p>Refinitiv Data Platform entitlement check is based on OAuth 2.0 specification. The first step of an application workflow is to get a token from RDP Auth Service, which will allow access to the protected resource, i.e. data REST API.</p>
+<h2 id="RDP-APIs-Application-Workflow"><a id="rdp_workflow"></a>RDP APIs Application Workflow<a class="anchor-link" href="#RDP-APIs-Application-Workflow">¶</a></h2><h3 id="Step-1:-Authentication-with-RDP-APIs">Step 1: Authentication with RDP APIs<a class="anchor-link" href="#Step-1:-Authentication-with-RDP-APIs">¶</a></h3><p>RDP APIs entitlement check is based on OAuth 2.0 specification. The first step of an application workflow is to get a token from RDP Auth Service, which will allow access to the protected resource, i.e. data REST API.</p>
 <p>The API requires the following access credential information:</p>
 <ul>
 <li>Username: The username.</li>
@@ -7640,7 +7641,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 1 - get RDP Access Token from RDP</span>
@@ -7699,7 +7700,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 </li>
 </ul>
 <p>Please notice <em>the space</em> between the <code>Bearer</code> and <code>RDP Access Token</code> values.</p>
-<p>The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from Refinitiv Data Platform's <a href="https://api.refinitiv.com/">API Playground page</a> - which is an interactive documentation site developers can access once they have a valid Refinitiv Data Platform account.</p>
+<p>The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from RDP <a href="https://apidocs.refinitiv.com/Apps/ApiDocs">API Playground page</a> - which is an interactive documentation site developers can access once they have a valid RDP account.</p>
 </div>
 </div>
 </div>
@@ -7903,8 +7904,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="More-on-/file-store/v1/packages-parameters">More on /file-store/v1/packages parameters<a class="anchor-link" href="#More-on-/file-store/v1/packages-parameters">¶</a></h3><p>Beside the <code>packageName</code> query, the <code>/file-store/v1/packages</code> endpoint supports the following optional parameters:
-permission.</p>
+<h3 id="More-on-/file-store/v1/packages-parameters">More on /file-store/v1/packages parameters<a class="anchor-link" href="#More-on-/file-store/v1/packages-parameters">¶</a></h3><p>Beside the <code>packageName</code> query, the <code>/file-store/v1/packages</code> endpoint supports the following optional parameters:</p>
 <ul>
 <li><em>packageType</em>: Return all packages that match the specified package type.</li>
 <li><em>bucketName</em>:Return all packages that are associated with the specified bucket name.</li>
@@ -7913,7 +7913,8 @@ skipToken logic will be excluded)</li>
 <li><em>includedTotalResult</em>: The total search result will be counting and added to the first response message.</li>
 <li><em>skipToken</em>: A token to retrieve the next set of result that exceeds page size.</li>
 <li><em>pageSize</em>: The number of packages that will be shown on one page. Default value is 25.</li>
-<li><em>includedEntitilementResult</em>: CFS will perform a permission check on each package against the client</li>
+<li><em>includedEntitilementResult</em>: CFS will perform a permission check on each package against the client
+permission.</li>
 </ul>
 <p>Please find more detail on the <a href="https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide">CFS API User Guide</a> document.</p>
 </div>
@@ -8533,12 +8534,12 @@ skipToken logic will be excluded)</li>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 5 - Downlaod file</span>
-<span class="kn">import</span> <span class="nn">polling2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">polling2</span>
 
 <span class="n">zipfilename</span> <span class="o">=</span> <span class="n">file_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"?"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"%3A"</span><span class="p">,</span><span class="s2">"_"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Downloading File </span><span class="si">{</span><span class="n">zipfilename</span><span class="si">}</span><span class="s1"> ...'</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">test_result</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_result</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -8712,7 +8713,7 @@ Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 7 - Revoking Token</span>
 
-<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
 
 <span class="n">clientId_bytes</span> <span class="o">=</span> <span class="n">clientId</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'ascii'</span><span class="p">)</span>
 <span class="n">base64_bytes</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">clientId_bytes</span><span class="p">)</span>
@@ -8793,15 +8794,15 @@ Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="References"><a id="references"></a>References<a class="anchor-link" href="#References">¶</a></h2><p>That brings me to the end of my generic CFS file workflow project. For further details, please check out the following resources:</p>
 <ul>
-<li><a href="https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis">Refinitiv Data Platform APIs page</a> on the <a href="https://developers.lseg.com/">Refinitiv Developer Community</a> website.</li>
-<li><a href="https://apidocs.refinitiv.com/Apps/ApiDocs">Refinitiv Data Platform APIs Playground page</a>.</li>
-<li><a href="https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api">Refinitiv Data Platform APIs: Introduction to the Request-Response API</a>.</li>
-<li><a href="https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens">Refinitiv Data Platform APIs: Authorization - All about tokens</a>.</li>
+<li><a href="https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis">RDP APIs page</a> on the <a href="https://developers.lseg.com/">LSEG Developer Community</a> website.</li>
+<li><a href="https://apidocs.refinitiv.com/Apps/ApiDocs">RDP APIs Playground page</a>.</li>
+<li><a href="https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api">RDP APIs: Introduction to the Request-Response API</a>.</li>
+<li><a href="https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens">RDP APIs: Authorization - All about tokens</a>.</li>
 <li><a href="https://developers.lseg.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service">Limitations and Guidelines for the RDP Authentication Service</a> article.</li>
-<li><a href="https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform">Getting Started with Refinitiv Data Platform</a> article.</li>
+<li><a href="https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform">Getting Started with Data Platform</a> article.</li>
 <li><a href="https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide">CFS API User Guide</a>.</li>
 </ul>
-<p>For any questions related to Refinitiv Data Platform APIs, please use the <a href="https://community.developers.refinitiv.com/spaces/231/index.html">RDP APIs Forum</a> on the <a href="https://community.developers.refinitiv.com/">Developers Community Q&amp;A page</a>.</p>
+<p>For any questions related to RDP APIs or CFS service, please use the <a href="https://community.developers.refinitiv.com/">Developers Community Q&amp;A page</a>.</p>
 </div>
 </div>
 </div>
