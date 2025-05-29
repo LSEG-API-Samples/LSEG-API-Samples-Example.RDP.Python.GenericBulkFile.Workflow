@@ -155,7 +155,7 @@ expires_in = 0
 auth_url = f'{RDP_HOST}/auth/oauth2/v1/token'
 payload = f'grant_type=password&username={username}&client_id={clientId}&password={password}&takeExclusiveSignOnControl=True&scope=trapi'
 try:
-    response = requests.post(auth_url, 
+    auth_response = requests.post(auth_url, 
                              headers = {'Content-Type':'application/x-www-form-urlencoded'}, 
                              data = payload, 
                              auth = (clientId, '')
@@ -167,15 +167,15 @@ except requests.exceptions.RequestException as exp:
 The next step is checking the authentication request result, then get the token information and assign them to local variables for the later use.
 
 ``` Python
-if response.status_code == 200:  # HTTP Status 'OK'
+if auth_response.status_code == 200:  # HTTP Status 'OK'
     print('Authentication success')
-    access_token = response.json()['access_token']
-    refresh_token = response.json()['refresh_token']
-    expires_in = int(response.json()['expires_in'])
+    access_token = auth_response.json()['access_token']
+    refresh_token = auth_response.json()['refresh_token']
+    expires_in = int(auth_response.json()['expires_in'])
 
-if response.status_code != 200:
-    print(f'RDP authentication failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+if auth_response.status_code != 200:
+    print(f'RDP authentication failure: {auth_response.status_code} {auth_response.reason}')
+    print(f'Text: {auth_response.text}')
 ```
 Now we have the access token information that can be used for further data requests.
 
@@ -229,22 +229,22 @@ bucket_name = 'bulk-ESG'
 CFS_url = f'{RDP_HOST}/file-store/v1/packages?bucketName={bucket_name}'
 
 try:
-    response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+    packageID_response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if packageID_response.status_code == 200:  # HTTP Status 'OK'
     print('Receive list Package IDs from RDP APIs')
 else:
-    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+    print(f'RDP APIs: CFS request failure: {packageID_response.status_code} {packageID_response.reason}')
+    print(f'Text: {packageID_response.text}')
 ```
 You can check the example data response to see the example of PackageIds from the following code:
 
 ```Python
 #Example of the first entry of package IDs
 
-print(json.dumps(response.json()['value'][0], sort_keys=True, indent=2, separators=(',', ':')))
+print(json.dumps(packageID_response.json()['value'][0], sort_keys=True, indent=2, separators=(',', ':')))
 ```
 
 Result:
@@ -288,15 +288,15 @@ packageId = '4037-e79c-96b73648-a42a-6b65ef8ccbd1'
 CFS_url = f'{RDP_HOST}/file-store/v1/file-sets?bucket={bucket_name}&packageId={packageId}'
 
 try:
-    response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+    fileSet_response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if fileSet_response.status_code == 200:  # HTTP Status 'OK'
     print('Receive FileSets list from RDP APIs')
 else:
-    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+    print(f'RDP APIs: CFS request failure: {fileSet_response.status_code} {fileSet_response.reason}')
+    print(f'Text: {fileSet_response.text}')
 ```
 The FileSets response message from the API is as follows:
 
@@ -346,16 +346,16 @@ Python Code:
 CFS_url = f'{RDP_HOST}/file-store/v1/file-sets?bucket={bucket_name}&pageSize=2'
 
 try:
-    response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+    fileSet_response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if fileSet_response.status_code == 200:  # HTTP Status 'OK'
     print('Receive list Package IDs from RDP APIs')
 else:
-    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+    print(f'RDP APIs: CFS request failure: {fileSet_response.status_code} {fileSet_response.reason}')
+    print(f'Text: {fileSet_response.text}')
 ```
 Now we get 2 entries per request from the API as we set via ```pageSize=2``` parameter:
 
@@ -418,15 +418,15 @@ if '@nextLink' in response.json():
     CFS_url = f'{RDP_HOST}{next_link}'
     
     try:
-        response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+        fileSet_response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
     except requests.exceptions.RequestException as exp:
         print(f'Caught exception: {exp}')
     
-    if response.status_code == 200:  # HTTP Status 'OK'
+    if fileSet_response.status_code == 200:  # HTTP Status 'OK'
         print('Receive list Package IDs from RDP APIs')
     else:
-        print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-        print(f'Text: {response.text}')
+        print(f'RDP APIs: CFS request failure: {fileSet_response.status_code} {fileSet_response.reason}')
+        print(f'Text: {fileSet_response.text}')
 ```
 
 Result:
@@ -499,17 +499,17 @@ file_id = response.json()['value'][0]['files'][1] #'4c35-1775-c1a590ea-8376-ac6c
 FileID_url = f'{RDP_HOST}/file-store/v1/files/{file_id}/stream?doNotRedirect=true'
 
 try:
-    response = requests.get(FileID_url, headers={'Authorization': f'Bearer {access_token}'})
+    fileID_response = requests.get(FileID_url, headers={'Authorization': f'Bearer {access_token}'})
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if fileID_response.status_code == 200:  # HTTP Status 'OK'
     print('Receive File URL from RDP APIs')
 else:
-    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
+    print(f'RDP APIs: CFS request failure: {fileID_response.status_code} {fileID_response.reason}')
     print(f'Text: {response.text}')
 
-file_url = response.json()['url']
+file_url = fileID_response.json()['url']
 print(file_url)
 ```
 The File URL is in the ```url``` attribute of the response message.
@@ -528,30 +528,30 @@ That brings us to download the file. Based on the S3 ```file_url``` above, the a
 Python code:
 
 ```Python
-#step 5 - Downlaod file
+#step 5 - Download file
 import polling2
 
 zipfilename = file_url.split("?")[0].split("/")[-1].replace("%3A","_")
 print(f'Downloading File {zipfilename} ...')
 
-def test_result(response):
-    return response.status_code == 200
+def test_result(_response):
+    return _response.status_code == 200
 
 try:
-    response = polling2.poll(lambda: requests.get(file_url), 
+    bulkFile_response = polling2.poll(lambda: requests.get(file_url), 
                             step = 10,
                             poll_forever = True,
                             check_success= test_result)
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if bulkFile_response.status_code == 200:  # HTTP Status 'OK'
     print('Receive File Successfully')
-    open(zipfilename, 'wb').write(response.content)
+    open(zipfilename, 'wb').write(bulkFile_response.content)
     print(f'{zipfilename} Saved')
 else:
-    print(f'RDP APIs: Request file failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+    print(f'RDP APIs: Request file failure: {bulkFile_response.status_code} {bulkFile_response.reason}')
+    print(f'Text: {bulkFile_response.text}')
 ```
 
 Result:
@@ -601,8 +601,10 @@ Python code:
 # Send HTTP Request
 auth_url = f'{RDP_HOST}/auth/oauth2/v1/token'
 payload = f'grant_type=refresh_token&client_id={clientId}&refresh_token={refresh_token}'
+auth_response = None
+
 try:
-    response = requests.post(auth_url, 
+    auth_response = requests.post(auth_url, 
                              headers = {'Content-Type':'application/x-www-form-urlencoded'}, 
                              data = payload, 
                              auth = (clientId, '')
@@ -610,15 +612,15 @@ try:
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if auth_response.status_code == 200:  # HTTP Status 'OK'
     print('Refresh Token success')
-    access_token = response.json()['access_token']
-    refresh_token = response.json()['refresh_token']
-    expires_in = int(response.json()['expires_in'])
+    access_token = auth_response.json()['access_token']
+    refresh_token = auth_response.json()['refresh_token']
+    expires_in = int(auth_response.json()['expires_in'])
 
-if response.status_code != 200:
-    print(f'RDP authentication failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+if auth_response.status_code != 200:
+    print(f'RDP authentication failure: {auth_response.status_code} {auth_response.reason}')
+    print(f'Text: {auth_response.text}')
 ```
 
 ### Step 7: Revoke Token to ending the session.
@@ -658,8 +660,10 @@ clientId_base64 = base64_bytes.decode('ascii')
 # Send HTTP Request
 auth_url = f'{RDP_HOST}/auth/oauth2/v1/revoke'
 payload = f'token={access_token}'
+auth_response = None 
+
 try:
-    response = requests.post(auth_url, 
+    auth_response = requests.post(auth_url, 
                              headers = {
                                  'Content-Type':'application/x-www-form-urlencoded',
                                  'Authorization': f'Basic {clientId_base64}'
@@ -670,11 +674,11 @@ try:
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if auth_response.status_code == 200:  # HTTP Status 'OK'
     print('Revoke Token success')
-if response.status_code != 200:
-    print(f'RDP authentication failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+if auth_response.status_code != 200:
+    print(f'RDP authentication failure: {auth_response.status_code} {auth_response.reason}')
+    print(f'Text: {auth_response.text}')
 ```
 That’s all I have to say about the CFS API workflow.
 
@@ -824,7 +828,7 @@ And much more on the [Developer Portal](https://developers.lseg.com/en) website.
 
 For further details, please check out the following resources:
 
-- [RDP APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [LSEG Developer Community](https://developers.lseg.com/) website.
+- [Delivery Platform (RDP) APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [LSEG Developer Community](https://developers.lseg.com/) website.
 - [RDP APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
 - [RDP APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
 - [RDP APIs: Authorization - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
