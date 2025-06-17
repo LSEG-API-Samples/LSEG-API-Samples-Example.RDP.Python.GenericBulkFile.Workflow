@@ -524,7 +524,7 @@ Result:
 That brings us to download the file. You can download the bulk file using that S3 URL (**as is**). **Do not alter or make any changes to the URL text string**. It will cause unable to download or signature mismatch error. 
 
 **Note**: 
-- If you cannot download the file, please wait for a while and then retry download the file from the URL. Please do not flush the download requests.
+- If you cannot download the file, please wait for a while and then retry download the file from the URL. Please do not flush the download requests. 
 - The code below set ```verify = False``` property in a ```requests``` library call to workaround LSEG's beloved ZScaler blocks a download request message. **Do not** set ```verify = False``` in a Production.
 
 Python code:
@@ -543,7 +543,7 @@ except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 ```
 
-ow you have downloaded the CFS bulk file stream in an application level. You can choose to save that file with whatever name you want.
+Now you have downloaded the CFS bulk file stream in an application level. You can choose to save that file with whatever name you want.
 
 If you need an actual file name of the file, it is available in S3 URL as follows:
 
