@@ -535,7 +535,7 @@ import polling2
 
 try:
     print(f'Downloading File from {file_url} ...')
-    response = polling2.poll(lambda: requests.get(file_url, verify= False), 
+    bulkFile_response = polling2.poll(lambda: requests.get(file_url, verify= False), 
                             step = 10,
                             poll_forever = True,
                             check_success= lambda r: r.status_code == 200)
@@ -559,14 +559,14 @@ The actual file name has been replace a ```_``` (underscore) with ```%3A``` esca
 ```python
 # Save the file locally.
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if bulkFile_response.status_code == 200:  # HTTP Status 'OK'
     zipfilename = file_url.split("?")[0].split("/")[-1].replace("%3A","_")
     print('Download File Successfully')
-    open(zipfilename, 'wb').write(response.content)
+    open(zipfilename, 'wb').write(bulkFile_response.content)
     print(f'{zipfilename} Saved')
 else:
-    print(f'RDP APIs: Request file failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+    print(f'RDP APIs: Request file failure: {bulkFile_response.status_code} {bulkFile_response.reason}')
+    print(f'Text: {bulkFile_response.text}')
 ```
 
 Result:
