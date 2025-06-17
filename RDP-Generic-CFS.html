@@ -7517,7 +7517,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Delivery-Platform-(RDP)-Generic-CFS-File-Workflow">Delivery Platform (RDP) Generic CFS File Workflow<a class="anchor-link" href="#Delivery-Platform-(RDP)-Generic-CFS-File-Workflow">¶</a></h1><p><strong>Last Update</strong>: May 2025</p>
+<h1 id="RDP-Generic-CFS-File-Workflow">RDP Generic CFS File Workflow<a class="anchor-link" href="#RDP-Generic-CFS-File-Workflow">¶</a></h1><p><strong>Last Update</strong>: June 2025</p>
 <p>Example Code Disclaimer:
 ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR ILLUSTRATIVE PURPOSES ONLY. LSEG MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE OPERATION OF THE EXAMPLE CODE, OR THE INFORMATION, CONTENT, OR MATERIALS USED IN CONNECTION WITH THE EXAMPLE CODE. YOU EXPRESSLY AGREE THAT YOUR USE OF THE EXAMPLE CODE IS AT YOUR SOLE RISK.</p>
 </div>
@@ -7539,7 +7539,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -7575,7 +7575,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <span class="n">clientId</span> <span class="o">=</span> <span class="s1">'your RDP APP Key'</span>
 
 <span class="n">RDP_HOST</span><span class="o">=</span> <span class="s1">'https://api.refinitiv.com'</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">acccess_token</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">refresh_token</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">expires_in</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
@@ -7641,7 +7641,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 1 - get RDP Access Token from RDP</span>
@@ -7650,7 +7650,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <span class="n">auth_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">RDP_HOST</span><span class="si">}</span><span class="s1">/auth/oauth2/v1/token'</span>
 <span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'grant_type=password&amp;username=</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s1">&amp;client_id=</span><span class="si">{</span><span class="n">clientId</span><span class="si">}</span><span class="s1">&amp;password=</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s1">&amp;takeExclusiveSignOnControl=True&amp;scope=trapi'</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">auth_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> 
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> 
                              <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/x-www-form-urlencoded'</span><span class="p">},</span> 
                              <span class="n">data</span> <span class="o">=</span> <span class="n">payload</span><span class="p">,</span> 
                              <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">clientId</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
@@ -7658,15 +7658,15 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Authentication success'</span><span class="p">)</span>
-    <span class="n">access_token</span> <span class="o">=</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'access_token'</span><span class="p">]</span>
-    <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'refresh_token'</span><span class="p">]</span>
-    <span class="n">expires_in</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">auth_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'expires_in'</span><span class="p">])</span>
+    <span class="n">access_token</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'access_token'</span><span class="p">]</span>
+    <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'refresh_token'</span><span class="p">]</span>
+    <span class="n">expires_in</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'expires_in'</span><span class="p">])</span>
 
-<span class="k">if</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP authentication failure: </span><span class="si">{</span><span class="n">auth_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">auth_response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">auth_response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP authentication failure: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7798,7 +7798,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># set Bucket Name, this notebook use bulk-ESG as an example</span>
@@ -7814,7 +7814,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 2 - list Package IDs from bucket name</span>
@@ -7822,15 +7822,15 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <span class="n">CFS_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">RDP_HOST</span><span class="si">}</span><span class="s1">/file-store/v1/packages?bucketName=</span><span class="si">{</span><span class="n">bucket_name</span><span class="si">}</span><span class="s1">'</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">packageID_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CFS_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CFS_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
 <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">packageID_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Receive list Package IDs from RDP APIs'</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">packageID_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">packageID_response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">packageID_response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7865,10 +7865,10 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">packageID_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'value'</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">':'</span><span class="p">)))</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'value'</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">':'</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -7887,7 +7887,7 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
   ],
   "contactEmail":"robin.fielder@refinitiv.com",
   "created":"2021-11-11T07:54:04Z",
-  "modified":"2023-02-10T09:10:16Z",
+  "modified":"2025-04-04T09:55:15Z",
   "packageId":"4037-e79c-96b73648-a42a-6b65ef8ccbd1",
   "packageName":"Bulk-ESG-Global-Symbology-Organization-v1",
   "packageType":"bulk"
@@ -7944,7 +7944,7 @@ permission.</li>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Next, set a package Id to <code>packageId</code> variable below like to following statement:</p>
-<div class="highlight"><pre><span></span><span class="n">packageId</span> <span class="o">=</span> <span class="s1">'4c80-73a0-fcef949b-bfde-2b9b8117cfb0'</span>
+<div class="highlight"><pre><span></span><span class="n">packageId</span> <span class="o">=</span> <span class="s1">'408c-ba29-cae68349-abb7-ba38f6d7fce7'</span>
 </pre></div>
 <p>This notebook uses <em>4037-e79c-96b73648-a42a-6b65ef8ccbd1</em> packageId of the <em>bulk-ESG</em> bucket as an example.</p>
 <p>If you cannot find the package Id for your interested content set, please contact your LSEG representative.</p>
@@ -7956,12 +7956,12 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># pick the packageId you need and set to the packageId variable</span>
 <span class="c1">#packageId = response.json()['value'][0]['packageId']</span>
-<span class="n">packageId</span> <span class="o">=</span> <span class="s1">'4037-e79c-96b73648-a42a-6b65ef8ccbd1'</span>
+<span class="n">packageId</span> <span class="o">=</span> <span class="s1">'408c-ba29-cae68349-abb7-ba38f6d7fce7'</span>
 </pre></div>
 </div>
 </div>
@@ -7972,7 +7972,7 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 3 - list FileSets from bucket name and package Id</span>
@@ -7980,15 +7980,15 @@ permission.</li>
 <span class="n">CFS_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">RDP_HOST</span><span class="si">}</span><span class="s1">/file-store/v1/file-sets?bucket=</span><span class="si">{</span><span class="n">bucket_name</span><span class="si">}</span><span class="s1">&amp;packageId=</span><span class="si">{</span><span class="n">packageId</span><span class="si">}</span><span class="s1">'</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">fileSet_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CFS_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CFS_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
 <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">fileSet_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Receive FileSets list from RDP APIs'</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8023,10 +8023,10 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'value'</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">':'</span><span class="p">)))</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'value'</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">':'</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -8043,23 +8043,27 @@ permission.</li>
   "attributes":[
     {
       "name":"ContentType",
-      "value":"Symbology Organization"
+      "value":"ESGWealthStandard"
+    },
+    {
+      "name":"ResultCount",
+      "value":"3855140"
     }
   ],
-  "availableFrom":"2023-11-26T16:18:44Z",
-  "availableTo":"2023-12-10T16:18:44Z",
+  "availableFrom":"2025-06-08T19:25:14Z",
+  "availableTo":"2025-06-22T19:25:13Z",
   "bucketName":"bulk-ESG",
-  "contentFrom":"1970-01-01T00:00:00Z",
-  "contentTo":"2023-11-26T15:55:00Z",
-  "created":"2023-11-26T16:18:44Z",
+  "contentFrom":"2025-06-01T16:20:00Z",
+  "contentTo":"2025-06-08T18:08:25Z",
+  "created":"2025-06-08T19:25:14Z",
   "files":[
-    "4de0-ceda-25b5a1f1-9b7e-35c10b384078"
+    "412d-ab1a-f20f60b8-8279-b0bc7f78a804"
   ],
-  "id":"4646-6302-b810e622-8808-85367d798021",
-  "modified":"2023-11-26T16:18:49Z",
-  "name":"Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-11-26T16:04:11.525Z",
+  "id":"4035-af6c-bcf9f923-834d-c845673b9608",
+  "modified":"2025-06-08T19:25:51Z",
+  "name":"Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Csv-Delta-2025-06-08T18:15:15.433Z",
   "numFiles":1,
-  "packageId":"4037-e79c-96b73648-a42a-6b65ef8ccbd1",
+  "packageId":"408c-ba29-cae68349-abb7-ba38f6d7fce7",
   "status":"READY"
 }
 </pre>
@@ -8083,11 +8087,11 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># try just one file</span>
-<span class="n">file_id</span> <span class="o">=</span> <span class="n">fileSet_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'value'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">'files'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">file_id</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'value'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">'files'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">file_id</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -8101,7 +8105,7 @@ permission.</li>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>4de0-ceda-25b5a1f1-9b7e-35c10b384078
+<pre>412d-ab1a-f20f60b8-8279-b0bc7f78a804
 </pre>
 </div>
 </div>
@@ -8164,24 +8168,23 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 3.5 - list FileSets from bucket name and package Id - with pageSize 2</span>
 
 <span class="n">CFS_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">RDP_HOST</span><span class="si">}</span><span class="s1">/file-store/v1/file-sets?bucket=</span><span class="si">{</span><span class="n">bucket_name</span><span class="si">}</span><span class="s1">&amp;packageId=</span><span class="si">{</span><span class="n">packageId</span><span class="si">}</span><span class="s1">&amp;pageSize=2'</span>
-<span class="n">fileSet_response</span> <span class="o">=</span> <span class="kc">None</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">fileSet_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CFS_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CFS_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
 <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">fileSet_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Receive list Package IDs from RDP APIs'</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8205,10 +8208,10 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">':'</span><span class="p">)))</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">':'</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -8222,51 +8225,60 @@ permission.</li>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>{
+  "@nextLink":"/file-store/v1/file-sets?bucket=bulk-ESG&amp;packageId=408c-ba29-cae68349-abb7-ba38f6d7fce7&amp;pageSize=2&amp;skipToken=ZmlsZXNldElkPTQwZWMtOGRkYi1kMWY0Y2EyMS04ZTNjLTIxNTgwMTdmY2RjMA",
   "value":[
     {
       "attributes":[
         {
           "name":"ContentType",
-          "value":"Symbology Organization"
+          "value":"ESGWealthStandard"
+        },
+        {
+          "name":"ResultCount",
+          "value":"3855140"
         }
       ],
-      "availableFrom":"2023-11-26T16:18:44Z",
-      "availableTo":"2023-12-10T16:18:44Z",
+      "availableFrom":"2025-06-08T19:25:14Z",
+      "availableTo":"2025-06-22T19:25:13Z",
       "bucketName":"bulk-ESG",
-      "contentFrom":"1970-01-01T00:00:00Z",
-      "contentTo":"2023-11-26T15:55:00Z",
-      "created":"2023-11-26T16:18:44Z",
+      "contentFrom":"2025-06-01T16:20:00Z",
+      "contentTo":"2025-06-08T18:08:25Z",
+      "created":"2025-06-08T19:25:14Z",
       "files":[
-        "4de0-ceda-25b5a1f1-9b7e-35c10b384078"
+        "412d-ab1a-f20f60b8-8279-b0bc7f78a804"
       ],
-      "id":"4646-6302-b810e622-8808-85367d798021",
-      "modified":"2023-11-26T16:18:49Z",
-      "name":"Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-11-26T16:04:11.525Z",
+      "id":"4035-af6c-bcf9f923-834d-c845673b9608",
+      "modified":"2025-06-08T19:25:51Z",
+      "name":"Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Csv-Delta-2025-06-08T18:15:15.433Z",
       "numFiles":1,
-      "packageId":"4037-e79c-96b73648-a42a-6b65ef8ccbd1",
+      "packageId":"408c-ba29-cae68349-abb7-ba38f6d7fce7",
       "status":"READY"
     },
     {
       "attributes":[
         {
           "name":"ContentType",
-          "value":"Symbology Organization"
+          "value":"ESGWealthStandard"
+        },
+        {
+          "name":"ResultCount",
+          "value":"3233481"
         }
       ],
-      "availableFrom":"2023-12-03T16:16:37Z",
-      "availableTo":"2023-12-17T16:16:37Z",
+      "availableFrom":"2025-06-16T05:49:41Z",
+      "availableTo":"2025-06-30T05:49:40Z",
       "bucketName":"bulk-ESG",
-      "contentFrom":"1970-01-01T00:00:00Z",
-      "contentTo":"2023-12-03T15:55:00Z",
-      "created":"2023-12-03T16:16:37Z",
+      "contentFrom":"2025-06-08T18:08:25Z",
+      "contentTo":"2025-06-16T05:33:46Z",
+      "created":"2025-06-16T05:49:41Z",
       "files":[
-        "4823-5fb2-67ae60ab-bd45-1699a214c428"
+        "45a2-b47d-46625457-85d2-ae5e68edeb38"
       ],
-      "id":"4721-716d-682abf0a-86a7-2a54368ee8a7",
-      "modified":"2023-12-03T16:16:42Z",
-      "name":"Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-12-03T16:03:00.312Z",
+      "id":"40ec-8ddb-d1f4ca21-8e3c-2158017fcdc0",
+      "modified":"2025-06-16T06:08:04Z",
+      "name":"Bulk-ESG-Global-Raw-Wealth-Standard-v2-Analytics-Csv-Delta-2025-06-16T05:40:35.140Z",
       "numFiles":1,
-      "packageId":"4037-e79c-96b73648-a42a-6b65ef8ccbd1",
+      "packageId":"408c-ba29-cae68349-abb7-ba38f6d7fce7",
       "status":"READY"
     }
   ]
@@ -8293,33 +8305,45 @@ permission.</li>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c300c810-9f3e-46f5-bc0c-a0d7a51b3b3b">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c300c810-9f3e-46f5-bc0c-a0d7a51b3b3b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Step 3.2: Listing the FileSets using the Bucket Name - nextLink</span>
-<span class="k">if</span> <span class="s1">'@nextLink'</span> <span class="ow">in</span> <span class="n">fileSet_response</span><span class="o">.</span><span class="n">json</span><span class="p">():</span>
-    <span class="n">next_link</span> <span class="o">=</span> <span class="n">fileSet_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'@nextLink'</span><span class="p">]</span>
+<span class="k">if</span> <span class="s1">'@nextLink'</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">():</span>
+    <span class="n">next_link</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'@nextLink'</span><span class="p">]</span>
     <span class="c1">#step 3.5 - list Package IDs from bucket name - with pageSize 2 - navigate to next link</span>
 
     <span class="n">CFS_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">RDP_HOST</span><span class="si">}{</span><span class="n">next_link</span><span class="si">}</span><span class="s1">'</span>
-    <span class="n">fileSet_response</span> <span class="o">=</span> <span class="kc">None</span>
     
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">fileSet_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CFS_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CFS_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
     
-    <span class="k">if</span> <span class="n">fileSet_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">'Receive list Package IDs from RDP APIs'</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Receive list Package IDs from RDP APIs
+</pre>
 </div>
 </div>
 </div>
@@ -8329,10 +8353,10 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">fileSet_response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">':'</span><span class="p">)))</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">':'</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -8346,51 +8370,54 @@ permission.</li>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>{
+  "@nextLink":"/file-store/v1/file-sets?bucket=bulk-ESG&amp;skipToken=ZmlsZXNldElkPTQyNDYtNWE1OC1jNzY0MDVlNi1iNTlhLTUzYjE1ZDc2MWMyZA&amp;packageId=408c-ba29-cae68349-abb7-ba38f6d7fce7&amp;pageSize=2",
   "value":[
     {
       "attributes":[
         {
           "name":"ContentType",
-          "value":"Symbology Organization"
+          "value":"ESGWealthStandard"
         }
       ],
-      "availableFrom":"2023-11-26T16:18:44Z",
-      "availableTo":"2023-12-10T16:18:44Z",
+      "availableFrom":"2025-06-16T06:15:53Z",
+      "availableTo":"2025-06-30T06:15:52Z",
       "bucketName":"bulk-ESG",
       "contentFrom":"1970-01-01T00:00:00Z",
-      "contentTo":"2023-11-26T15:55:00Z",
-      "created":"2023-11-26T16:18:44Z",
+      "contentTo":"2025-06-16T05:33:46Z",
+      "created":"2025-06-16T06:15:53Z",
       "files":[
-        "4de0-ceda-25b5a1f1-9b7e-35c10b384078"
+        "4f9f-6dbb-21420ee2-9a21-883de05afc17"
       ],
-      "id":"4646-6302-b810e622-8808-85367d798021",
-      "modified":"2023-11-26T16:18:49Z",
-      "name":"Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-11-26T16:04:11.525Z",
+      "id":"4108-8540-e334597d-a70d-d9f73f671d1c",
+      "modified":"2025-06-16T06:17:07Z",
+      "name":"Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Jsonl-Init-2025-06-16T05:40:36.092Z",
       "numFiles":1,
-      "packageId":"4037-e79c-96b73648-a42a-6b65ef8ccbd1",
+      "packageId":"408c-ba29-cae68349-abb7-ba38f6d7fce7",
       "status":"READY"
     },
     {
       "attributes":[
         {
           "name":"ContentType",
-          "value":"Symbology Organization"
+          "value":"ESGWealthStandard"
         }
       ],
-      "availableFrom":"2023-12-03T16:16:37Z",
-      "availableTo":"2023-12-17T16:16:37Z",
+      "availableFrom":"2025-06-08T19:05:47Z",
+      "availableTo":"2025-06-22T19:05:47Z",
       "bucketName":"bulk-ESG",
-      "contentFrom":"1970-01-01T00:00:00Z",
-      "contentTo":"2023-12-03T15:55:00Z",
-      "created":"2023-12-03T16:16:37Z",
+      "contentFrom":"2025-06-01T16:20:00Z",
+      "contentTo":"2025-06-08T18:08:25Z",
+      "created":"2025-06-08T19:05:47Z",
       "files":[
-        "4823-5fb2-67ae60ab-bd45-1699a214c428"
+        "4676-87b4-d50b35e7-8136-1bd3b2375774",
+        "4706-26a3-3048d56e-b2ed-fda73611ba0b",
+        "47c1-bb21-e0928cc4-9b0b-bb0053a68289"
       ],
-      "id":"4721-716d-682abf0a-86a7-2a54368ee8a7",
-      "modified":"2023-12-03T16:16:42Z",
-      "name":"Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-12-03T16:03:00.312Z",
-      "numFiles":1,
-      "packageId":"4037-e79c-96b73648-a42a-6b65ef8ccbd1",
+      "id":"4246-5a58-c76405e6-b59a-53b15d761c2d",
+      "modified":"2025-06-08T19:25:50Z",
+      "name":"Bulk-ESG-Global-Raw-Wealth-Standard-v2-DataItems-Jsonl-Delta-2025-06-08T18:15:15.433Z",
+      "numFiles":3,
+      "packageId":"408c-ba29-cae68349-abb7-ba38f6d7fce7",
       "status":"READY"
     }
   ]
@@ -8423,7 +8450,7 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 4 - get file URL from file id</span>
@@ -8431,15 +8458,15 @@ permission.</li>
 <span class="n">FileID_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">RDP_HOST</span><span class="si">}</span><span class="s1">/file-store/v1/files/</span><span class="si">{</span><span class="n">file_id</span><span class="si">}</span><span class="s1">/stream?doNotRedirect=true'</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">fileID_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">FileID_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">FileID_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Bearer </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
 <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">fileID_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Receive File URL from RDP APIs'</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">fileID_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">fileID_response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">fileID_response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: CFS request failure: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8474,10 +8501,10 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">file_url</span> <span class="o">=</span> <span class="n">fileID_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'url'</span><span class="p">]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">file_url</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'url'</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -8491,7 +8518,7 @@ permission.</li>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz?x-request-Id=e7658630-f8c6-4bd3-9443-4d87efa20b5c&amp;x-package-id=4037-e79c-96b73648-a42a-6b65ef8ccbd1&amp;x-client-app-id=b4842f3904fb4a1fa18234796368799086c63541&amp;x-file-name=Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz&amp;x-fileset-id=4646-6302-b810e622-8808-85367d798021&amp;x-bucket-name=bulk-ESG&amp;x-uuid=GESG1-178570&amp;x-file-Id=4de0-ceda-25b5a1f1-9b7e-35c10b384078&amp;x-fileset-name=Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-11-26T16%3A04%3A11.525Z&amp;x-event-external-name=cfs-claimCheck-download&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFAaCXVzLWVhc3QtMSJHMEUCIEzV%2BjWQVpI6MyZSaZ8SDQHlLPSsv8n50rxgWVDO6l%2F6AiEAu6f00kJgGFokGZxSWXicGqPbiL2X1SwEI16MlBgrMQwqowIIuP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAEGgw2NDIxNTcxODEzMjYiDBu3pKa9FpE%2Fi14VMCr3AQDhdsrjQAR4YmsEBme6RolP2AlZSYOhk8cH5xRqqus1fYhG0jIxx5Rj0t5n7%2Fcy5fq7TX9ygoR4JJDjRKpHhS4weeTn2oqcEPEyGlegGJuktEjmWrRFqANR3vSzFQQbUECxDSC%2FnHAuIUz2X130j30SC31aNihaF1XNWJEGcxGYVNWKPslvVe3Ohg1euVup4kvH3YpIhfAGHnPHhyAHoK7M8K417rAMqkuSP05XGyf%2BD%2BuPSiS9n2EM66XnHZUthf5nkm70bk1%2B%2FpA%2BC5opQIRfhE7kHMg29qKWpPiyJJCtvmj9N79AeEwnfm%2FD%2BXlV5ZM%2BVx8cHGkw5YPLqwY6nQFj%2BbHSvw088XgcKLEde1RJdKZ9E1t39X%2FT3m765zf8I94m8skLdLd9tSJalzFnQbq%2BWx4zABO5VKm1xJ9Z%2FFyRklKzTX8B6fmV4ioEqbvauMn0OT4Lcn2BQLDoLefsZc0WaUQd5p1N8UVSfgVzcv3yNR4%2FHCFmXhKPMT%2F8MNWjlwG438YlrNRVCrWZpl2Eogx7shza%2Bl99v0rLdtF4&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20231208T071237Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=21600&amp;X-Amz-Credential=ASIAZLA4M7GHBJJLJVV4%2F20231208%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=8f67fbf45259c2830f7e2578d03e7e546832ef34fba37b769b951e071ad08175
+<pre>https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Raw-Wealth-Standard-v2/2025/06/08/Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Delta-2025-06-08T18%3A15%3A15.433Z.csv.gz?x-request-Id=ce431bcb-2cdc-417a-9e86-7e83af4056b1&amp;x-package-id=408c-ba29-cae68349-abb7-ba38f6d7fce7&amp;x-client-app-id=b4842f3904fb4a1fa18234796368799086c63541&amp;x-file-name=Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Delta-2025-06-08T18%3A15%3A15.433Z.csv.gz&amp;x-fileset-id=4035-af6c-bcf9f923-834d-c845673b9608&amp;x-bucket-name=bulk-ESG&amp;x-uuid=GESG1-178570&amp;x-file-Id=412d-ab1a-f20f60b8-8279-b0bc7f78a804&amp;x-fileset-name=Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Csv-Delta-2025-06-08T18%3A15%3A15.433Z&amp;x-event-external-name=cfs-claimCheck-download&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIn%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCcvGmFcP8z9NzuAtLbxo7%2BTf%2B2k6x45T97X4TgxJrXXQIgDhErnOPKi08fNhR4RvJi4fZgcGK8c2LUUuweYNydmNcqmgIIchAFGgw2NDIxNTcxODEzMjYiDEOFsCw0CxOGxTTJmyr3ASNFewKXgFz70H4SVgKZjdyBZz8Db8SGwYyASGLRSRSbinapoo2JAP2IM%2BKE2edYb345%2BMe7B2dWYP96HRR3NFdtsT15uKffmkLCSbl6slAyeIU5lHtSYbxAeCqyVRStl2adiJlrug0oyuasqLWKm7GAJAIeGX0YXbGkHW54rHOy%2BgtD1aKl3O1bJjoHUKM7VxAPnvKEigr4JSgyoYE8xeB%2BqMfuAotBzS2leoRwB%2FWhL%2Fou5x4%2FDpI%2BFIWlaTMKY65%2BuVmRj2gGkpaZRjQ1GfI2OeVFNvbqAEjRAs1zejTuldhft8OJFX91o%2FOc%2BxSL7H%2FXVuf1aUkwutHEwgY6nQF%2BO9OEXsXlF7JZGbbbffFmnJGZMRxE9k4SgUN2NlkVZD4QsfjIkKqzXrm5nVd8K80fRAnkg19mzuwSk7j4ExgnTO2ryDiWp4pKUL5o6V8bvnQ1HSP9l%2B4BXGMsSL%2B%2B3nXAuRkFgZNJb7Jf%2Bajru6y%2B5m8NZCShT8WGQMMMVqbKRei2mt51cFeYsSFJQV%2FDlaXfucfEKggHZkdQxtBp&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20250617T083506Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=21600&amp;X-Amz-Credential=ASIAZLA4M7GHHDCU3QDW%2F20250617%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=6708a8de9ba17525fce0b96ddd96a46ee7a3d817aa46291845724564d5806653
 </pre>
 </div>
 </div>
@@ -8522,8 +8549,12 @@ permission.</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Step-5:-Downloading-the-file">Step 5: Downloading the file<a class="anchor-link" href="#Step-5:-Downloading-the-file">¶</a></h3><p>Based on the S3 <code>file_url</code> above, the actual file name is <em>Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz</em>. So you need to replace the escape character <code>%3A</code> with <code>_</code> (underscore) character.</p>
-<p><strong>Note</strong>: If you cannot download the file, please wait for a while and then retry download the file from the URL. Please do not flush the download requests.</p>
+<h3 id="Step-5:-Downloading-the-file">Step 5: Downloading the file<a class="anchor-link" href="#Step-5:-Downloading-the-file">¶</a></h3><p>Once you got the S3 URL. You can download the bulk file using that URL (<strong>as is</strong>). <strong>Do not alter or make any changes to the URL text string</strong>. It will cause unable to download or signature mismatch error.</p>
+<p><strong>Note</strong>:</p>
+<ul>
+<li>If you cannot download the file, please wait for a while and then retry download the file from the URL. Please do not flush the download requests.</li>
+<li>The code below set <code>verify = False</code> property in a <code>requests</code> library call to workaround LSEG's beloved ZScaler blocks a download request message. <strong>Do not</strong> set <code>verify = False</code> in a Production.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -8532,33 +8563,20 @@ permission.</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 5 - Downlaod file</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 5 - Download file</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">polling2</span>
 
-<span class="n">zipfilename</span> <span class="o">=</span> <span class="n">file_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"?"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"%3A"</span><span class="p">,</span><span class="s2">"_"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Downloading File </span><span class="si">{</span><span class="n">zipfilename</span><span class="si">}</span><span class="s1"> ...'</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_result</span><span class="p">(</span><span class="n">_response</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
-
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">bulkFile_response</span> <span class="o">=</span> <span class="n">polling2</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_url</span><span class="p">),</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Downloading File from </span><span class="si">{</span><span class="n">file_url</span><span class="si">}</span><span class="s1"> ...'</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">polling2</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_url</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span> <span class="kc">False</span><span class="p">),</span> 
                             <span class="n">step</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
                             <span class="n">poll_forever</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                            <span class="n">check_success</span><span class="o">=</span> <span class="n">test_result</span><span class="p">)</span>
+                            <span class="n">check_success</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span>
 <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">bulkFile_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'Receive File Successfully'</span><span class="p">)</span>
-    <span class="nb">open</span><span class="p">(</span><span class="n">zipfilename</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bulkFile_response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">zipfilename</span><span class="si">}</span><span class="s1"> Saved'</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: Request file failure: </span><span class="si">{</span><span class="n">bulkFile_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">bulkFile_response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">bulkFile_response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8571,9 +8589,70 @@ permission.</li>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Downloading File Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz ...
-Receive File Successfully
-Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz Saved
+<pre>Downloading File from https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Raw-Wealth-Standard-v2/2025/06/08/Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Delta-2025-06-08T18%3A15%3A15.433Z.csv.gz?x-request-Id=ce431bcb-2cdc-417a-9e86-7e83af4056b1&amp;x-package-id=408c-ba29-cae68349-abb7-ba38f6d7fce7&amp;x-client-app-id=b4842f3904fb4a1fa18234796368799086c63541&amp;x-file-name=Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Delta-2025-06-08T18%3A15%3A15.433Z.csv.gz&amp;x-fileset-id=4035-af6c-bcf9f923-834d-c845673b9608&amp;x-bucket-name=bulk-ESG&amp;x-uuid=GESG1-178570&amp;x-file-Id=412d-ab1a-f20f60b8-8279-b0bc7f78a804&amp;x-fileset-name=Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Csv-Delta-2025-06-08T18%3A15%3A15.433Z&amp;x-event-external-name=cfs-claimCheck-download&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIn%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCcvGmFcP8z9NzuAtLbxo7%2BTf%2B2k6x45T97X4TgxJrXXQIgDhErnOPKi08fNhR4RvJi4fZgcGK8c2LUUuweYNydmNcqmgIIchAFGgw2NDIxNTcxODEzMjYiDEOFsCw0CxOGxTTJmyr3ASNFewKXgFz70H4SVgKZjdyBZz8Db8SGwYyASGLRSRSbinapoo2JAP2IM%2BKE2edYb345%2BMe7B2dWYP96HRR3NFdtsT15uKffmkLCSbl6slAyeIU5lHtSYbxAeCqyVRStl2adiJlrug0oyuasqLWKm7GAJAIeGX0YXbGkHW54rHOy%2BgtD1aKl3O1bJjoHUKM7VxAPnvKEigr4JSgyoYE8xeB%2BqMfuAotBzS2leoRwB%2FWhL%2Fou5x4%2FDpI%2BFIWlaTMKY65%2BuVmRj2gGkpaZRjQ1GfI2OeVFNvbqAEjRAs1zejTuldhft8OJFX91o%2FOc%2BxSL7H%2FXVuf1aUkwutHEwgY6nQF%2BO9OEXsXlF7JZGbbbffFmnJGZMRxE9k4SgUN2NlkVZD4QsfjIkKqzXrm5nVd8K80fRAnkg19mzuwSk7j4ExgnTO2ryDiWp4pKUL5o6V8bvnQ1HSP9l%2B4BXGMsSL%2B%2B3nXAuRkFgZNJb7Jf%2Bajru6y%2B5m8NZCShT8WGQMMMVqbKRei2mt51cFeYsSFJQV%2FDlaXfucfEKggHZkdQxtBp&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20250617T083506Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=21600&amp;X-Amz-Credential=ASIAZLA4M7GHHDCU3QDW%2F20250617%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=6708a8de9ba17525fce0b96ddd96a46ee7a3d817aa46291845724564d5806653 ...
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>c:\Projects\Code\CFS_demo\run_cfs\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'a206464-bulk-esg.s3.amazonaws.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ea886d4b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Now you have downloaded the CFS bulk file stream in an application level. You can choose to save that file with whatever name you want.</p>
+<p>If you need an actual file name of the file, it is available in S3 URL as follows:</p>
+<pre><code>https://a206464-{bucket_name}.s3.amazonaws.com/XXX/YEAR/MONTH/DATE/{file_name}?x-request-Id={signature}.
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li><a href="https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/*Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz*?x-request-Id=signature">https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/*Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz*?x-request-Id=signature</a> (an actual file name is <strong>Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz</strong>)</li>
+<li><a href="https://a206464-bulk-custom.s3.amazonaws.com/GE-11328/2025/06/12/*TM3_SIFMAIndex2025-06-12T14%3A00%3A00.000-04%3A00*?x-request-Id=signature">https://a206464-bulk-custom.s3.amazonaws.com/GE-11328/2025/06/12/*TM3_SIFMAIndex2025-06-12T14%3A00%3A00.000-04%3A00*?x-request-Id=signature</a> (an actual file name is <strong>TM3_SIFMAIndex2025-06-12T14_00_00.000-04_00</strong>)</li>
+</ul>
+<p>The actual file name has been replace a <code>_</code> (underscore) with <code>%3A</code> escape character, so an application needs to replace the escape character <code>%3A</code> with <code>_</code> (underscore) character to get an actual file name.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ff9406cc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [26]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
+    <span class="n">zipfilename</span> <span class="o">=</span> <span class="n">file_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"?"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"%3A"</span><span class="p">,</span><span class="s2">"_"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Download File Successfully'</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">zipfilename</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">zipfilename</span><span class="si">}</span><span class="s1"> Saved'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP APIs: Request file failure: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Download File Successfully
+Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Delta-2025-06-08T18_15_15.433Z.csv.gz Saved
 </pre>
 </div>
 </div>
@@ -8626,7 +8705,7 @@ Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [36]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 6 - Refreshing Token</span>
@@ -8634,10 +8713,8 @@ Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz
 <span class="c1"># Send HTTP Request</span>
 <span class="n">auth_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">RDP_HOST</span><span class="si">}</span><span class="s1">/auth/oauth2/v1/token'</span>
 <span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'grant_type=refresh_token&amp;client_id=</span><span class="si">{</span><span class="n">clientId</span><span class="si">}</span><span class="s1">&amp;refresh_token=</span><span class="si">{</span><span class="n">refresh_token</span><span class="si">}</span><span class="s1">'</span>
-<span class="n">auth_response</span> <span class="o">=</span> <span class="kc">None</span> 
-
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">auth_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> 
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> 
                              <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/x-www-form-urlencoded'</span><span class="p">},</span> 
                              <span class="n">data</span> <span class="o">=</span> <span class="n">payload</span><span class="p">,</span> 
                              <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">clientId</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
@@ -8645,15 +8722,15 @@ Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz
 <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Refresh Token success'</span><span class="p">)</span>
-    <span class="n">access_token</span> <span class="o">=</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'access_token'</span><span class="p">]</span>
-    <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'refresh_token'</span><span class="p">]</span>
-    <span class="n">expires_in</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">auth_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'expires_in'</span><span class="p">])</span>
+    <span class="n">access_token</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'access_token'</span><span class="p">]</span>
+    <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'refresh_token'</span><span class="p">]</span>
+    <span class="n">expires_in</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'expires_in'</span><span class="p">])</span>
 
-<span class="k">if</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP authentication failure: </span><span class="si">{</span><span class="n">auth_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">auth_response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">auth_response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP authentication failure: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8712,7 +8789,7 @@ Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [37]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#step 7 - Revoking Token</span>
@@ -8726,10 +8803,8 @@ Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz
 <span class="c1"># Send HTTP Request</span>
 <span class="n">auth_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">RDP_HOST</span><span class="si">}</span><span class="s1">/auth/oauth2/v1/revoke'</span>
 <span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'token=</span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s1">'</span>
-<span class="n">auth_response</span> <span class="o">=</span> <span class="kc">None</span> 
-
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">auth_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> 
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> 
                              <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
                                  <span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/x-www-form-urlencoded'</span><span class="p">,</span>
                                  <span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Basic </span><span class="si">{</span><span class="n">clientId_base64</span><span class="si">}</span><span class="s1">'</span>
@@ -8740,11 +8815,11 @@ Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz
 <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># HTTP Status 'OK'</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Revoke Token success'</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">auth_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP authentication failure: </span><span class="si">{</span><span class="n">auth_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">auth_response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">auth_response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'RDP authentication failure: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Text: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

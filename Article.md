@@ -521,9 +521,11 @@ Result:
 
 ### Step 5: Downloading the file
 
-That brings us to download the file. Based on the S3 ```file_url``` above, the actual file name is *Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz*. So you need to replace the escape character ```%3A``` with ```_``` (underscore) character.
+That brings us to download the file. You can download the bulk file using that S3 URL (**as is**). **Do not alter or make any changes to the URL text string**. It will cause unable to download or signature mismatch error. 
 
-**Note**: If you cannot download the file, please wait for a while and then retry download the file from the URL (```file_url```). Please do not flush the download requests. I am demonstrating with the [polling2](https://pypi.org/project/polling2/) library.
+**Note**: 
+- If you cannot download the file, please wait for a while and then retry download the file from the URL. Please do not flush the download requests.
+- The code below set ```verify = False``` property in a ```requests``` library call to workaround LSEG's beloved ZScaler blocks a download request message. **Do not** set ```verify = False``` in a Production.
 
 Python code:
 
@@ -531,32 +533,44 @@ Python code:
 #step 5 - Download file
 import polling2
 
-zipfilename = file_url.split("?")[0].split("/")[-1].replace("%3A","_")
-print(f'Downloading File {zipfilename} ...')
-
-def test_result(_response):
-    return _response.status_code == 200
-
 try:
-    bulkFile_response = polling2.poll(lambda: requests.get(file_url), 
+    print(f'Downloading File from {file_url} ...')
+    response = polling2.poll(lambda: requests.get(file_url, verify= False), 
                             step = 10,
                             poll_forever = True,
-                            check_success= test_result)
+                            check_success= lambda r: r.status_code == 200)
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
+```
 
-if bulkFile_response.status_code == 200:  # HTTP Status 'OK'
-    print('Receive File Successfully')
-    open(zipfilename, 'wb').write(bulkFile_response.content)
+ow you have downloaded the CFS bulk file stream in an application level. You can choose to save that file with whatever name you want.
+
+If you need an actual file name of the file, it is available in S3 URL as follows:
+
+```
+https://a206464-{bucket_name}.s3.amazonaws.com/XXX/YEAR/MONTH/DATE/{file_name}?x-request-Id={signature}.
+```
+Examples: 
+- https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/*Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz*?x-request-Id=signature (an actual file name is **Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz**)
+- https://a206464-bulk-custom.s3.amazonaws.com/GE-11328/2025/06/12/*TM3_SIFMAIndex2025-06-12T14%3A00%3A00.000-04%3A00*?x-request-Id=signature (an actual file name is **TM3_SIFMAIndex2025-06-12T14_00_00.000-04_00**)
+
+The actual file name has been replace a ```_``` (underscore) with ```%3A``` escape character, so an application needs to replace the escape character ```%3A``` with ```_``` (underscore) character to get an actual file name.
+
+```python
+# Save the file locally.
+
+if response.status_code == 200:  # HTTP Status 'OK'
+    zipfilename = file_url.split("?")[0].split("/")[-1].replace("%3A","_")
+    print('Download File Successfully')
+    open(zipfilename, 'wb').write(response.content)
     print(f'{zipfilename} Saved')
 else:
-    print(f'RDP APIs: Request file failure: {bulkFile_response.status_code} {bulkFile_response.reason}')
-    print(f'Text: {bulkFile_response.text}')
+    print(f'RDP APIs: Request file failure: {response.status_code} {response.reason}')
+    print(f'Text: {response.text}')
 ```
 
 Result:
 ```bash
-Downloading File Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz ...
 Receive File Successfully
 Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz Saved
 ```
