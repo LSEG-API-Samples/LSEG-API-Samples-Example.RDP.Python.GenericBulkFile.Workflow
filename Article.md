@@ -261,6 +261,32 @@ Result:
   "packageType":"bulk"
 }
 ```
+
+### More on /file-store/v1/packages parameters
+
+Beside the ```packageName``` query, the ```/file-store/v1/packages``` endpoint supports the following optional parameters:
+- *packageType*: Return all packages that match the specified package type.
+- *bucketName*:Return all packages that are associated with the specified bucket name.
+- *page*: Filter results by a specific pagination index (If client has already specified this query parameter, the 
+skipToken logic will be excluded)
+- *includedTotalResult*: The total search result will be counting and added to the first response message. 
+- *skipToken*: A token to retrieve the next set of result that exceeds page size.
+- *pageSize*: The number of packages that will be shown on one page. Default value is 25.
+- *includedEntitilementResult*: CFS will perform a permission check on each package against the client 
+permission.
+
+**Tips**
+
+It is recommended to call the endpoint with ```pageSize=100``` parameter as follows:
+
+``` HTTP
+GET /file-store/v1/packages?bucketName={bucket-name}&pageSize=100 HTTP/1.1
+Host: api.refinitiv.com
+Authorization: Bearer <Access Token>
+```
+
+Please find more detail on the [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide) document.
+
 ## Step 3: Listing the FileSets using the Bucket Name and Package ID
 
 Now we come to getting the FileSets information. The application needs to send an HTTP ```GET``` request to the RDP ```/file-store/v1/file-sets?bucket={bucket-name}&packageId={packageId}``` endpoint to list all FileSets under the input ```bucket-name``` and ```packageId```.
@@ -327,6 +353,46 @@ The FileSets response message from the API is as follows:
 ```
 
 The File ID is in the ```files``` array above. I am demonstrating with the ```4c35-1775-c1a590ea-8376-ac6c1546b908``` file id.
+
+### More on /file-store/v1/file-sets?bucket parameters
+
+Beside the ```bucket``` and ```packageId```queries, the ```/file-store/v1/file-sets?bucket``` endpoint supports the following optional parameters:
+
+- *name*: The name of the file-set. Only exactly matched results are returned.
+- *packageId*: Package ID
+- *status*: Filter file-set by status (Ready/Pending)
+- *availableFrom*: Return all file-sets that become visible to permissioned users after the specified Datetime.
+- *availableTo*: Return all file-sets that is no longer visible to permissioned user after the specified Datetime.
+- *contentFrom*: Filter results by the age of the content within the file-set.
+- *contentTo*: Filter results by the age of the content within the file-set.
+- *createdSince*: Return all file-sets that have a created date after the specified Datetime
+- *modifiedSince*: Return all file-sets that have a modified date after the specified Datetime.
+- *attributes*: Return a list of publisher-defined attributes of the file-sets.
+- *pageSize*: The number of file-sets that will be shown on one page. Default value is 25.
+- *skipToken*: A token to retrieve the next set of file-set result that exceeds page size.
+
+The ```modifiedSince``` parameter can help an application to limit the returned File-Set only for the File-Set that has been modified after a specified time. 
+
+**Tips**
+
+It is recommended to call the endpoint with ```pageSize=100``` and ```modifiedSince``` parameters as follows:
+
+``` HTTP
+GET /file-store/v1/file-sets?bucket={bucket-name}&packageId={packageId}&modifiedSince={datetime}&pageSize=100 HTTP/1.1
+Host: api.refinitiv.com
+Authorization: Bearer <Access Token>
+```
+
+Example:
+
+``` HTTP
+GET /file-store/v1/file-sets?bucket=bulk-ESG&packageId=4288-ebb6-93372235-acb2-89882a826af1&pageSize=100&modifiedSince=2022-01-26T00:00:00Z HTTP/1.1
+Host: api.refinitiv.com
+Authorization: Bearer <Access Token>
+```
+
+Please find more detail on the [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide) document.
+
 
 ### Step 3.1: Listing the packageId using the Bucket Name - Paging
 
@@ -518,6 +584,17 @@ Result:
 ```bash
 'https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz?x-request-Id=e7658630-f8c6-4bd3-9443-4d87efa20b5c&x-package-id=4037-e79c-96b73648-a42a-6b65ef8ccbd1&x-client-app-id=b4842f3904fb4a1fa18234796368799086c63541&x-file-name=Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz&x-fileset-id=4646-6302-b810e622-8808-85367d798021&x-bucket-name=bulk-ESG&x-uuid=GESG1-178570&x-file-Id=4de0-ceda-25b5a1f1-9b7e-35c10b384078&x-fileset-name=Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-11-26T16%3A04%3A11.525Z&x-event-external-name=cfs-claimCheck-download&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFAaCXVzLWVhc3QtMSJHMEUCIEzV%2BjWQVpI6MyZSaZ8SDQHlLPSsv8n50rxgWVDO6l%2F6AiEAu6f00kJgGFokGZxSWXicGqPbiL2X1SwEI16MlBgrMQwqowIIuP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAEGgw2NDIxNTcxODEzMjYiDBu3pKa9FpE%2Fi14VMCr3AQDhdsrjQAR4YmsEBme6RolP2AlZSYOhk8cH5xRqqus1fYhG0jIxx5Rj0t5n7%2Fcy5fq7TX9ygoR4JJDjRKpHhS4weeTn2oqcEPEyGlegGJuktEjmWrRFqANR3vSzFQQbUECxDSC%2FnHAuIUz2X130j30SC31aNihaF1XNWJEGcxGYVNWKPslvVe3Ohg1euVup4kvH3YpIhfAGHnPHhyAHoK7M8K417rAMqkuSP05XGyf%2BD%2BuPSiS9n2EM66XnHZUthf5nkm70bk1%2B%2FpA%2BC5opQIRfhE7kHMg29qKWpPiyJJCtvmj9N79AeEwnfm%2FD%2BXlV5ZM%2BVx8cHGkw5YPLqwY6nQFj%2BbHSvw088XgcKLEde1RJdKZ9E1t39X%2FT3m765zf8I94m8skLdLd9tSJalzFnQbq%2BWx4zABO5VKm1xJ9Z%2FFyRklKzTX8B6fmV4ioEqbvauMn0OT4Lcn2BQLDoLefsZc0WaUQd5p1N8UVSfgVzcv3yNR4%2FHCFmXhKPMT%2F8MNWjlwG438YlrNRVCrWZpl2Eogx7shza%2Bl99v0rLdtF4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20231208T071237Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=ASIAZLA4M7GHBJJLJVV4%2F20231208%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=8f67fbf45259c2830f7e2578d03e7e546832ef34fba37b769b951e071ad08175'
 ```
+
+### More on /file-store/v1/files/ parameters
+
+Beside the ```file_id``` query, the ```/file-store/v1/files/``` endpoint supports the following optional parameters:
+
+- *createdSince*: Return all files that have a created date after the specified Datetime.
+- *modifiedSince*: Return all files that have a modified date after the specified Datetime.
+- *pageSize*: The number of files that will be shown on one page. Default value is 25.
+- *skipToken*: A token to retrieve the next set of file result that exceeds page size
+
+Please find more detail on the [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide) document.
 
 ### Step 5: Downloading the file
 

@@ -7917,6 +7917,12 @@ skipToken logic will be excluded)</li>
 permission.</li>
 </ul>
 <p>Please find more detail on the <a href="https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide">CFS API User Guide</a> document.</p>
+<p><strong>Tips</strong></p>
+<p>It is recommended to call the endpoint with <code>pageSize=100</code> parameter as follows:</p>
+<div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/file-store/v1/packages?bucketName={bucket-name}&amp;pageSize=100</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.refinitiv.com</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;Access Token&gt;</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -8134,12 +8140,14 @@ permission.</li>
 <li><em>skipToken</em>: A token to retrieve the next set of file-set result that exceeds page size.</li>
 </ul>
 <p>The <code>modifiedSince</code> parameter can help an application to limit the returned File-Set only for the File-Set that has been modified after a specified time.</p>
-<div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/file-store/v1/file-sets?bucket={bucket-name}&amp;packageId={packageId}&amp;modifiedSince={datetime}</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<p><strong>Tips</strong></p>
+<p>It is recommended to call the endpoint with <code>pageSize=100</code> and <code>modifiedSince</code> parameters as follows:</p>
+<div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/file-store/v1/file-sets?bucket={bucket-name}&amp;packageId={packageId}&amp;modifiedSince={datetime}&amp;pageSize=100</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.refinitiv.com</span>
 <span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;Access Token&gt;</span>
 </pre></div>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/file-store/v1/file-sets?bucket=bulk-ESG&amp;packageId=4288-ebb6-93372235-acb2-89882a826af1&amp;modifiedSince=2022-01-26T00:00:00Z</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/file-store/v1/file-sets?bucket=bulk-ESG&amp;packageId=4288-ebb6-93372235-acb2-89882a826af1&amp;pageSize=100&amp;modifiedSince=2022-01-26T00:00:00Z</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.refinitiv.com</span>
 <span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;Access Token&gt;</span>
 </pre></div>
