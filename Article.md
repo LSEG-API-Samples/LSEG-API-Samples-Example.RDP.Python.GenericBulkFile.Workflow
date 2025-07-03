@@ -625,7 +625,7 @@ Now you have downloaded the CFS bulk file stream in an application level. You ca
 If you need an actual file name of the file, it is available in S3 URL as follows:
 
 ```
-https://a206464-{bucket_name}.s3.amazonaws.com/XXX/YEAR/MONTH/DATE/{file_name}?x-request-Id={signature}.
+https://XXXX.s3.amazonaws.com/XXX/YEAR/MONTH/DATE/{file_name}?x-request-Id={signature}.
 ```
 Examples: 
 - https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/*Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz*?x-request-Id=signature (an actual file name is **Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz**)
