@@ -8787,11 +8787,16 @@ Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Delta-2025-06-08T18_15_15.433
 <span class="na">Accept</span><span class="o">:</span> <span class="l">*/*</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.refinitiv.com:443</span>
-<span class="na">Authorization</span><span class="o">:</span> <span class="l">Basic &lt;App Key in Base64&gt;</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Basic &lt;App Key+":" in Base64&gt;</span>
 <span class="na">Content-Length</span><span class="o">:</span> <span class="l">XXX</span>
 
 <span class="nt">token</span><span class="o">=</span><span class="s">{current_Access_token}</span>
 </pre></div>
+<p><strong>Note</strong>:</p>
+<ul>
+<li>Please be noticed <strong>":"</strong> string after the <strong>App Key</strong>.</li>
+<li>The <code>/revoke</code> endpoint does not use the <code>password</code> in a Basic Authorization, so we need to send empty password in <code>AppKey:</code> format.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -8807,7 +8812,7 @@ Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Delta-2025-06-08T18_15_15.433
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
 
-<span class="n">clientId_bytes</span> <span class="o">=</span> <span class="n">clientId</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'ascii'</span><span class="p">)</span>
+<span class="n">clientId_bytes</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">clientId</span><span class="si">}</span><span class="s1">:'</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'ascii'</span><span class="p">)</span> <span class="c1">#Please be noticed ":" string after the app-key</span>
 <span class="n">base64_bytes</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">clientId_bytes</span><span class="p">)</span>
 <span class="n">clientId_base64</span> <span class="o">=</span> <span class="n">base64_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'ascii'</span><span class="p">)</span>
 
@@ -8822,8 +8827,7 @@ Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Delta-2025-06-08T18_15_15.433
                                  <span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/x-www-form-urlencoded'</span><span class="p">,</span>
                                  <span class="s1">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'Basic </span><span class="si">{</span><span class="n">clientId_base64</span><span class="si">}</span><span class="s1">'</span>
                              <span class="p">},</span> 
-                             <span class="n">data</span> <span class="o">=</span> <span class="n">payload</span><span class="p">,</span> 
-                             <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">clientId</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+                             <span class="n">data</span> <span class="o">=</span> <span class="n">payload</span>
                 <span class="p">)</span>
 <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">exp</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Caught exception: </span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
