@@ -7517,7 +7517,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="RDP-Generic-CFS-File-Workflow">RDP Generic CFS File Workflow<a class="anchor-link" href="#RDP-Generic-CFS-File-Workflow">¶</a></h1><p><strong>Last Update</strong>: June 2025</p>
+<h1 id="RDP-Generic-CFS-File-Workflow">RDP Generic CFS File Workflow<a class="anchor-link" href="#RDP-Generic-CFS-File-Workflow">¶</a></h1><p><strong>Last Update</strong>: August 2025</p>
 <p>Example Code Disclaimer:
 ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR ILLUSTRATIVE PURPOSES ONLY. LSEG MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE OPERATION OF THE EXAMPLE CODE, OR THE INFORMATION, CONTENT, OR MATERIALS USED IN CONNECTION WITH THE EXAMPLE CODE. YOU EXPRESSLY AGREE THAT YOUR USE OF THE EXAMPLE CODE IS AT YOUR SOLE RISK.</p>
 </div>
@@ -8770,17 +8770,21 @@ Bulk-ESG-Global-Raw-Wealth-Standard-v2-ValueScores-Delta-2025-06-08T18_15_15.433
 <h3 id="Step-7:-Revoke-Token-to-ending-the-session.">Step 7: Revoke Token to ending the session.<a class="anchor-link" href="#Step-7:-Revoke-Token-to-ending-the-session.">¶</a></h3><p>This revocation mechanism allows an application to invalidate its tokens if the end-user logs out, changes identity, or exits the respective application. Notifying the authorization server that the token is no longer needed allows the authorization server to clean up data associated with that token (e.g., session data) and the underlying authorization grant.</p>
 <p>The API requires the following HTTP Header and Credential parameter information:</p>
 <ul>
-<li>Header:<ul>
-<li>Authorization = <code>Basic &lt;App Key in Base64 format&gt;</code></li>
+<li><p>Header:</p>
+<ul>
+<li>Authorization = <code>Basic &lt;App Key+":" in Base64&gt;</code></li>
 </ul>
 </li>
-</ul>
-<p>Please notice <em>the space</em> between the <code>Basic</code> and <code>App Key in Base64 format</code> values.</p>
+<li><p>Body parameter</p>
 <ul>
-<li>Body parameter<ul>
 <li>token: The current <code>Access Token</code> value from the previous RDP Authentication call</li>
 </ul>
 </li>
+</ul>
+<p>Please be noticed</p>
+<ul>
+<li>The <strong>":"</strong> string after the <strong>App Key</strong>.</li>
+<li><em>the space</em> between the <strong>Basic</strong> and <strong>App Key+":" in Base64</strong> values.</li>
 </ul>
 <p>The HTTP request for the RDP APIs Authentication service is as follows:</p>
 <div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/auth/oauth2/v1/revoke</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>

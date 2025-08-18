@@ -720,11 +720,13 @@ This revocation mechanism allows an application to invalidate its tokens if the 
 
 The API requires the following HTTP Header and Credential parameter information:
 - Header: 
-    * Authorization = ```Basic <App Key in Base64 format>```
-
-Please notice *the space* between the ```Basic``` and ```App Key in Base64 format``` values.
+    * Authorization = ```Authorization: Basic <App Key+":" in Base64>```
 - Body parameter
     * token: The current ```Access Token``` value from the previous RDP Authentication call
+
+Please be noticed
+  - The **":"** string after the **App Key**. 
+  -  *the space* between the **Basic** and **App Key+":" in Base64** values.
 
 The HTTP request for the RDP APIs Authentication service is as follows:
 
