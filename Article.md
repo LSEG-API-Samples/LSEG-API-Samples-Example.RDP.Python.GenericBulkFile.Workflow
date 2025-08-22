@@ -720,7 +720,8 @@ This revocation mechanism allows an application to invalidate its tokens if the 
 
 The API requires the following HTTP Header and Credential parameter information:
 - Header: 
-    * Authorization = ```Authorization: Basic <App Key+":" in Base64>```
+    * Authorization = ```Basic <App Key+":" in Base64 format>```
+
 - Body parameter
     * token: The current ```Access Token``` value from the previous RDP Authentication call
 
@@ -745,15 +746,14 @@ token={current_Access_token}
 - Please be noticed **":"** string after the **App Key**. 
 - The ```/revoke``` endpoint does not use the ```password``` in a Basic Authorization, so we need to send empty password in ```AppKey:``` format.
 
+I am demonstrating with the Python [requests](https://requests.readthedocs.io/) library. We can use the ```auth(clientid,'')``` to the ```requests.post``` function, and the library handles the base64 conversion for us.
+
+If you are using other languages or libraries (like C#), you may need to convert the ```App-Key:``` to based64 ascii string by your self.
+
 Python code:
 
 ```Python
 #step 7 - Revoking Token
-import base64
-
-clientId_bytes = f'{clientId}:'.encode('ascii') #Please be noticed ":" string after the app-key
-base64_bytes = base64.b64encode(clientId_bytes)
-clientId_base64 = base64_bytes.decode('ascii')
 
 # Send HTTP Request
 auth_url = f'{RDP_HOST}/auth/oauth2/v1/revoke'
@@ -763,10 +763,10 @@ auth_response = None
 try:
     auth_response = requests.post(auth_url, 
                              headers = {
-                                 'Content-Type':'application/x-www-form-urlencoded',
-                                 'Authorization': f'Basic {clientId_base64}'
+                                 'Content-Type':'application/x-www-form-urlencoded'
                              }, 
-                             data = payload
+                             data = payload,
+                            auth = (clientId, '')
                 )
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
