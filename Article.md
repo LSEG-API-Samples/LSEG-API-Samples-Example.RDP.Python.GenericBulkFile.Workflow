@@ -214,7 +214,9 @@ The example bucket names for RDP content set are as follows:
 | Tick History                     | TICKHISTORY_VBD_NO_EMBARGO                   | 4c01-ab9e-db594a31-a8f5-5b7852ec4638           |
 | Green Revenue                    | bulk-GreenRevenue                            | Summary: 4e94-6d63-fea034dc-90e2-de33895bd4e9  |
 | Green Revenue                    | bulk-GreenRevenue                            | Standard: 4316-d43b-81c40763-8e6a-0dbec8162ab1 |
-| Starmine                         | STARMINE_PREDICTIVE_ANALYTICS_SMARTECON_LIVE | 40d4-1404-58533484-afe8-718650a4e0d4           |  
+| Starmine                         | STARMINE_PREDICTIVE_ANALYTICS_SMARTECON_LIVE | 40d4-1404-58533484-afe8-718650a4e0d4|   
+| Municipal Market Monitor (TM3)   | bulk-Custom                                  | 4c5b-0f65-c57f5ae4-b548-2a1075ee725d |
+| Messenger External Feeds         | CAAS-EF-MESSAGES                             | 464a-9d20-f9f5c4c2-8049-82ce061f2351 |
 
 **Note**: The bucket name is *case-insensitive*.
 

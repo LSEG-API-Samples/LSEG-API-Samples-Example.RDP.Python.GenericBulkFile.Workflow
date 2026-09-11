@@ -1,6 +1,6 @@
 # A Generic and Step By Step Workflow for RDP Client File Store (CFS) File API
-- version: 1.0.9
-- Last update: August 2025
+- version: 1.10.0
+- Last update: September 2026
 - Environment: Jupyter Notebook
 - Prerequisite: [Access to RDP credentials](#prerequisite)
 
@@ -9,7 +9,11 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 
 ## <a id="intro"></a>Introduction
 
-**Important for Messenger Compliance External feeds users**: On 28 April 2024, a new version of Messenger will be released in parallel with a new External Feeds offering, which will allow customers to retrieve their compliance files in JSON format using this Client File Store (CFS) API. For more details on support, refer to [PCN208738](https://my.refinitiv.com/content/mytr/en/product-notifications/details.html?id=PCN208738). 
+**For the Municipal Market Monitor (TM3) file users**: There is an article aims for your TM3 bulk file available on the [A Step By Step Guide for Getting Municipal Market Monitor (TM3) Bulk File Using C#](https://developers.lseg.com/en/article-catalog/article/a-step-by-step-guide-for-tm3-bulk-file-csharp) article. I highly recommend you check it.
+
+**Important for Messenger Compliance External feeds users**: On 28 April 2024, a new version of Messenger will be released in parallel with a new External Feeds offering, which will allow customers to retrieve their compliance files in JSON format using this Client File Store (CFS) API. For more details on support, refer to [PCN208738](https://myaccount.lseg.com/en/product-notifications/details?id=PCN208738). 
+- The bucket name for Messenger Compliance External feeds is **CAAS-EF-MESSAGES*
+- Please check the *LSEG Messenger - Accessing external feeds for CFS APIs.pdf" and other documents on the [PCN208738](https://myaccount.lseg.com/en/product-notifications/details?id=PCN208738) page.
 
 This demo application shows the generic workflow of Refinitiv Data Platform (RDP) CFS API. The workflow can be applied to any Bucket (ESG, Symbology, Green Revenue, etc). I am demonstrating the workflow in [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment. However, the RDP APIs are the web-based API that any programming langues can connect and consume data from via the HTTP RESTful API. 
 
