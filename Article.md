@@ -2,7 +2,7 @@
 
 ## <a id="intro"></a>Introduction
 
-The Client File Store (CFS) is a capability of Refinitiv Data Platform (RDP) that provides authorization and enables access to content files stored in publisher repositories. LSEG provides various content file domains (aka *bucket*) for consumers such as:
+The Client File Store (CFS) is a capability of Delivery Platform (RDP - formerly known as Refinitiv Data Platform) that provides authorization and enables access to content files stored in publisher repositories. LSEG provides various content file domains (aka *bucket*) for consumers such as:
 - CFS ESG data
 - Green Revenue data
 - Symbology data
@@ -13,15 +13,16 @@ And much more.
 
 The Client File Store (CFS) is a component of the RDP which let consumers access via a set of HTTP RESTful APIs. This article contains a step-by-step, generic workflow guide from the authentication and download the file for any buckets (ESG, Symbology, Green Revenue, etc). The example source code is written in [Python](https://www.python.org/) and [Jupyter](https://jupyter.org/) environment. However, our APIs are the web-based API, so any programming langues can connect and consume data using the same concept. 
 
-## <a id="whatis_rdp"></a>What is Refinitiv Data Platform (RDP) APIs?
+## <a id="whatis_rdp"></a>What is Delivery Platform (RDP) APIs?
 
-The [Refinitiv Data Platform - (RDP)](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via easy-to-use Web-based API.
+The [Delivery Platform - (RDP)](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) (formerly known as Refinitiv Data Platform) provide various LSEG data and content for developers via easy-to-use Web-based API.
 
 RDP APIs give developers seamless and holistic access to all of the LSEG content such as Environmental Social and Governance (ESG), News, Research, etc, and commingled with their content, enriching, integrating, and distributing the data through a single interface, delivered wherever they need it.  The RDP APIs delivery mechanisms are the following:
-* Request - Response: RESTful web service (HTTP GET, POST, PUT or DELETE) 
-* Alert: delivery is a mechanism to receive asynchronous updates (alerts) to a subscription. 
-* Bulks:  deliver substantial payloads, like the end-of-day pricing data for the whole venue. 
-* Streaming: deliver real-time delivery of messages.
+
+- Request - Response: RESTful web service (HTTP GET, POST, PUT or DELETE) 
+- Alert: delivery is a mechanism to receive asynchronous updates (alerts) to a subscription. 
+- Bulks:  deliver substantial payloads, like the end-of-day pricing data for the whole venue. 
+- Streaming: deliver real-time delivery of messages.
 
 This example project is focusing on the Request-Response: RESTful web service delivery method only.  
 
@@ -33,7 +34,7 @@ For more detail regarding RDP, please see the following APIs resources:
 
 ## <a id="what_is_cfs"></a>What is CFS?
 
-**Client File Store (CFS)** aka File Distribution is a capability of Refinitiv Data Platform (RDP) that provides authorization and enables access to content files stored in publisher-supplied repository. CFS defines content ownership that publisher are isolated. And subscribers can trust the source of content.
+**Client File Store (CFS)** aka File Distribution is a capability of RDP APIs that provides authorization and enables access to content files stored in publisher-supplied repository. CFS defines content ownership that publisher are isolated. And subscribers can trust the source of content.
 
 CFS is engineered as a self-service metadata tool intend for publishers and subscribers. CFS provides bucket and file-set to organize files to simplify the interaction with publishers or subscribers CFS doesn't store file directly. Actual files are store in publisher-supplied. AWS S3 only one type storage that supported by current CFS.
 
@@ -84,7 +85,7 @@ This project uses RDP access credentials with the CFS file permission. You need 
 - **User-ID**: Identifier for user allowing access to contracted content and APIs on the API Playground page (https://apidocs.refinitiv.com/Apps/ApiDocs) or Bulk UI via Workspace/Eikon Desktop. It normally is email address of user (example: sample@lseg.com).
 - **Machine ID**:  Identifier for machine allowing access and run this tool or any automate applications. It normally is a username with "GE-A-XXXXXXXX" format.
 
-Please see more detail about how to setup your RDP User-ID and Machine-ID from the [Getting Started with Refinitiv Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article. 
+Please see more detail about how to setup your RDP User-ID and Machine-ID from the [Getting Started with Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article. 
 
 Please contact your LSEG representative to help you with the RDP account and the bucket permission.
 
@@ -154,7 +155,7 @@ expires_in = 0
 auth_url = f'{RDP_HOST}/auth/oauth2/v1/token'
 payload = f'grant_type=password&username={username}&client_id={clientId}&password={password}&takeExclusiveSignOnControl=True&scope=trapi'
 try:
-    response = requests.post(auth_url, 
+    auth_response = requests.post(auth_url, 
                              headers = {'Content-Type':'application/x-www-form-urlencoded'}, 
                              data = payload, 
                              auth = (clientId, '')
@@ -166,15 +167,15 @@ except requests.exceptions.RequestException as exp:
 The next step is checking the authentication request result, then get the token information and assign them to local variables for the later use.
 
 ``` Python
-if response.status_code == 200:  # HTTP Status 'OK'
+if auth_response.status_code == 200:  # HTTP Status 'OK'
     print('Authentication success')
-    access_token = response.json()['access_token']
-    refresh_token = response.json()['refresh_token']
-    expires_in = int(response.json()['expires_in'])
+    access_token = auth_response.json()['access_token']
+    refresh_token = auth_response.json()['refresh_token']
+    expires_in = int(auth_response.json()['expires_in'])
 
-if response.status_code != 200:
-    print(f'RDP authentication failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+if auth_response.status_code != 200:
+    print(f'RDP authentication failure: {auth_response.status_code} {auth_response.reason}')
+    print(f'Text: {auth_response.text}')
 ```
 Now we have the access token information that can be used for further data requests.
 
@@ -188,7 +189,7 @@ Please notice *the space* between the ```Bearer``` and ```RDP Access Token``` va
 
 If the token is still valid and has appropriate scope, the request is allowed to access the data.
 
-The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from Refinitiv Data Platform's [API Playground page](https://api.refinitiv.com/) - which is an interactive documentation site developers can access once they have a valid Refinitiv Data Platform account.
+The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from RDP [API Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs) - which is an interactive documentation site developers can access once they have a valid RDP account.
 
 ### Step 2: Listing the packageIds using the Bucket Name
 
@@ -228,22 +229,22 @@ bucket_name = 'bulk-ESG'
 CFS_url = f'{RDP_HOST}/file-store/v1/packages?bucketName={bucket_name}'
 
 try:
-    response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+    packageID_response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if packageID_response.status_code == 200:  # HTTP Status 'OK'
     print('Receive list Package IDs from RDP APIs')
 else:
-    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+    print(f'RDP APIs: CFS request failure: {packageID_response.status_code} {packageID_response.reason}')
+    print(f'Text: {packageID_response.text}')
 ```
 You can check the example data response to see the example of PackageIds from the following code:
 
 ```Python
 #Example of the first entry of package IDs
 
-print(json.dumps(response.json()['value'][0], sort_keys=True, indent=2, separators=(',', ':')))
+print(json.dumps(packageID_response.json()['value'][0], sort_keys=True, indent=2, separators=(',', ':')))
 ```
 
 Result:
@@ -260,6 +261,32 @@ Result:
   "packageType":"bulk"
 }
 ```
+
+### More on /file-store/v1/packages parameters
+
+Beside the ```packageName``` query, the ```/file-store/v1/packages``` endpoint supports the following optional parameters:
+- *packageType*: Return all packages that match the specified package type.
+- *bucketName*:Return all packages that are associated with the specified bucket name.
+- *page*: Filter results by a specific pagination index (If client has already specified this query parameter, the 
+skipToken logic will be excluded)
+- *includedTotalResult*: The total search result will be counting and added to the first response message. 
+- *skipToken*: A token to retrieve the next set of result that exceeds page size.
+- *pageSize*: The number of packages that will be shown on one page. Default value is 25.
+- *includedEntitilementResult*: CFS will perform a permission check on each package against the client 
+permission.
+
+**Tips**
+
+It is recommended to call the endpoint with ```pageSize=100``` parameter as follows:
+
+``` HTTP
+GET /file-store/v1/packages?bucketName={bucket-name}&pageSize=100 HTTP/1.1
+Host: api.refinitiv.com
+Authorization: Bearer <Access Token>
+```
+
+Please find more detail on the [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide) document.
+
 ## Step 3: Listing the FileSets using the Bucket Name and Package ID
 
 Now we come to getting the FileSets information. The application needs to send an HTTP ```GET``` request to the RDP ```/file-store/v1/file-sets?bucket={bucket-name}&packageId={packageId}``` endpoint to list all FileSets under the input ```bucket-name``` and ```packageId```.
@@ -287,15 +314,15 @@ packageId = '4037-e79c-96b73648-a42a-6b65ef8ccbd1'
 CFS_url = f'{RDP_HOST}/file-store/v1/file-sets?bucket={bucket_name}&packageId={packageId}'
 
 try:
-    response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+    fileSet_response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if fileSet_response.status_code == 200:  # HTTP Status 'OK'
     print('Receive FileSets list from RDP APIs')
 else:
-    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+    print(f'RDP APIs: CFS request failure: {fileSet_response.status_code} {fileSet_response.reason}')
+    print(f'Text: {fileSet_response.text}')
 ```
 The FileSets response message from the API is as follows:
 
@@ -327,6 +354,46 @@ The FileSets response message from the API is as follows:
 
 The File ID is in the ```files``` array above. I am demonstrating with the ```4c35-1775-c1a590ea-8376-ac6c1546b908``` file id.
 
+### More on /file-store/v1/file-sets?bucket parameters
+
+Beside the ```bucket``` and ```packageId```queries, the ```/file-store/v1/file-sets?bucket``` endpoint supports the following optional parameters:
+
+- *name*: The name of the file-set. Only exactly matched results are returned.
+- *packageId*: Package ID
+- *status*: Filter file-set by status (Ready/Pending)
+- *availableFrom*: Return all file-sets that become visible to permissioned users after the specified Datetime.
+- *availableTo*: Return all file-sets that is no longer visible to permissioned user after the specified Datetime.
+- *contentFrom*: Filter results by the age of the content within the file-set.
+- *contentTo*: Filter results by the age of the content within the file-set.
+- *createdSince*: Return all file-sets that have a created date after the specified Datetime
+- *modifiedSince*: Return all file-sets that have a modified date after the specified Datetime.
+- *attributes*: Return a list of publisher-defined attributes of the file-sets.
+- *pageSize*: The number of file-sets that will be shown on one page. Default value is 25.
+- *skipToken*: A token to retrieve the next set of file-set result that exceeds page size.
+
+The ```modifiedSince``` parameter can help an application to limit the returned File-Set only for the File-Set that has been modified after a specified time. 
+
+**Tips**
+
+It is recommended to call the endpoint with ```pageSize=100``` and ```modifiedSince``` parameters as follows:
+
+``` HTTP
+GET /file-store/v1/file-sets?bucket={bucket-name}&packageId={packageId}&modifiedSince={datetime}&pageSize=100 HTTP/1.1
+Host: api.refinitiv.com
+Authorization: Bearer <Access Token>
+```
+
+Example:
+
+``` HTTP
+GET /file-store/v1/file-sets?bucket=bulk-ESG&packageId=4288-ebb6-93372235-acb2-89882a826af1&pageSize=100&modifiedSince=2022-01-26T00:00:00Z HTTP/1.1
+Host: api.refinitiv.com
+Authorization: Bearer <Access Token>
+```
+
+Please find more detail on the [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide) document.
+
+
 ### Step 3.1: Listing the packageId using the Bucket Name - Paging
 
 My next point is the paging feature. By default, the ```/file-store/v1/file-sets?bucket={bucket-name}``` endpoint always returns 25 results per request. You can adjust the number of return results via the ```pageSize``` query parameter, the maximum number is **100**.
@@ -345,16 +412,16 @@ Python Code:
 CFS_url = f'{RDP_HOST}/file-store/v1/file-sets?bucket={bucket_name}&pageSize=2'
 
 try:
-    response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+    fileSet_response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if fileSet_response.status_code == 200:  # HTTP Status 'OK'
     print('Receive list Package IDs from RDP APIs')
 else:
-    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+    print(f'RDP APIs: CFS request failure: {fileSet_response.status_code} {fileSet_response.reason}')
+    print(f'Text: {fileSet_response.text}')
 ```
 Now we get 2 entries per request from the API as we set via ```pageSize=2``` parameter:
 
@@ -417,15 +484,15 @@ if '@nextLink' in response.json():
     CFS_url = f'{RDP_HOST}{next_link}'
     
     try:
-        response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
+        fileSet_response = requests.get(CFS_url, headers={'Authorization': f'Bearer {access_token}'})
     except requests.exceptions.RequestException as exp:
         print(f'Caught exception: {exp}')
     
-    if response.status_code == 200:  # HTTP Status 'OK'
+    if fileSet_response.status_code == 200:  # HTTP Status 'OK'
         print('Receive list Package IDs from RDP APIs')
     else:
-        print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
-        print(f'Text: {response.text}')
+        print(f'RDP APIs: CFS request failure: {fileSet_response.status_code} {fileSet_response.reason}')
+        print(f'Text: {fileSet_response.text}')
 ```
 
 Result:
@@ -498,17 +565,17 @@ file_id = response.json()['value'][0]['files'][1] #'4c35-1775-c1a590ea-8376-ac6c
 FileID_url = f'{RDP_HOST}/file-store/v1/files/{file_id}/stream?doNotRedirect=true'
 
 try:
-    response = requests.get(FileID_url, headers={'Authorization': f'Bearer {access_token}'})
+    fileID_response = requests.get(FileID_url, headers={'Authorization': f'Bearer {access_token}'})
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if fileID_response.status_code == 200:  # HTTP Status 'OK'
     print('Receive File URL from RDP APIs')
 else:
-    print(f'RDP APIs: CFS request failure: {response.status_code} {response.reason}')
+    print(f'RDP APIs: CFS request failure: {fileID_response.status_code} {fileID_response.reason}')
     print(f'Text: {response.text}')
 
-file_url = response.json()['url']
+file_url = fileID_response.json()['url']
 print(file_url)
 ```
 The File URL is in the ```url``` attribute of the response message.
@@ -518,44 +585,69 @@ Result:
 'https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz?x-request-Id=e7658630-f8c6-4bd3-9443-4d87efa20b5c&x-package-id=4037-e79c-96b73648-a42a-6b65ef8ccbd1&x-client-app-id=b4842f3904fb4a1fa18234796368799086c63541&x-file-name=Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz&x-fileset-id=4646-6302-b810e622-8808-85367d798021&x-bucket-name=bulk-ESG&x-uuid=GESG1-178570&x-file-Id=4de0-ceda-25b5a1f1-9b7e-35c10b384078&x-fileset-name=Bulk-ESG-Global-Symbology-Organization-v1-Jsonl-Init-2023-11-26T16%3A04%3A11.525Z&x-event-external-name=cfs-claimCheck-download&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFAaCXVzLWVhc3QtMSJHMEUCIEzV%2BjWQVpI6MyZSaZ8SDQHlLPSsv8n50rxgWVDO6l%2F6AiEAu6f00kJgGFokGZxSWXicGqPbiL2X1SwEI16MlBgrMQwqowIIuP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAEGgw2NDIxNTcxODEzMjYiDBu3pKa9FpE%2Fi14VMCr3AQDhdsrjQAR4YmsEBme6RolP2AlZSYOhk8cH5xRqqus1fYhG0jIxx5Rj0t5n7%2Fcy5fq7TX9ygoR4JJDjRKpHhS4weeTn2oqcEPEyGlegGJuktEjmWrRFqANR3vSzFQQbUECxDSC%2FnHAuIUz2X130j30SC31aNihaF1XNWJEGcxGYVNWKPslvVe3Ohg1euVup4kvH3YpIhfAGHnPHhyAHoK7M8K417rAMqkuSP05XGyf%2BD%2BuPSiS9n2EM66XnHZUthf5nkm70bk1%2B%2FpA%2BC5opQIRfhE7kHMg29qKWpPiyJJCtvmj9N79AeEwnfm%2FD%2BXlV5ZM%2BVx8cHGkw5YPLqwY6nQFj%2BbHSvw088XgcKLEde1RJdKZ9E1t39X%2FT3m765zf8I94m8skLdLd9tSJalzFnQbq%2BWx4zABO5VKm1xJ9Z%2FFyRklKzTX8B6fmV4ioEqbvauMn0OT4Lcn2BQLDoLefsZc0WaUQd5p1N8UVSfgVzcv3yNR4%2FHCFmXhKPMT%2F8MNWjlwG438YlrNRVCrWZpl2Eogx7shza%2Bl99v0rLdtF4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20231208T071237Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=ASIAZLA4M7GHBJJLJVV4%2F20231208%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=8f67fbf45259c2830f7e2578d03e7e546832ef34fba37b769b951e071ad08175'
 ```
 
+### More on /file-store/v1/files/ parameters
+
+Beside the ```file_id``` query, the ```/file-store/v1/files/``` endpoint supports the following optional parameters:
+
+- *createdSince*: Return all files that have a created date after the specified Datetime.
+- *modifiedSince*: Return all files that have a modified date after the specified Datetime.
+- *pageSize*: The number of files that will be shown on one page. Default value is 25.
+- *skipToken*: A token to retrieve the next set of file result that exceeds page size
+
+Please find more detail on the [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide) document.
+
 ### Step 5: Downloading the file
 
-That brings us to download the file. Based on the S3 ```file_url``` above, the actual file name is *Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz*. So you need to replace the escape character ```%3A``` with ```_``` (underscore) character.
+That brings us to download the file. You can download the bulk file using that S3 URL (**as is**). **Do not alter or make any changes to the URL text string**. It will cause unable to download or signature mismatch error. 
 
-**Note**: If you cannot download the file, please wait for a while and then retry download the file from the URL (```file_url```). Please do not flush the download requests. I am demonstrating with the [polling2](https://pypi.org/project/polling2/) library.
+**Note**: 
+- If you cannot download the file, please wait for a while and then retry download the file from the URL. Please do not flush the download requests. 
+- The code below set ```verify = False``` property in a ```requests``` library call to workaround LSEG's beloved ZScaler blocks a download request message. **Do not** set ```verify = False``` in a Production.
 
 Python code:
 
 ```Python
-#step 5 - Downlaod file
+#step 5 - Download file
 import polling2
 
-zipfilename = file_url.split("?")[0].split("/")[-1].replace("%3A","_")
-print(f'Downloading File {zipfilename} ...')
-
-def test_result(response):
-    return response.status_code == 200
-
 try:
-    response = polling2.poll(lambda: requests.get(file_url), 
+    print(f'Downloading File from {file_url} ...')
+    bulkFile_response = polling2.poll(lambda: requests.get(file_url, verify= False), 
                             step = 10,
                             poll_forever = True,
-                            check_success= test_result)
+                            check_success= lambda r: r.status_code == 200)
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
+```
 
-if response.status_code == 200:  # HTTP Status 'OK'
-    print('Receive File Successfully')
-    open(zipfilename, 'wb').write(response.content)
+Now you have downloaded the CFS bulk file stream in an application level. You can choose to save that file with whatever name you want.
+
+If you need an actual file name of the file, it is available in S3 URL as follows:
+
+```
+https://XXXX.s3.amazonaws.com/XXX/YEAR/MONTH/DATE/{file_name}?x-request-Id={signature}.
+```
+Examples: 
+- https://a206464-bulk-esg.s3.amazonaws.com/Bulk-ESG-Global-Symbology-Organization-v1/2023/11/26/*Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16%3A04%3A11.525Z.jsonl.gz*?x-request-Id=signature (an actual file name is **Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz**)
+- https://a206464-bulk-custom.s3.amazonaws.com/GE-11328/2025/06/12/*TM3_SIFMAIndex2025-06-12T14%3A00%3A00.000-04%3A00*?x-request-Id=signature (an actual file name is **TM3_SIFMAIndex2025-06-12T14_00_00.000-04_00**)
+
+The actual file name has been replace a ```_``` (underscore) with ```%3A``` escape character, so an application needs to replace the escape character ```%3A``` with ```_``` (underscore) character to get an actual file name.
+
+```python
+# Save the file locally.
+
+if bulkFile_response.status_code == 200:  # HTTP Status 'OK'
+    zipfilename = file_url.split("?")[0].split("/")[-1].replace("%3A","_")
+    print('Download File Successfully')
+    open(zipfilename, 'wb').write(bulkFile_response.content)
     print(f'{zipfilename} Saved')
 else:
-    print(f'RDP APIs: Request file failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+    print(f'RDP APIs: Request file failure: {bulkFile_response.status_code} {bulkFile_response.reason}')
+    print(f'Text: {bulkFile_response.text}')
 ```
 
 Result:
 ```bash
-Downloading File Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz ...
 Receive File Successfully
 Bulk-ESG-Global-Symbology-Organization-v1-Init-2023-11-26T16_04_11.525Z.jsonl.gz Saved
 ```
@@ -600,8 +692,10 @@ Python code:
 # Send HTTP Request
 auth_url = f'{RDP_HOST}/auth/oauth2/v1/token'
 payload = f'grant_type=refresh_token&client_id={clientId}&refresh_token={refresh_token}'
+auth_response = None
+
 try:
-    response = requests.post(auth_url, 
+    auth_response = requests.post(auth_url, 
                              headers = {'Content-Type':'application/x-www-form-urlencoded'}, 
                              data = payload, 
                              auth = (clientId, '')
@@ -609,15 +703,15 @@ try:
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if auth_response.status_code == 200:  # HTTP Status 'OK'
     print('Refresh Token success')
-    access_token = response.json()['access_token']
-    refresh_token = response.json()['refresh_token']
-    expires_in = int(response.json()['expires_in'])
+    access_token = auth_response.json()['access_token']
+    refresh_token = auth_response.json()['refresh_token']
+    expires_in = int(auth_response.json()['expires_in'])
 
-if response.status_code != 200:
-    print(f'RDP authentication failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+if auth_response.status_code != 200:
+    print(f'RDP authentication failure: {auth_response.status_code} {auth_response.reason}')
+    print(f'Text: {auth_response.text}')
 ```
 
 ### Step 7: Revoke Token to ending the session.
@@ -626,11 +720,14 @@ This revocation mechanism allows an application to invalidate its tokens if the 
 
 The API requires the following HTTP Header and Credential parameter information:
 - Header: 
-    * Authorization = ```Basic <App Key in Base64 format>```
+    * Authorization = ```Basic <App Key+":" in Base64 format>```
 
-Please notice *the space* between the ```Basic``` and ```App Key in Base64 format``` values.
 - Body parameter
     * token: The current ```Access Token``` value from the previous RDP Authentication call
+
+Please be noticed
+  - The **":"** string after the **App Key**. 
+  -  *the space* between the **Basic** and **App Key+":" in Base64** values.
 
 The HTTP request for the RDP APIs Authentication service is as follows:
 
@@ -639,42 +736,48 @@ POST /auth/oauth2/v1/revoke HTTP/1.1
 Accept: */*
 Content-Type: application/x-www-form-urlencoded
 Host: api.refinitiv.com:443
-Authorization: Basic <App Key in Base64>
+Authorization: Basic <App Key+":" in Base64>
 Content-Length: XXX
 
 token={current_Access_token}
 ```
 
+**Note**: 
+- Please be noticed **":"** string after the **App Key**. 
+- The ```/revoke``` endpoint does not use the ```password``` in a Basic Authorization, so we need to send empty password in ```AppKey:``` format.
+
+I am demonstrating with the Python [requests](https://requests.readthedocs.io/) library. We can use the ```auth(clientid,'')``` to the ```requests.post``` function, and the library handles the base64 conversion for us.
+
+If you are using other languages or libraries (like C#), you may need to convert the ```App-Key:``` to based64 ascii string by your self.
+
 Python code:
+
 ```Python
 #step 7 - Revoking Token
-import base64
-
-clientId_bytes = clientId.encode('ascii')
-base64_bytes = base64.b64encode(clientId_bytes)
-clientId_base64 = base64_bytes.decode('ascii')
 
 # Send HTTP Request
 auth_url = f'{RDP_HOST}/auth/oauth2/v1/revoke'
 payload = f'token={access_token}'
+auth_response = None
+
 try:
-    response = requests.post(auth_url, 
+    auth_response = requests.post(auth_url, 
                              headers = {
-                                 'Content-Type':'application/x-www-form-urlencoded',
-                                 'Authorization': f'Basic {clientId_base64}'
+                                 'Content-Type':'application/x-www-form-urlencoded'
                              }, 
-                             data = payload, 
-                             auth = (clientId, '')
+                             data = payload,
+                            auth = (clientId, '')
                 )
 except requests.exceptions.RequestException as exp:
     print(f'Caught exception: {exp}')
 
-if response.status_code == 200:  # HTTP Status 'OK'
+if auth_response.status_code == 200:  # HTTP Status 'OK'
     print('Revoke Token success')
-if response.status_code != 200:
-    print(f'RDP authentication failure: {response.status_code} {response.reason}')
-    print(f'Text: {response.text}')
+if auth_response.status_code != 200:
+    print(f'RDP authentication failure: {auth_response.status_code} {auth_response.reason}')
+    print(f'Text: {auth_response.text}')
 ```
+
 That’s all I have to say about the CFS API workflow.
 
 ## <a id="how_to_run"></a>How to run the demo application
@@ -810,7 +913,7 @@ That covers how to run an example Postman collection.
 
 That brings me to the end of this CFS API workflow project. The CFS API is a powerful API that allows developers to download the content file dynamically via a straightforward sequence of HTTP RESTful API calls. The demonstration code is written in Python but the concept of the API calls steps are the same for other programming languages.
 
-At the same time, the [Refinitiv Data Platform (RDP) APIs](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via an easy-to-use Web-based API. The APIs are easy to integrate into any application and platform that supports the HTTP protocol and JSON message format. 
+At the same time, the [RDP APIs](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various LSEG data and content for developers via an easy-to-use Web-based API. The APIs are easy to integrate into any application and platform that supports the HTTP protocol and JSON message format. 
 
 You may interested in the following resources for more detail about the CFS data usage:
 - [Find environmental footprint of your bond portfolio](https://developers.lseg.com/en/article-catalog/article/Environmental_footprint_of_bond_portfolio) article
@@ -823,16 +926,16 @@ And much more on the [Developer Portal](https://developers.lseg.com/en) website.
 
 For further details, please check out the following resources:
 
-* [Refinitiv Data Platform APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [LSEG Developer Community](https://developers.lseg.com/) website.
-* [Refinitiv Data Platform APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
-* [Refinitiv Data Platform APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
-* [Refinitiv Data Platform APIs: Authorization - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
-* [Limitations and Guidelines for the RDP Authentication Service](https://developers.lseg.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
-* [Getting Started with Refinitiv Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
-* [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide).
+- [Delivery Platform (RDP) APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [LSEG Developer Community](https://developers.lseg.com/) website.
+- [RDP APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
+- [RDP APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
+- [RDP APIs: Authorization - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
+- [Limitations and Guidelines for the RDP Authentication Service](https://developers.lseg.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
+- [Getting Started with Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
+- [CFS API User Guide](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/documentation#cfs-api-user-guide).
 
 
-For any questions related to Refinitiv Data Platform APIs, please use the [RDP APIs Forum](https://community.developers.refinitiv.com/spaces/231/index.html) on the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
+For any questions related to RDP APIs or CFS service, please use the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
 
 
 
