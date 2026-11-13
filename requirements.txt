@@ -76,7 +76,7 @@ rfc3987-syntax==1.1.0
 rpds-py==2026.6.3
 Send2Trash==2.1.0
 six==1.17.0
-soupsieve==2.9.2
+soupsieve==4.0
 stack-data==0.6.3
 terminado==0.18.1
 tinycss2==1.5.1
