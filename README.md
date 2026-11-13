@@ -1,6 +1,6 @@
 # A Generic and Step By Step Workflow for RDP Client File Store (CFS) File API
-- version: 1.10.0
-- Last update: September 2026
+- version: 1.10.5
+- Last update: November 2026
 - Environment: Jupyter Notebook
 - Prerequisite: [Access to RDP credentials](#prerequisite)
 
@@ -117,7 +117,7 @@ The first step is to unzip or download the example project folder into a directo
     $>CSF\Scripts\activate
 
     #Mac
-    $>source CFS\bin\activte
+    $>source CFS\bin\activate
     ```
 4. Run the following command to the dependencies in the *CFS* environment 
     ``` bash
